@@ -9,9 +9,9 @@
 ## 指南
 ### 一、安装与使用
 ### 二、请求与响应
-通过restful风格发送post、get请求加上json-rpc2.0作为默认响应数据格式来实现通讯过程。
-请求的数据格式支持xml、form-data、json，接收到的数据会在request.query和request.body中。
-响应支持xml、text、json、html，但建议使用json格式，由于mm_os采用函数式编程，所以可以直接return value来响应请求。
+通过restful风格发送post、get请求加上json-rpc2.0作为默认响应数据格式来实现通讯过程。  
+请求的数据格式支持xml、form-data、json，接收到的数据会在request.query和request.body中。  
+响应支持xml、text、json、html，但建议使用json格式，由于mm_os采用函数式编程，所以可以直接return value来响应请求。  
 
 ### 二、拓展和规范
 ### 三、开发和步骤
@@ -51,7 +51,7 @@
 
 ## 愿景
 ### 应用愿景
-期待实现mm_os的自动化、智能化
+期待mm_os能实现自动化、智能化、可视化开发
 
 ### 商业愿景
 希望mm_os能帮助更多企业快速实现应用落地计划，提升中小企业创业成功率，抢占市场先机。
