@@ -44,9 +44,9 @@ npm run start
 响应支持xml、text、json、html，但建议使用json格式，由于mm_os采用函数式编程，所以可以直接return value来响应请求。  
 ```javascript
 async function main(ctx, db){
-  var query = ctx.request.query;
+	var query = ctx.request.query;
 	var body = ctx.request.body;
-  return "hello world"
+	return "hello world"
 }
 module.exports = main;
 ```
