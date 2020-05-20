@@ -2,7 +2,7 @@
 这是超级美眉系统，用于开发web、rpc、websocket函数式编程服务。
 
 ## 简介
-### 一、研发初衷
+### 一、研发背景
 目前主流、且好用的开源框架，如下↓  
 php语言：ThinkPHP、PhalApi、discuz、DedeCMS；    
 asp.net core语言：ZKEACMS、Orchard；  
