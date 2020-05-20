@@ -8,6 +8,36 @@
 
 ## 指南
 ### 一、安装与使用
+1.创建目录
+```
+mkdir example
+```
+2.进入目录
+```
+cd example
+```
+3.初始化项目
+```
+npm init
+```
+4.安装mm_os
+```
+npm i mm_os
+```
+5.在package.json的"scripts"中加入两行代码
+```
+"dev": "./node_modules/.bin/cross-env NODE_ENV=development PORT=5000 nodemon server.js"
+"start": "./node_modules/.bin/cross-env NODE_ENV=production PORT=5000 node server.js"
+```
+6.运行开发模式
+```
+npm run dev
+```
+7.运行生产模式
+```
+npm run start
+```
+
 ### 二、请求与响应
 通过restful风格发送post、get请求加上json-rpc2.0作为默认响应数据格式来实现通讯过程。  
 请求的数据格式支持xml、form-data、json，接收到的数据会在request.query和request.body中。  
