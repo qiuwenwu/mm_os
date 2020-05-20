@@ -8,14 +8,13 @@ require("mm_timer");
 $.binPath = __dirname.fullname();
 $.html = require('mm_html');
 $.redis_admin = require("mm_redis").redis_admin;
-$.mongoDB_admin = require("mm_mongodb").mongoDB_admin;
+$.mongodb_admin = require("mm_mongodb").mongodb_admin;
 $.mysql_admin = require('mm_mysql').mysql_admin;
 
 /**
- * @param {Object} app
+ * @param {Object} config
  */
-module.exports = function(app) {
-	var config = app.config;
+module.exports = function(config) {
 	var sys = config.sys;
 	// 选择缓存方式,默认memory缓存
 	if (sys.cache == 'redis') {
@@ -29,7 +28,7 @@ module.exports = function(app) {
 		$.cache = $.cache_admin();
 	} else if (sys.cache == 'mongodb') {
 		// 将Api的缓存改为mongoDB方式
-		$.cache = $.mongoDB_admin();
+		$.cache = $.mongodb_admin();
 	}
 
 	// 选择数据库
@@ -39,5 +38,13 @@ module.exports = function(app) {
 		$.sql.open();
 	}
 
-	return app;
+	// 引用公共库
+	if (sys.com == true) {
+		"./app".addDir();
+		var Com = require("./bin/com.js");
+		$.com = new Com(null, $);
+		$.com.run();
+	}
+
+	return config;
 };

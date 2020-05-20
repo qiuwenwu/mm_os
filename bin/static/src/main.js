@@ -14,7 +14,7 @@ require({
 		Vue: '/js/vue',
 		vuex: '/js/vuex.min',
 		VueRouter: '/js/vue-router.min',
-		jquery: '/js/jquery-3.4.1.min',
+		jquery: '/js/jquery.min',
 		swiper: "/js/swiper.min",
 		clipboard: '/js/clipboard.min',
 		mm_sdk: '/js/mm_sdk',

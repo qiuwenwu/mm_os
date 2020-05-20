@@ -20,8 +20,8 @@ app.before('/te*', async (ctx, db) => {
 
 // 添加请求后事件
 app.after('/te*', async (ctx, db) => {
-	if (ctx.ret) {
-		ret_cache = ctx.ret;
+	if (db.ret) {
+		ret_cache = db.ret;
 	}
 });
 
@@ -50,7 +50,7 @@ app.get('/test', async (ctx, db) => {
 });
 
 
-app.get('/ws/tt', async(ctx, db) => {
+app.get('/ws/tt', async (ctx, db) => {
 	ctx.body = "子函数";
 });
 
@@ -59,10 +59,10 @@ app.use(async (ctx, next) => {
 	// await next();
 	if (!ctx.body && ctx.path.has('/t*')) {
 		ctx.body = "Hello World!";
-	}
-	else {
+	} else {
 		next();
 	}
 });
-
+// console.log($.toJson(app.routes, true));
+// console.log($.toJson(app.events, true));
 app.run();

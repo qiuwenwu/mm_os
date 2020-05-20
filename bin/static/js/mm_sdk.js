@@ -2698,6 +2698,40 @@ if (typeof($) === "undefined") {
 		return ret;
 	};
 	$.get = get;
+	
+	/**
+	 * 遍历读写对象
+	 * @param {Object} obj
+	 * @param {String} key 键 多级对象用.分隔
+	 * @param {Object} value 值，如果不传为查询，传为修改
+	 */
+	function obj_for(obj, key, value) {
+		if(!key)
+		{
+			return undefined;
+		}
+		var keys = key.split('.');
+		var len = keys.length;
+		if (len == 0) {
+			return undefined;
+		}
+		var k = keys[0];
+		var o = obj[k];
+		if(len == 1 && value !== undefined){
+			obj[k] = value;
+			o = value;
+		}
+		else if (typeof(o) == 'object') {
+			if(len > 1){
+				return obj_for(o, keys.splice(1, len).join('.'), value);
+			}
+		} else if (len > 1) {
+			return undefined;
+		}
+		return o;
+	}
+	
+	$.obj = obj_for;
 })();
 
 /**

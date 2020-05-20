@@ -16,8 +16,8 @@ app.before('/te*', async (ctx, db) => {
 
 // 添加请求后事件
 app.after('/te*', async (ctx, db) => {
-	if (ctx.ret) {
-		ret_cache = ctx.ret;
+	if (db.ret) {
+		ret_cache = db.ret;
 	}
 });
 
