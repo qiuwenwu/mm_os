@@ -78,10 +78,11 @@ async function main(ctx, db){
 	return "hello world"
 }
 module.exports = main;
-```
+```  
+
 ### 二、拓展和规范
 mm_os将一个业务划分成两部分，一部分叫配置，一部分叫服务。  
-为了方便区分，保存配置的是json文件，保存服务程序的是js文件，一个业务就由一个json和一个js组成，如果js是常规通用的，那么就可能只有一个配置json，启动后动态继承js。
+为了方便区分，保存配置的是json文件，保存服务程序的是js文件，一个业务就由一个json和一个js组成，如果js是常规通用的，那么就可能只有一个配置json，启动后动态继承js。  
 
 ### 三、开发和步骤
 1.设计数据库  
@@ -94,14 +95,50 @@ mm_os将一个业务划分成两部分，一部分叫配置，一部分叫服务
   
 ## SDK
 ### 一、Mysql SQL数据库
+1. 使用object对象进行增删改查  
+2. 使用sql语句进行增删改查  
+3. 使用sql模板语法进行增删改查  
+4. 使用共鸣model对数据库进行修改  
+
 ### 二、Redis NoSQL数据库缓存
+1. 使用增删改查函数  
+2. 修改缓存时长  
+3. 根据规律删除缓存  
+4. 使用消息订阅和通知功能  
+
 ### 三、mangodb NoSQL数据库持久存储
+1. 使用增删改查函数  
+2. 使用object对象增删改查  
+
 ### 四、expand.js 拓展原型函数
+1. 使用array原型函数  
+2. 使用string原型函数  
+3. 使用number原型函数  
+4. 使用date原型函数  
+5. 使用object便捷函数  
+
 ### 五、check.js 参数校验
+1. 使用check校验入参  
+2. 修改check错误提示  
+
 ### 六、http.js 网络请求
+1. 使用http帮助类做get请求  
+2. 使用http帮助类做post请求  
+3. 使用http上传文件  
+4. 使用http下载文件  
+
 ### 七、mathch.js 字符串匹配
+1. 使用mathch格式匹配字符串  
+2. 使用正则加格式匹配字符串  
+3. 使用相似度匹配字符串  
+
 ### 八、html.js 网页数据抓取
-### 九、art-template 数据视图渲染
+1. 使用类似jquery方式提取html、text  
+2. 使用类似jquery方式网抓取网页中添加数据  
+
+### 九、art-template 视图渲染
+1. 使用类似discuz模板语法渲染数据  
+2. 使用mvc模式开发网站  
 
 ## 机制
 ### 一、plugin 应用、插件机制
