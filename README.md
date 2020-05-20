@@ -42,7 +42,14 @@ npm run start
 通过restful风格发送post、get请求加上json-rpc2.0作为默认响应数据格式来实现通讯过程。  
 请求的数据格式支持xml、form-data、json，接收到的数据会在request.query和request.body中。  
 响应支持xml、text、json、html，但建议使用json格式，由于mm_os采用函数式编程，所以可以直接return value来响应请求。  
-
+```javascript
+async function main(ctx, db){
+  var query = ctx.request.query;
+	var body = ctx.request.body;
+  return "hello world"
+}
+module.exports = main;
+```
 ### 二、拓展和规范
 ### 三、开发和步骤
 
