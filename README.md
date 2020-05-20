@@ -3,7 +3,7 @@
 
 ## 简介
 ### 一、研发初衷
-目前主流、且好用的开源框架，如下↓
+目前主流、且好用的开源框架，如下↓  
 php语言：ThinkPHP、PhalApi、discuz、DedeCMS；    
 asp.net core语言：ZKEACMS、Orchard；  
 java语言：Sping、Struts2；  
