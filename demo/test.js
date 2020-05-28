@@ -3,8 +3,10 @@ const MM = require('../index.js');
 // 修改程序运行目录
 $.runPath = __dirname.fullname();
 // console.log($.runPath);
-
-var app = new MM();
+var env = process.NODE_ENV || 'local';
+var config_path = `./config/${env}.json`;
+var config = config_path.loadJson();
+var app = new MM(config);
 
 // 临时缓存结果
 var ret_cache;

@@ -4,7 +4,7 @@
 			<mm_col>
 				<mm_view>
 					<header class="arrow">
-						<h5>文章正文章节</h5>
+						<h5>文章章节</h5>
 					</header>
 					<mm_body>
 						<mm_form class="mm_filter">

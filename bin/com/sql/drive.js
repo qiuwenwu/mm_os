@@ -1,4 +1,5 @@
 const Item = require('mm_machine').Item;
+const Excel = require('mm_excel');
 
 /**
  * Sql操作驱动类
@@ -70,7 +71,7 @@ class Drive extends Item {
 			// 分隔符 用于查询时的多条件处理
 			"separator": "|",
 			// 支持的方法 add增、del删、set改、get查, 只填get表示只支持查询 // import export del_repeat",
-			"method": "add del set get",
+			"method": "add del set get import export del_repeat",
 			// sql查询语句
 			"query": {},
 			// 默认查询, 当查询条件中不包含该项时，默认添加该项。 例如: { "age": "`age` < 20" } , 当查询参含有age，不调用该项，不存在时，sql会增加该项
@@ -378,7 +379,6 @@ Drive.prototype.add = async function(db, query, body) {
 	return await this.add_main(db, body);
 };
 
-
 /**
  * 删除(主要)
  * @param {Object} db 数据库操作类
@@ -466,6 +466,8 @@ Drive.prototype.addOrSet = async function(db, query, body) {
  * @return {Object} 返回导入结果
  */
 Drive.prototype.import_main = async function(db, path) {
+	var bl = false;
+	return $.ret.bl(bl, bl ? '导入成功!' : '导入失败!');
 	// 					if (can.Contains("export")) {
 	// 						if (paracg.TryGetValue("url", out object fileToken)) {
 	// 							var url = fileToken.ToString();
@@ -511,14 +513,26 @@ Drive.prototype.import_main = async function(db, path) {
 };
 
 /**
+ * 获取数据
+ * @param {Array} fields 要获取的字段数组
+ * @return {String} 返回参数
+ */
+Drive.prototype.get_params = async function() {
+
+};
+
+/**
  * 导入数据
  * @param {Object} db 数据库操作类
- * @param {Object} query 查询条件
- * @param {Object} body 修改项
+ * @param {Object} file 查询条件
  * @return {String} 返回文件下载地址
  */
 Drive.prototype.import = async function(db, query, body) {
-
+	var params = Object.assign({}, query, body);
+	if (!params.file) {
+		return $.ret.error(70000, '文件名（file）参数不能为空');
+	}
+	return await this.import_main(db, params);
 };
 
 /**
@@ -530,6 +544,13 @@ Drive.prototype.import = async function(db, query, body) {
  * @return {String} 返回文件下载地址
  */
 Drive.prototype.export_main = async function(db, path, name) {
+	var bl = false;
+	var file = pm.file.fullname();
+	var params = this.get_params();
+	var excel = new Excel({
+		file,
+		params
+	});
 	// 					if (can.Contains("export")) {
 	// 						var convert = false;
 	// 						if (paracg.TryGetValue(cg.Convert, out object ctb)) {
@@ -555,27 +576,7 @@ Drive.prototype.export_main = async function(db, path, name) {
 	// 						ret = ToRet("", null, 20000);
 	// 					}
 	// 					break;
-	// 				case "delrepeat": //删除重复
-	// 					if (cg.DelRepeat != null) {
-	// 						var str = DelRepeat(cg.DelRepeat, table);
-	// 						if (str === "[]") {
-	// 							if (string.IsNullOrEmpty(Ex)) {
-	// 								ret = ToRetBl("没有找到重复项", false);
-	// 							} else {
-	// 								ret = ToRetBl("去重失败,原因：" + Ex, false);
-	// 							}
-	// 						} else {
-	// 							ret = ToRetBl("", true);
-	// 							ret = ret.Replace("true }", "true, \"array\": " + str + " }");
-	// 						}
-	// 					} else {
-	// 						ret = ToRet("", null, 20000);
-	// 					}
-	// 					break;
-	// 				default:
-	// 					ret = ToRet("", null, 10003);
-	// 					break;
-	// 			}
+	return bl
 }
 
 /**
@@ -586,6 +587,80 @@ Drive.prototype.export_main = async function(db, path, name) {
  * @return {String} 返回文件下载地址
  */
 Drive.prototype.export = async function(db, query, body) {};
+
+var ay = [
+	'ret', 'run', 'exec', 'escape',
+	'escapeId', 'sql', 'results', 'table',
+	'page', 'size', 'method', 'field',
+	'orderby', 'count_ret', 'config', 'database',
+	'tables', 'fields', 'setType', 'addTable',
+	'field_add', 'field_set', 'field_del', 'field_sql',
+	'field_name', 'clear', 'filter', 'toQuery',
+	'addSql', 'delSql', 'setSql', 'getSql',
+	'addOrSetSql', 'countSql', 'getCountSql', 'toWhere',
+	'toSet', 'toAddSql', 'toDelSql', 'toSetSql',
+	'toGetSql', 'add', 'del', 'set',
+	'get', 'addOrSet', 'count', 'getCount',
+	'addList', 'delList', 'setList', 'has_param',
+	'not_param', 'filter_param', 'tpl_query', 'tpl_body',
+	'model', 'getObj', 'user'
+]
+
+/**
+ * 删除重复项（主要）
+ * @param {Object} db 数据库管理器
+ * @param {Object} params 查询参数
+ */
+Drive.prototype.del_repeat_main = async function(db, params) {
+	var msg = '';
+	var cg = this.config.del_repeat;
+	var orderBy = params.orderby || cg.orderBy;
+	delete params.orderby;
+	var groupBy = params.groupby || cg.groupBy;
+	delete params.groupby;
+	var f = db.config.filter;
+	// 设置查询字段
+	var field = params[f.field] || groupBy;
+	delete params[f.field];
+	db.field = field;
+	var sql = db.toGetSql(params).replace(' * ', ' `' + field + '`, count(*) as len ');
+	sql += ` GROUP BY ${groupBy}`;
+	sql = 'SELECT * FROM (' + sql + ') a WHERE len > 1';
+	var list = await db.run(sql);
+	if(list.length)
+	{
+		db.page = 1;
+		db.size = 1;
+		var table = db.table;
+		var key = this.config.key;
+		for (var i = 0; i < list.length; i++) {
+			var o = list[i];
+			var len = o.len - 1;
+			delete o.len;
+			for(var n = 0; n < len; n++){
+				var obj = await db.getObj(o, orderBy, key);
+				if(obj){
+					await db.del(obj);
+				}
+			}
+		}
+	}
+	else {
+		msg = '没有重复号码。';
+	}
+	// console.log(list);
+	return $.ret.bl(!msg, msg ? '去重失败!原因：' + msg : '去重成功!');
+};
+
+/**
+ * 删除重复项
+ * @param {Object} db 数据库管理器
+ * @param {Object} query 查询条件
+ */
+Drive.prototype.del_repeat = async function(db, query, body) {
+	var pm = Object.assign({}, query, body);
+	return await this.del_repeat_main(db, pm);
+};
 
 /**
  * 执行模板操作
@@ -600,13 +675,14 @@ Drive.prototype.main = async function(params, db) {
 
 	var cg = this.config;
 	var method = query.method;
+
 	if (!method) {
 		method = "get";
 	}
 	if (!cg.method.has("*" + method + "*")) {
 		return $.ret.error(50001, '不支持的操作方式')
 	}
-
+	delete query.method;
 	if (this[method]) {
 		db.method = method;
 

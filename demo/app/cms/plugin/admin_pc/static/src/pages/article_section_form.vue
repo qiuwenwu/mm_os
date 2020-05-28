@@ -4,7 +4,7 @@
 			<mm_col width="33">
 				<mm_form class="card">
 					<header class="arrow">
-						<h5>{{ form[field] ? '修改' : '创建' }}文章正文章节</h5>
+						<h5>{{ form[field] ? '修改' : '创建' }}文章章节</h5>
 					</header>
 					<dl>
 						<dt>头像</dt>

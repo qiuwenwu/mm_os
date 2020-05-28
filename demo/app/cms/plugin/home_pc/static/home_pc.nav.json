@@ -130,7 +130,7 @@
                     "url": "/cms/article_comment"
                 },
                 {
-                    "title": "文章正文章节",
+                    "title": "文章章节",
                     "show": false,
                     "name": "cms_article_section",
                     "url": "/cms/article_section"

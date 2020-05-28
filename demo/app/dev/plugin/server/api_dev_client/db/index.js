@@ -21,6 +21,9 @@ dev_class.update_config = async function(req, db) {
 		scope = "sys";
 	}
 	var pool = $.pool.db[scope];
+	if(!pool){
+		return $.ret.error(10000, '作用域(scope)不存在!');
+	}
 	var msg = await pool.update_config(db, q["name"], q["table"], q["cover"]);
 	if (msg) {
 		return $.ret.bl(false, msg);

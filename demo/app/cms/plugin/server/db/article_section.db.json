@@ -1,5 +1,5 @@
 {
-    "title": "文章正文章节",
+    "title": "文章章节",
     "description": "文章的正文是单独一块保存的，一个个章节保存",
     "name": "cms_article_section",
     "table": "cms_article_section",

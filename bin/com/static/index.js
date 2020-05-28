@@ -40,7 +40,6 @@ class Static extends Index {
 				if (path.indexOf('.') !== -1) {
 					for (var i = 0; i < len; i++) {
 						var o = list[i];
-						var p = o.config.path;
 						done = await o.run(ctx, path, next);
 						if (done) {
 							break;
@@ -63,8 +62,7 @@ class Static extends Index {
 								}
 							}
 							break;
-						}
-						else {
+						} else {
 							done = await o.run(ctx, path, next);
 							if (done) {
 								break;
@@ -73,8 +71,7 @@ class Static extends Index {
 					}
 					return
 				}
-			}
-			else {
+			} else {
 				await next();
 			}
 		};
@@ -87,7 +84,7 @@ class Static extends Index {
  * @return {Drive} 静态文件驱动类
  */
 Static.prototype.getObj = function(dir) {
-	var d = join(dir).replace($.runPath, '');
+	var d = join(dir).replace($.runPath, '/');
 	var app = d.between(join('app/'), join('/'));
 	var plugin = d.between(join('/plugin/'), join('/'));
 	var path = '/' + app;
@@ -109,7 +106,7 @@ Static.prototype.getObj = function(dir) {
  */
 Static.prototype.load = function(path) {
 	if (!path) {
-		path =  $.runPath + 'app' + $.slash;
+		path = $.runPath + 'app' + $.slash;
 	}
 	// 获取所有应用路径
 	var search_dir = "static";

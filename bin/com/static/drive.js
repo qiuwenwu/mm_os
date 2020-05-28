@@ -71,6 +71,9 @@ class Drive extends Item {
 				}
 			}
 		}
+		if (this.config.convert_amd) {
+			this.mode(true);
+		}
 	}
 }
 
@@ -145,38 +148,35 @@ Drive.prototype.mode = async function(convert_amd) {
 	if (convert_amd) {
 		this.main = async function main(ctx, path) {
 			if (path.endsWith('.vue') || path.endsWith('.js')) {
-				var file = this.dir + path;
-				if (file) {
-					var code;
-					var str = file.loadText();
-					try {
-						if (str && str.indexOf('@/') !== -1) {
-							var arr = ctx.request.href.split('/');
-							var word = arr[0] + "//" + arr[2] + "/";
-							str = str.replaceAll('@/', word);
-						}
-						code = $.es6_to_amd(str);
-					} catch (e) {
-						throw e
+				var file = (this.dir + path).fullname();
+				var code;
+				var str = file.loadText();
+				try {
+					if (str && str.indexOf('@/') !== -1) {
+						var arr = ctx.request.href.split('/');
+						var word = arr[0] + "//" + arr[2] + "/";
+						str = str.replaceAll('@/', word);
 					}
-					if (code) {
-						if (path.endsWith('.js')) {
-							ctx.response.type = "application/javascript; charset=utf-8";
-						}
-						else {
-							ctx.response.type = "text/html; charset=utf-8";
-						}
-						ctx.body = code;
-						var age = cg.maxAge;
-						if (age) {
-							if (cg.immutable) {
-								ctx.set('Cache-Control', 'max-age=' + (age / 1000) + ",immutable");
-							} else {
-								ctx.set('Cache-Control', 'max-age=' + (age / 1000));
-							}
-						}
-						return file;
+					code = $.es6_to_amd(str);
+				} catch (e) {
+					throw e
+				}
+				if (code) {
+					if (path.endsWith('.js')) {
+						ctx.response.type = "application/javascript; charset=utf-8";
+					} else {
+						ctx.response.type = "text/html; charset=utf-8";
 					}
+					ctx.body = code;
+					var age = cg.maxAge;
+					if (age) {
+						if (cg.immutable) {
+							ctx.set('Cache-Control', 'max-age=' + (age / 1000) + ",immutable");
+						} else {
+							ctx.set('Cache-Control', 'max-age=' + (age / 1000));
+						}
+					}
+					return file;
 				}
 			} else {
 				return send(ctx, path, cg);
@@ -217,9 +217,9 @@ Drive.prototype.run = async function(ctx, path, next) {
 			done = ' ';
 			if (ctx.status === 404) {
 				var file;
-				
+
 				// 取到物理路径
-				var root = cg.root.fullname();
+				var root = this.dir;
 				var dir = (root + p).fullname();
 				if (!p) {
 					file = dir + '/' + cg.index;

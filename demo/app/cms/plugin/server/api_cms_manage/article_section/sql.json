@@ -1,6 +1,6 @@
 {
     "name": "cms_article_section2",
-    "title": "文章正文章节",
+    "title": "文章章节",
     "table": "cms_article_section",
     "key": "content_id",
     "orderby_default": "`content_id` desc",

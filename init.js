@@ -44,6 +44,10 @@ module.exports = function(config) {
 		var Com = require("./bin/com.js");
 		$.com = new Com(null, $);
 		$.com.run();
+		
+		if(sys.db_admin){
+			$.db_admin('sys').update;
+		}
 	}
 
 	return config;
