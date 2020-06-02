@@ -82,29 +82,46 @@ class Drive extends Item {
 			"func_file": "",
 			// 回调函数名 用于决定调用脚本的哪个函数
 			"func_name": "",
-			/* 导入导出转换 */
-			"convert": {
-				/*
-				需要转换的字段名
-				"city_id":
-				{
-					// 转换时对应的名字
-					"title": "城市",
-					// 转换来源 table 表示从数据表中转换、array 表示从数组中转换
-					"source": "table",
+			// 参数 []
+			"params": null,
+			// 格式
+			"format": [
+				/* {
 					// 表名，当选择转换方式 表转换时需填写
 					"table": "mm_web_region",
-					// 转换值来源字段
-					"field": "rid",
-					// 转换时匹配的键
-					"key": "name",
 					// 查询条件，用于加速转换
-					"select": "`group`='市'"
-					// 数组转换时的对应值
-					"array": ["待售中","已预约","已售出","已下架","已删除"]
-				}
-				*/
-			},
+					"query": {
+						"group": "市"
+					},
+					// 表标题名
+					"title": "所属省份",
+					// 转换ID
+					"id": "province_id",
+					// 转换主键
+					"key": "province",
+					// 取名
+					"name": "name",
+					// 列表
+					"list": [{
+							"province_id": 1,
+							"name": "广东省"
+						},
+						{
+							"province_id": 2,
+							"name": "广西省"
+						},
+						{
+							"province_id": 3,
+							"name": "湖南省"
+						}
+					]
+				},
+				{
+					"title": "是否可见",
+					"key": "show",
+					"list": ["否", "是"]
+				} */
+			],
 			/* 去重 */
 			"del_repeat": {
 				// 判断重复的字段，例如字段名 number
@@ -115,7 +132,7 @@ class Drive extends Item {
 			/* 逻辑符 */
 			"logic": {},
 			// 输出sql语句 
-			log: false
+			"log": false
 		};
 	}
 }
@@ -459,157 +476,200 @@ Drive.prototype.addOrSet = async function(db, query, body) {
 	return await this.addOrSet_main(db, query, body);
 };
 
-/**
- * 导入数据(主要)
- * @param {Object} db 数据库操作类
- * @param {Object} path 返回查询结果
- * @return {Object} 返回导入结果
- */
-Drive.prototype.import_main = async function(db, path) {
-	var bl = false;
-	return $.ret.bl(bl, bl ? '导入成功!' : '导入失败!');
-	// 					if (can.Contains("export")) {
-	// 						if (paracg.TryGetValue("url", out object fileToken)) {
-	// 							var url = fileToken.ToString();
-	// 							var file = CacheModel.webPath + url;
-	// 							var convert = false;
-	// 							if (paracg.TryGetValue(cg.Convert, out object ctb)) {
-	// 								paracg.Remove(cg.Convert);
-	// 								convert = true;
-	// 							}
-	// 							var fast = false;
-	// 							if (paracg.TryGetValue("fast", out object ctj)) {
-	// 								fast = true;
-	// 							}
-	// 							var n = Import(file.Replace("/", "\\").Replace("\\\\", "\\"), cg.NoRepeat, convert, cg.Map, table, fast);
-	// 							if (n > 0) {
-	// 								var dt = new Dictionary < string,
-	// 									object > {
-	// 										{
-	// 											"bl",
-	// 											true
-	// 										},
-	// 										{
-	// 											"num",
-	// 											n
-	// 										}
-	// 									};
-	// 								ret = ToRet("", dt);
-	// 								if (cg.Update.ContainsKey("createtime")) {
-	// 									Table = table;
-	// 									SetAsync("`createtime` < '1997-01-02'", "`createtime` = now()");
-	// 								}
-	// 							} else if (string.IsNullOrEmpty(Ex)) {
-	// 								ret = ToRet("", null, 10010);
-	// 							} else {
-	// 								ret = ToRet(Ex, null, 10000);
-	// 							}
-	// 						} else {
-	// 							ret = ToRet("缺少url参数", null, 32000);
-	// 						}
-	// 					} else {
-	// 						ret = ToRet("", null, 20000);
-	// 					}
-};
 
 /**
  * 获取数据
  * @param {Array} fields 要获取的字段数组
- * @return {String} 返回参数
+ * @return {Array} 返回参数信息列表
  */
-Drive.prototype.get_params = async function() {
-
+Drive.prototype.get_params = async function(fields) {
+	var cg = this.config;
+	if(cg.params){
+		return cg.params;
+	}
+	var params;
+	var name = cg.table;
+	var db = $.pool.db['sys'];
+	if (db) {
+		var dt = db.get(name);
+		if (dt && dt.config) {
+			var list = dt.config.fields;
+			if (fields) {
+				var lt = [];
+				var arr = fields.split(',');
+				arr.map((name) => {
+					for (var i = 0; i < list.length; i++) {
+						var o = list[i];
+						if (name == o.name) {
+							lt.push(o);
+						}
+					}
+				});
+				params = lt;
+			} else {
+				params = list;
+			}
+		}
+	}
+	if (!params) {
+		var field = cg.field_default;
+		var lt = [];
+		var arr = field.split(',');
+		for (var i = 0; i < arr.length; i++) {
+			var name = arr[i].replace(/`/g, '');
+			params.push({
+				name,
+				title: name
+			});
+		}
+		params = lt;
+	}
+	return params;
 };
+
+/**
+ * 获取导入导出格式
+ * @param {Object} db 数据库操作类
+ * @return {Array} 格式列表
+ */
+Drive.prototype.get_format = async function(db) {
+	var dbs = Object.assign({}, db);
+	dbs.size = 0;
+	var fmt = this.config.format;
+	for (var i = 0; i < fmt.length; i++) {
+		var o = fmt[i];
+		if (o.table) {
+			if (o.list || o.list.length == 0) {
+				dbs.table = o.table;
+				o.list = await dbs.getSql(o.where, null, o.id + "," + o.name);
+			}
+		}
+	}
+	return fmt;
+};
+
+/**
+ * 导入数据(主要)
+ * @param {Object} db 数据库操作类
+ * @param {String} file 文件名
+ * @return {Object} 返回导入结果
+ */
+Drive.prototype.import_main = async function(db, file) {
+	var params = await this.get_params();
+	var format = await this.get_format(db);
+	file = file.fullname($.config.path.static);
+	if(!file.hasFile()){
+		return $.ret.error(30000, file + "文件不存在！");
+	}
+	var excel = new Excel({
+		file,
+		params,
+		format
+	});
+	var jarr = await excel.load();
+	var list = [];
+	var errors = [];
+	db.table = this.config.table;
+	for (var i = 0; i < jarr.length; i++) {
+		var o = jarr[i];
+		var n = await db.add(o);
+		if (n < 1) {
+			list.push(o);
+			errors.push(db.error);
+		}
+	}
+	var bl = list.length !== jarr.length;
+	var body = $.ret.bl(bl, bl ? '导入成功!' : '导入失败!');
+	body.result.list = list;
+	if (errors.length) {
+		body.errors = errors;
+	}
+	return body;
+};
+
 
 /**
  * 导入数据
  * @param {Object} db 数据库操作类
- * @param {Object} file 查询条件
- * @return {String} 返回文件下载地址
+ * @param {Object} query 查询条件
+ * @param {Object} body 导出设置
+ * @return {Object} 返回执行结果
  */
 Drive.prototype.import = async function(db, query, body) {
 	var params = Object.assign({}, query, body);
 	if (!params.file) {
 		return $.ret.error(70000, '文件名（file）参数不能为空');
 	}
-	return await this.import_main(db, params);
+	return await this.import_main(db, params.file);
 };
 
 /**
  * 导出数据(主要)
  * @param {Object} db 数据库操作类
- * @param {String} field 需要导出的字段 例如: `username`,`gm`,`vip`
- * @param {String} name 文件名 例如: 用户名.xlsx 、用户信息.csv 、用户账户.xls
- * @param {String} path 文件路径 例如: /static/download, 可不填写
- * @return {String} 返回文件下载地址
+ * @param {Object} query 查询参数
+ * @param {Object} body 正文参数（导出设置）
+ * @property {String} body.fields 需要导出的字段 例如: `username`,`gm`,`vip`
+ * @property {String} body.file 文件名 例如: 用户名.xlsx 、用户信息.csv 、用户账户.xls
+ * @property {String} body.path 文件路径 例如: /static/download, 可不填写
+ * @return {Object} 返回执行结果
  */
-Drive.prototype.export_main = async function(db, path, name) {
-	var bl = false;
-	var file = pm.file.fullname();
-	var params = this.get_params();
+Drive.prototype.export_main = async function(db, query, body) {
+	var by = await this.get_main(db, query);
+	var message = "";
+	if (db.error) {
+		message = db.error.message;
+		return $.ret.error(10000, message);
+	}
+	var {
+		path,
+		file,
+		fields
+	} = body;
+	if (!file) {
+		var uid = 0;
+		if (db.user) {
+			uid = db.user.user_id;
+		}
+		file = './user/' + uid + '/' + this.config.table + '.xlsx';
+		file.addDir($.config.path.static);
+	}
+	if (!fields && query.field) {
+		fields = query.field;
+	}
+	var params = await this.get_params(fields);
+	var format = await this.get_format(db);
+	file = file.fullname(path || $.config.path.static);
 	var excel = new Excel({
 		file,
-		params
+		params,
+		format
 	});
-	// 					if (can.Contains("export")) {
-	// 						var convert = false;
-	// 						if (paracg.TryGetValue(cg.Convert, out object ctb)) {
-	// 							paracg.Remove(cg.Convert);
-	// 							convert = true;
-	// 						}
-	// 						if (!paracg.TryGetValue("pagesize", out object k)) {
-	// 							paracg.Add("pagesize", 30000);
-	// 						}
-	// 						sql = GetQuerySql(param, m, table, out string getSqlB);
-	// 						var file = CacheModel.uploadPath + "file\\" + DateTime.Now.ToFileTime() + ".xlsx";
-	// 
-	// 						var bl = Export(sql, file, convert, cg.Map, table);
-	// 						if (bl) {
-	// 							var url = file.Replace(CacheModel.webPath, "/").Replace("\\", "/");
-	// 							ret = ToRet("", "{ \"url\": \"" + url + "\" }");
-	// 						} else if (string.IsNullOrEmpty(Ex)) {
-	// 							ret = ToRet("", null, 10010);
-	// 						} else {
-	// 							ret = ToRet(Ex, null, 10000);
-	// 						}
-	// 					} else {
-	// 						ret = ToRet("", null, 20000);
-	// 					}
-	// 					break;
-	return bl
-}
+	var list = by.result.list;
+	file = await excel.save(list);
+	var body = $.ret.bl(file == true, file ? '导出成功!' : '导出失败!');
+	body.result.file = file;
+	if (message) {
+		body.result.message = message;
+	}
+	return body;
+};
 
 /**
  * 导出数据
  * @param {Object} db 数据库操作类
  * @param {Object} query 查询条件
  * @param {Object} body 修改项
- * @return {String} 返回文件下载地址
+ * @return {Object} 返回执行结果
  */
-Drive.prototype.export = async function(db, query, body) {};
-
-var ay = [
-	'ret', 'run', 'exec', 'escape',
-	'escapeId', 'sql', 'results', 'table',
-	'page', 'size', 'method', 'field',
-	'orderby', 'count_ret', 'config', 'database',
-	'tables', 'fields', 'setType', 'addTable',
-	'field_add', 'field_set', 'field_del', 'field_sql',
-	'field_name', 'clear', 'filter', 'toQuery',
-	'addSql', 'delSql', 'setSql', 'getSql',
-	'addOrSetSql', 'countSql', 'getCountSql', 'toWhere',
-	'toSet', 'toAddSql', 'toDelSql', 'toSetSql',
-	'toGetSql', 'add', 'del', 'set',
-	'get', 'addOrSet', 'count', 'getCount',
-	'addList', 'delList', 'setList', 'has_param',
-	'not_param', 'filter_param', 'tpl_query', 'tpl_body',
-	'model', 'getObj', 'user'
-]
+Drive.prototype.export = async function(db, query, body) {
+	return await this.export_main(db, query, body);
+};
 
 /**
  * 删除重复项（主要）
  * @param {Object} db 数据库管理器
  * @param {Object} params 查询参数
+ * @return {Object} 返回执行结果
  */
 Drive.prototype.del_repeat_main = async function(db, params) {
 	var msg = '';
@@ -627,8 +687,7 @@ Drive.prototype.del_repeat_main = async function(db, params) {
 	sql += ` GROUP BY ${groupBy}`;
 	sql = 'SELECT * FROM (' + sql + ') a WHERE len > 1';
 	var list = await db.run(sql);
-	if(list.length)
-	{
+	if (list.length) {
 		db.page = 1;
 		db.size = 1;
 		var table = db.table;
@@ -637,15 +696,14 @@ Drive.prototype.del_repeat_main = async function(db, params) {
 			var o = list[i];
 			var len = o.len - 1;
 			delete o.len;
-			for(var n = 0; n < len; n++){
+			for (var n = 0; n < len; n++) {
 				var obj = await db.getObj(o, orderBy, key);
-				if(obj){
+				if (obj) {
 					await db.del(obj);
 				}
 			}
 		}
-	}
-	else {
+	} else {
 		msg = '没有重复号码。';
 	}
 	// console.log(list);
@@ -656,6 +714,7 @@ Drive.prototype.del_repeat_main = async function(db, params) {
  * 删除重复项
  * @param {Object} db 数据库管理器
  * @param {Object} query 查询条件
+ * @return {Object} 返回执行结果
  */
 Drive.prototype.del_repeat = async function(db, query, body) {
 	var pm = Object.assign({}, query, body);
@@ -666,6 +725,7 @@ Drive.prototype.del_repeat = async function(db, query, body) {
  * 执行模板操作
  * @param {Object} params 参数对象 (object) 包含query和body
  * @param {Object} db 数据管理器
+ * @return {Object} 返回执行结果
  */
 Drive.prototype.main = async function(params, db) {
 	var {

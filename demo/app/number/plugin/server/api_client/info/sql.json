@@ -3,14 +3,12 @@
 	"title": "",
 	"table": "number_info",
 	"key": "number_id",
-	"orderby_default": "`display` asc",
-	"field_obj": "`number_id`,`number`,`yid`,`tid`,`cityID`,`gid`,`sid`,`uid`,`huaFei`,`maiJia`,`daiLiJia`,`diJia`,`format`,`order`,`heYue`,`desc`,`activity`,`hot`,`collection`,`private`,`createTime`,`topTime`,`updateTime`,`group`,`diXiao`,`rid`,`kid`,`log`,`note`,`hide`,`score`,`average`",
-	"field_default": "`number_id`,`number`,`yid`,`tid`,`cityID`,`gid`,`sid`,`uid`,`huaFei`,`maiJia`,`daiLiJia`,`diJia`,`format`,`order`,`heYue`,`desc`,`activity`,`hot`,`collection`,`private`,`display`,`createTime`,`topTime`,`updateTime`,`group`,`diXiao`,`rid`,`kid`,`log`,`note`,`hide`,`score`,`average`",
+	"orderby_default": "`display` ASC, `average` ASC, `updateTime` DESC, `maiJia` ASC, `number` ASC",
+	"field_obj": "`number_id`,`private`,`heYue`,`hide`,`kid`,`yid`,`tid`,`cityID`,`gid`,`sid`,`uid`,`rid`,`average`,`score`,`huaFei`,`maiJia`,`daiLiJia`,`diJia`,`order`,`hot`,`collection`,`createTime`,`topTime`,`updateTime`,`number`,`format`,`activity`,`group`,`desc`,`diXiao`,`log`,`note`",
+	"field_default": "`number_id`,`cityID`,`sid`,`huaFei`,`maiJia`,`order`,`number`,`group`",
 	"method": "get",
 	"query": {
 		"number": "`number` like '%{0}%'",
-		"cityID_min": "`cityID` >= {0}",
-		"cityID_max": "`cityID` <= {0}",
 		"huaFei_min": "`huaFei` >= {0}",
 		"huaFei_max": "`huaFei` <= {0}",
 		"maiJia_min": "`maiJia` >= {0}",
@@ -64,7 +62,9 @@
 		"recommend": "`rid` in (select x.rid FROM mm_number_recommend as x WHERE x.title like '%{0}%')",
 		"no_rid": "`rid` != {0}"
 	},
-	"query_default": {},
+	"query_default": {
+		"order": "`order` < 3"
+	},
 	"update": {
 		"cityID_add": "`cityID` = `cityID` + {0}",
 		"huaFei_add": "`huaFei` = `huaFei` + {0}",
