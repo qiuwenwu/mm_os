@@ -68,7 +68,7 @@ article::before,article::after{content:"";display:block; clear: both;}
 form::before,form::after{content:"";display:block; clear: both;}
 code { font-size: 1rem; padding: .5rem; }
 aside {position:relative;display: block; margin: auto;}
-table{background-color:#FFF;border:1px solid #dee2e6;border-collapse:collapse;width:100%; border-radius:0.25rem;}
+table{background-color:#FFF;border:1px solid #dee2e6;border-collapse:collapse;border-radius:0.25rem; width: 100%;}
 aside table { margin: 1rem; width: calc(100% - 2rem); }
 nav { white-space: nowrap; }
 
@@ -99,7 +99,7 @@ input:focus,select:focus,button:focus,textarea:focus{
 input[type=text],input[type=number],input[type=password],input[type=tel],input[type=email],input[type=date],input[type=datetime],input[type=time],input[type=datetime-local]
 {
 	height:2rem;line-height:2rem; border: 1px solid rgba(125,125,125,0.25); padding-left: 0.5rem; padding-right: 0.5rem; border-radius: .25rem;
-	min-width: 15rem;
+	min-width: 10rem;
 }
 input[type=number] { min-width: 4rem; }
 input[type=datetime-local] { min-width: initial; }
@@ -111,11 +111,12 @@ label~label {margin-left:1rem;}
 /* ===  列表类  === */
 caption{caption-side:bottom;padding-bottom:.5rem;padding-top:.5rem;text-align:left;}
 th{border:1px solid rgba(125,125,125,0.25);padding:0.5rem .75rem;text-align:inherit;}
+thead th>span{line-height: 2rem;}
 thead th{border-bottom:2px solid rgba(125,125,125,0.25);vertical-align:bottom;}
 tbody tr:hover { background-color: rgba(0,0,0,.075) !important; }
-td{border:1px solid rgba(125,125,125,0.25);padding:.5rem .75rem;}
-dt{display:block;clear:left;float:left;font-weight:400;line-height: 2rem; padding:.5rem; min-width: 6rem; }
-dt>span, dd>span{ line-height: 2rem;  }
+td{border:1px solid rgba(125,125,125,0.25);padding:.5rem .75rem;white-space:nowrap;}
+dt{display:block;clear:left;float:left;font-weight:400;padding:.5rem; min-width: 6rem; }
+dt>span, dd>span{ line-height: 2rem; }
 dd{display:block;padding:.5rem .75rem;float: left;}
 li{ position: relative; }
 ul{display: block; }

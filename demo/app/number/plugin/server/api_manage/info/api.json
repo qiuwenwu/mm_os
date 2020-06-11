@@ -1,6 +1,6 @@
 {
     "name": "number_info2",
-    "title": "",
+    "title": "号码信息",
     "description": "",
     "path": "/apis/number/info",
     "method": "ALL",

@@ -71,7 +71,7 @@
 .b-rt {border-top-right-radius:0.25rem !important;overflow:hidden;}
 
 /* ===  格子  === */
-.mm_col,[class*=mm_col_] {display:block;float:left;}
+.mm_col,[class*=mm_col_] {display:block;float:left;overflow: hidden;}
 .mm_col_10 {width:10% !important;flex-basis:10% !important;}
 .mm_col_20 {width:20% !important;flex-basis:20% !important;}
 .mm_col_25 {width:25% !important;flex-basis:25% !important;}
@@ -121,7 +121,7 @@
 .mm_group span,.mm_group .title {flex:inherit;height:2rem;line-height:2rem;padding-left:1rem;padding-right:1rem;background-color:#f9f9f9;border:1px solid rgba(125,125,125,0.25);font-size:0.75rem;text-align:center;}
 
 footer .mm_group,footer [class*=mm_group_] {margin-top:-1px;}
-
+[class*=mm_table_] { width: 100%; overflow-x: scroll; }
 
 /* ===  列表  === */
 .list-x>* {margin-top:-1px;margin-left:-1px;border:1px solid #DBDBDB;}

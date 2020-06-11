@@ -56,6 +56,7 @@
 				url_submit: "/apis/sys/address_area?",
 				url_get_obj: "/apis/sys/address_area",
 				field: "area_id",
+				list_group: [],
 				query: {
 					"area_id": 0
 				},
@@ -63,30 +64,69 @@
 			}
 		},
 		methods: {
-
+			get_group() {
+				var _this = this;
+				this.$get('~/apis/user/group?', null, function(json) {
+					if (json.result) {
+						_this.list_group.clear();
+						_this.list_group.addList(json.result.list)
+					}
+				});
+			}
+		},
+		created() {
+			this.get_group();
 		}
 	}
 </script>
 
 <style>
 	/* 页面 */
-	#sys_address_area_form {}
+	#$ {
+		id
+	}
+
+		{}
 
 	/* 表单 */
-	#sys_address_area_form .mm_form {}
+	#$ {
+		id
+	}
+
+	.mm_form {}
 
 	/* 筛选栏栏 */
-	#sys_address_area_form .mm_filter {}
+	#$ {
+		id
+	}
+
+	.mm_filter {}
 
 	/* 操作栏 */
-	#sys_address_area_form .mm_action {}
+	#$ {
+		id
+	}
+
+	.mm_action {}
 
 	/* 模态窗 */
-	#sys_address_area_form .mm_modal {}
+	#$ {
+		id
+	}
+
+	.mm_modal {}
 
 	/* 表格 */
-	#sys_address_area_form .mm_table {}
+	#$ {
+		id
+	}
+
+	.mm_table {}
 
 	/* 数据统计 */
-	#sys_address_area_form .mm_data_count {}
+	#$ {
+		id
+	}
+
+	.mm_data_count {}
 </style>

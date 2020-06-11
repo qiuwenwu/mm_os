@@ -1,6 +1,6 @@
 {
 	"name": "mm_os",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "这是超级美眉web、websocket函数式编程服务端框架。",
 	"main": "index.js",
 	"scripts": {
@@ -58,7 +58,7 @@
 		"mm_session": "^1.3.5",
 		"mm_statics": "^1.3.7",
 		"mm_timer": "^1.3.2",
-		"mm_tpl": "^2.0.4",
+		"mm_tpl": "^2.0.6",
 		"mm_xml": "^1.0.6",
 		"njwt": "^1.0.0"
 	}

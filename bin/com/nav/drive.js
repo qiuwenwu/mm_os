@@ -1,7 +1,14 @@
 const fs = require('fs');
 const Item = require('mm_machine').Item;
-const tpl = new $.Tpl('nav_tpl');
+const ViewModel = require('./viewmodel.js');
+
+const tpl = new $.Tpl({
+	extname: ".vue",
+	cache_extname: '.cache.vue'
+});
 tpl.dir = __dirname;
+
+const viewModel = new ViewModel();
 
 /**
  * Catch抓包驱动类
@@ -234,8 +241,6 @@ Drive.prototype.new_routes = function(app, plugin, name, group, oauth) {
  * @param {String} file
  */
 Drive.prototype.new_config = function(file) {
-	// var fl = this.dir_base + "/config.tpl.json";
-	// fl.copyFile(file);
 	var cg = this.config;
 	var plugin = (file + '').right('plugin' + $.slash).left($.slash, true);
 	var dir = (file + '').left(plugin) + "server" + $.slash;
@@ -359,6 +364,7 @@ Drive.prototype.get_api = function(app, route) {
 		component
 	} = route;
 	var scope = app;
+
 	var api_route = "";
 	var p = path.replace('_table', '').replace('_list', '').replace('_view', '').replace('_form', '');
 	if (component.indexOf('/admin') !== -1) {
@@ -369,7 +375,10 @@ Drive.prototype.get_api = function(app, route) {
 		api_route = "/api" + p
 	}
 	var api = $.pool.api[scope];
-	// $.log.debug('api', scope, api);
+	if(!api){
+		scope = scope.replace(app + '_', '');
+		api = $.pool.api[scope];
+	}
 	if (!api) {
 		return null;
 	}
@@ -399,7 +408,7 @@ Drive.prototype.get_api = function(app, route) {
  * @param {String} file 文件保存路径
  * @param {Object} route 路由配置
  */
-Drive.prototype.create_vue = function(file, route) {
+Drive.prototype.create_vue = async function(file, route) {
 	var l = $.slash;
 	var arr = file.split(l);
 	var name = arr[arr.length - 1].replace('.vue', '');
@@ -407,8 +416,8 @@ Drive.prototype.create_vue = function(file, route) {
 	var plugin = "";
 	var app = "";
 	if (arr.length > 5) {
-		plugin = arr[5];
-		app = arr[3];
+		plugin = arr[6];
+		app = arr[4];
 		f += plugin + '/';
 	} else if (file.indexOf('mobile' + l) !== -1) {
 		f += "mobile/";
@@ -440,6 +449,7 @@ Drive.prototype.create_vue = function(file, route) {
 		name: name,
 		app,
 		plugin,
+		file,
 		group: arr[arr.length - 2],
 		nav_config: this.config,
 		route,
@@ -447,15 +457,14 @@ Drive.prototype.create_vue = function(file, route) {
 		param: {},
 		sql: {}
 	};
-	$.push(model, this.get_api(app, route), true)
-	// $.log.debug(file, route);
-	$.log.debug('更新vue文件：', model.name);
-	// $.log.debug('路径', f, route, model);
-
-	console.log(model.sql.key);
-	var vue = tpl.view(f, model);
-	// $.log.debug(f, f.hasFile());
-	file.saveText(vue);
+	$.log.debug('更新vue文件：', file);
+	var m = Object.assign(model, this.get_api(app, route));
+	var vm = await viewModel.run(m);
+	var vue = tpl.view(f, vm);
+	if(vue)
+	{
+		file.saveText(vue);
+	}
 };
 
 /**
@@ -502,7 +511,7 @@ Drive.prototype.update_vue = async function(route_path, cover) {
 				var file = f.replace(p, dir).fullname();
 				if (cover || !file.hasFile()) {
 					this.mkdir(file);
-					this.create_vue(file, o);
+					await this.create_vue(file, o);
 				}
 			}
 		}
@@ -514,7 +523,7 @@ Drive.prototype.update_vue = async function(route_path, cover) {
 				var file = f.replace(p, dir).fullname();
 				if (cover || !file.hasFile()) {
 					this.mkdir(file);
-					this.create_vue(file, o);
+					await this.create_vue(file, o);
 				}
 			}
 		}

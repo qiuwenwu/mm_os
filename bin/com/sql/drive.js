@@ -360,7 +360,7 @@ Drive.prototype.set = async function(db, query, body) {
 /**
  * 添加(主要)
  * @param {Object} db 数据库操作类
- * @param {Object} body 修改项
+ * @param {Object} body 添加项
  * @return {Object} 返回查询结果
  */
 Drive.prototype.add_main = async function(db, body) {

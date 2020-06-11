@@ -5,11 +5,6 @@ define(["Vue", "VueRouter", "mm_sdk", "nav"], function(Vue, VueRouter, mm_sdk, n
 	var routePath = "/admin";
 	var filePath = "/admin";
 	var routes = [{
-		path: "/",
-		component: function component(resolve) {
-			return require(["vue!./pages/index.vue"], resolve);
-		}
-	}, {
 		path: "/not_power",
 		component: function component(resolve) {
 			return require(["vue!./pages/not_power.vue"], resolve);

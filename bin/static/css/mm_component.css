@@ -58,9 +58,8 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appea
 
 /* 筛选面板 */
 .mm_filter {display:flex;}
-.mm_filter>h5 {float:left;flex:1;position:relative;border-right:2px solid #DBDBDB;background:#f3f9ff;}
+.mm_filter>h5 {float:left;flex:1;position:relative;border-right:2px solid #DBDBDB;background:#f3f9ff; width: 7rem;}
 .mm_filter>h5>span {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;}
-.mm_filter>* {flex:10;}
 
 
 /* 视图块主体 */
@@ -134,11 +133,12 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appea
 .click .mm_box {right:initial;min-width:5.25rem;}
 
 /* 反转器 */
-.mm_reverse .figure {height:2rem;width:1rem;position:relative;padding-top:.25rem;}
+.mm_reverse {display: flex;}
+.mm_reverse .figure {height:2rem;width:1rem;position:relative;padding-top:.125rem;}
 .mm_input .title,.mm_checkbox .title,.mm_radio .title,.mm_select .title,.mm_number .title,.mm_slider .title,.mm_switch .title,.mm_reverse .title {float:left;padding-left:1rem;padding-right:.5rem;min-width:6.5rem;line-height:2rem;}
 .mm_checkbox .figure {position:relative;top:3px;display:inline-block;overflow:hidden;width:1.125rem;height:1.125rem;border:1px solid #38f;border-radius:50%;}
 table .mm_reverse .figure {float:right;}
-table .mm_reverse .title {min-width:initial;padding-left:0;width:calc(100% - 1rem);}
+table .mm_reverse .title {min-width:initial;padding-left:0;float: left; white-space: nowrap;}
 .mm_reverse .value {overflow:hidden;}
 .mm_reverse .up,.mm_reverse .down {margin:auto;margin:.2rem auto;display:block;}
 .mm_reverse .up::before {content:"";display:block;margin:auto;width:0;height:0;border-left:.25rem solid transparent;border-right:.25rem solid transparent;border-bottom:.5rem solid #E5E5E5;}

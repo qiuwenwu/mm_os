@@ -1,11 +1,11 @@
 {
     "name": "number_info2",
-    "title": "",
+    "title": "号码信息",
     "table": "number_info",
     "key": "number_id",
     "orderby_default": "`number_id` desc",
     "field_obj": "`number_id`,`private`,`heYue`,`hide`,`kid`,`yid`,`tid`,`cityID`,`gid`,`sid`,`uid`,`rid`,`average`,`score`,`huaFei`,`maiJia`,`daiLiJia`,`diJia`,`order`,`hot`,`collection`,`createTime`,`topTime`,`updateTime`,`number`,`format`,`activity`,`group`,`desc`,`diXiao`,`log`,`note`",
-    "field_default": "`number_id`,`private`,`heYue`,`hide`,`kid`,`yid`,`tid`,`cityID`,`gid`,`sid`,`uid`,`rid`,`average`,`score`,`huaFei`,`maiJia`,`daiLiJia`,`diJia`,`order`,`hot`,`collection`,`display`,`createTime`,`topTime`,`updateTime`,`number`,`format`,`activity`,`group`,`desc`,`diXiao`,`log`,`note`",
+    "field_default": "`number_id`,`private`,`heYue`,`hide`,`kid`,`yid`,`tid`,`cityID`,`gid`,`sid`,`uid`,`rid`,`average`,`score`,`huaFei`,`maiJia`,`daiLiJia`,`diJia`,`order`,`hot`,`collection`,`display`,`createTime`,`topTime`,`updateTime`,`number`,`format`,`activity`,`group`,`desc`,`diXiao`",
     "query": {
         "number": "`number` like '%{0}%'",
         "huaFei_min": "`huaFei` >= {0}",
@@ -19,7 +19,6 @@
         "format": "`format` like '%{0}%'",
         "order_min": "`order` >= {0}",
         "order_max": "`order` <= {0}",
-        "desc": "`desc` like '%{0}%'",
         "activity": "`activity` like '%{0}%'",
         "hot_min": "`hot` >= {0}",
         "hot_max": "`hot` <= {0}",
@@ -59,7 +58,10 @@
         "gongHuoShang": "`gid` in (select x.uid FROM mm_user as x WHERE x.name like '%{0}%')",
         "dateDiff": "DATEDIFF(`updateTime`, NOW()) = {0}",
         "recommend": "`rid` in (select x.rid FROM mm_number_recommend as x WHERE x.title like '%{0}%')",
-        "no_rid": "`rid` != {0}"
+        "no_rid": "`rid` != {0}",
+        "cityID_min": "`cityID` >= {0}",
+        "cityID_max": "`cityID` <= {0}",
+        "desc": "`desc` like '%{0}%'"
     },
     "update": {
         "cityID_add": "`cityID` = `cityID` + {0}",
@@ -74,5 +76,71 @@
         "score_add": "`score` = `score` + {0}",
         "average_add": "`average` = `average` + {0}"
     },
-    "field_hide": []
+    "field_hide": [],
+    "format": [
+        {
+            "key": "private",
+            "title": "是否私有",
+            "list": [
+                "否",
+                "是"
+            ]
+        },
+        {
+            "key": "heYue",
+            "title": "是否合约号",
+            "list": [
+                "否",
+                "是"
+            ]
+        },
+        {
+            "key": "hide",
+            "title": "是否隐藏",
+            "list": [
+                "否",
+                "是"
+            ]
+        },
+        {
+            "key": "kid",
+            "title": "号码种类",
+            "list": [
+                "",
+                "手机号码",
+                "固定电话号码",
+                "企业电话号码",
+                "QQ号码",
+                "车牌号码"
+            ]
+        },
+        {
+            "key": "sid",
+            "title": "制式",
+            "list": [
+                "",
+                "移动",
+                "联通",
+                "电信"
+            ]
+        },
+        {
+            "key": "uid",
+            "title": "处理人",
+            "table": "user_account",
+            "name": "name"
+        },
+        {
+            "key": "order",
+            "title": "订单状态",
+            "list": [
+                "",
+                "待售中",
+                "已预约",
+                "已售出",
+                "已下架",
+                "已删除"
+            ]
+        }
+    ]
 }

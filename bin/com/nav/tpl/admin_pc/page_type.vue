@@ -14,10 +14,10 @@
 									<mm_input v-model="query.keyword" title="关键词" desc="用户名 / 手机号 / 邮箱 / 姓名" @blur="search()" />
 								</mm_col>
 								<mm_col width="25">
-									<mm_select v-model="query.user_group" title="用户组" :options="$to_kv(user_group, 'group_id')" @change="search()" />
+									<mm_select v-model="query.group" title="用户组" :options="$to_kv(list_group, 'group_id')" @change="search()" />
 								</mm_col>
 								<mm_col width="25">
-									<mm_select v-model="query.state" title="状态" :options="$to_kv(states)" @change="search()" />
+									<mm_select v-model="query.state" title="状态" :options="$to_kv(arr_state)" @change="search()" />
 								</mm_col>
 							</mm_list>
 						</mm_form>
@@ -40,7 +40,7 @@
 										<mm_reverse title="昵称" v-model="query.orderby" field="nickname" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_name">
-										<mm_reverse title="用户组" v-model="query.orderby" field="user_group" :func="search"></mm_reverse>
+										<mm_reverse title="用户组" v-model="query.orderby" field="group" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_phone">
 										<mm_reverse title="手机" v-model="query.orderby" field="phone" :func="search"></mm_reverse>
@@ -60,10 +60,10 @@
 									<th scope="row">{{ o[field] }}</th>
 									<td><span class="name">{{ o.username }}</span></td>
 									<td><span class="name">{{ o.nickname }}</span></td>
-									<td><span class="name">{{ get_name(user_group, o.user_group, 'group_id') }}</span></td>
+									<td><span class="name">{{ get_name(group, o.group, 'group_id') }}</span></td>
 									<td><span class="time">{{ o.phone }}</span></td>
 									<td><span class="email">{{ o.email }}</span></td>
-									<td><span class="state" v-bind:class="colors[o.state]">{{ states[o.state] }}</span></td>
+									<td><span class="state" v-bind:class="arr_color[o.state]">{{ arr_state[o.state] }}</span></td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./${name}_form?${sql.key}=' + o[field]">修改</mm_btn>
 										<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
@@ -73,7 +73,7 @@
 						</mm_table>
 					</mm_body>
 					<footer>
-						<mm_grid col="4" class="mm_data_count">
+						<mm_grid class="mm_data_count">
 							<mm_col>
 								<mm_select v-model="query.size" :options="$to_size()" @change="search()" />
 							</mm_col>
@@ -108,7 +108,7 @@
 						</dd>
 						<dt>状态</dt>
 						<dd>
-							<mm_select v-model="form.state" :options="$to_kv(states)" />
+							<mm_select v-model="form.state" :options="$to_kv(arr_state)" />
 						</dd>
 					</dl>
 				</mm_body>
@@ -138,7 +138,7 @@
 				query_set: {
 					"${sql.key}": ""
 				},
-				user_group: [],
+				list_group: [],
 				// 查询条件
 				query: {
 					// 排序
@@ -152,21 +152,25 @@
 				},
 				form: {},
 				// 状态
-				states: ['', '正常', '异常', '已冻结', '已注销'],
-				colors: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
+				arr_state: ['', '正常', '异常', '已冻结', '已注销'],
+				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
 				// 视图模型
 				vm: {}
 			}
 		},
-		methods: {},
+		methods: {
+			get_group(){
+				var _this = this;
+				this.$get('~/apis/user/group?', null, function(json) {
+					if (json.result) {
+						_this.list_group.clear();
+						_this.list_group.addList(json.result.list)
+					}
+				});
+			}
+		},
 		created() {
-			var _this = this;
-			this.$get('~/apis/user/group?', null, function(json) {
-				if (json.result) {
-					_this.user_group.clear();
-					_this.user_group.addList(json.result.list)
-				}
-			});
+			this.get_group();
 		}
 	}
 </script>

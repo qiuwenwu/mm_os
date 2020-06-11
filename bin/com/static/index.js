@@ -94,7 +94,7 @@ Static.prototype.getObj = function(dir) {
 	var obj = {
 		app: app,
 		plugin: plugin,
-		root: d.substring(0, d.length - 1),
+		root: d.substring(0, d.length - 1).fullname(),
 		path: path
 	};
 	return new Drive(dir, obj);

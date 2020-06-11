@@ -2163,7 +2163,16 @@ if (typeof($) === "undefined") {
 		 * @param {Number} longTime 保存时长（单位:分钟）
 		 */
 		set: function(key, value, longTime) {
-			window.localStorage.setItem(key, value);
+			var expires = null;
+			if(longTime){
+				var time = Date.now();
+				expires = time + longTime * 60000;
+			}
+			var data = {
+				value,
+				expires
+			};
+			window.localStorage.setItem(key, JSON.stringify(data));
 		},
 		/**
 		 * 获取值
@@ -2171,7 +2180,34 @@ if (typeof($) === "undefined") {
 		 * @return {Object} 值
 		 */
 		get: function(key) {
-			return window.localStorage.getItem(key);
+			var value;
+			var text = window.localStorage.getItem(key);
+			if (text && text.indexOf('{') === 0) {
+				try {
+					var data = JSON.parse(text);
+					if (data) {
+						if (data.expires) {
+							var time = new Date(data.expires);
+							if(time > Date.now()){
+								value = data.value;
+							}
+							else {
+								window.localStorage.removeItem(key);
+							}
+						}
+						else {
+							value = data.value;
+						}
+					}
+				} catch (e) {
+					console.log(e);
+					value = text;
+				}
+			}
+			else {
+				value = text;
+			}
+			return value;
 		},
 		/**
 		 * 删除值
@@ -2698,7 +2734,7 @@ if (typeof($) === "undefined") {
 		return ret;
 	};
 	$.get = get;
-	
+
 	/**
 	 * 遍历读写对象
 	 * @param {Object} obj
@@ -2706,8 +2742,7 @@ if (typeof($) === "undefined") {
 	 * @param {Object} value 值，如果不传为查询，传为修改
 	 */
 	function obj_for(obj, key, value) {
-		if(!key)
-		{
+		if (!key) {
 			return undefined;
 		}
 		var keys = key.split('.');
@@ -2717,12 +2752,11 @@ if (typeof($) === "undefined") {
 		}
 		var k = keys[0];
 		var o = obj[k];
-		if(len == 1 && value !== undefined){
+		if (len == 1 && value !== undefined) {
 			obj[k] = value;
 			o = value;
-		}
-		else if (typeof(o) == 'object') {
-			if(len > 1){
+		} else if (typeof(o) == 'object') {
+			if (len > 1) {
 				return obj_for(o, keys.splice(1, len).join('.'), value);
 			}
 		} else if (len > 1) {
@@ -2730,21 +2764,19 @@ if (typeof($) === "undefined") {
 		}
 		return o;
 	}
-	
+
 	$.obj = obj_for;
 })();
 
 /**
  * 跨站校验
  */
-function ifame_check(){
+function ifame_check() {
 	var domain = document.domain;
 	var _self = Object.assign({}, window.self.location);
 	try {
 		var host = window.top.location.host;
-	}
-	catch(e)
-	{
+	} catch (e) {
 		console.log('跨域嵌套ifame');
 		window.location.href = "/404.html";
 	}

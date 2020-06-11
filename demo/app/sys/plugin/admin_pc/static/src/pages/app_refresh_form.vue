@@ -7,25 +7,29 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}应用刷新</h5>
 					</header>
 					<dl>
-						<dt>应用ID</dt>
+						<dt>头像</dt>
 						<dd>
-							<mm_input type="text" v-model="form.appid"></mm_input>
+							<mm_upload_img width="10rem" height="10rem" name="avatar" type="text" v-model="form.avatar"></mm_upload_img>
 						</dd>
-						<dt>刷新令牌</dt>
+						<dt>昵称</dt>
 						<dd>
-							<mm_input type="text" v-model="form.refresh_token"></mm_input>
+							<mm_input type="text" v-model="form.nickname" desc="由2-16个字符组成"></mm_input>
 						</dd>
-						<dt>用户ID</dt>
+						<dt>会员级别</dt>
 						<dd>
-							<mm_input type="text" v-model="form.user_id"></mm_input>
+							<mm_select v-model="form.vip" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
 						</dd>
-						<dt>创建时间</dt>
+						<dt>管理级别</dt>
 						<dd>
-							<mm_input type="text" v-model="form.time_create"></mm_input>
+							<mm_select v-model="form.gm" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
 						</dd>
-						<dt>更新时间</dt>
+						<dt>商户级别</dt>
 						<dd>
-							<mm_select v-model="form.time_update" ></mm_select>
+							<mm_select v-model="form.mc" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
+						</dd>
+						<dt>个性签名</dt>
+						<dd>
+							<textarea v-model="form.signature" placeholder="由2-16个字符组成"></textarea>
 						</dd>
 					</dl>
 					<footer>
@@ -52,6 +56,7 @@
 				url_submit: "/apis/sys/app_refresh?",
 				url_get_obj: "/apis/sys/app_refresh",
 				field: "refresh_id",
+				list_group: [],
 				query: {
 					"refresh_id": 0
 				},
@@ -59,30 +64,69 @@
 			}
 		},
 		methods: {
-
+			get_group() {
+				var _this = this;
+				this.$get('~/apis/user/group?', null, function(json) {
+					if (json.result) {
+						_this.list_group.clear();
+						_this.list_group.addList(json.result.list)
+					}
+				});
+			}
+		},
+		created() {
+			this.get_group();
 		}
 	}
 </script>
 
 <style>
 	/* 页面 */
-	#sys_app_refresh_form {}
+	#$ {
+		id
+	}
+
+		{}
 
 	/* 表单 */
-	#sys_app_refresh_form .mm_form {}
+	#$ {
+		id
+	}
+
+	.mm_form {}
 
 	/* 筛选栏栏 */
-	#sys_app_refresh_form .mm_filter {}
+	#$ {
+		id
+	}
+
+	.mm_filter {}
 
 	/* 操作栏 */
-	#sys_app_refresh_form .mm_action {}
+	#$ {
+		id
+	}
+
+	.mm_action {}
 
 	/* 模态窗 */
-	#sys_app_refresh_form .mm_modal {}
+	#$ {
+		id
+	}
+
+	.mm_modal {}
 
 	/* 表格 */
-	#sys_app_refresh_form .mm_table {}
+	#$ {
+		id
+	}
+
+	.mm_table {}
 
 	/* 数据统计 */
-	#sys_app_refresh_form .mm_data_count {}
+	#$ {
+		id
+	}
+
+	.mm_data_count {}
 </style>

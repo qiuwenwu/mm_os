@@ -1,10 +1,10 @@
 <template>
-	<main id="user_sns_form">
+	<main id="number_info_form">
 		<mm_grid>
 			<mm_col width="33">
 				<mm_form class="card">
 					<header class="arrow">
-						<h5>{{ form[field] ? '修改' : '创建' }}社交账户</h5>
+						<h5>{{ form[field] ? '修改' : '创建' }}号码信息</h5>
 					</header>
 					<dl>
 						<dt>头像</dt>
@@ -53,12 +53,12 @@
 		components: {},
 		data() {
 			return {
-				url_submit: "/apis/user/sns?",
-				url_get_obj: "/apis/user/sns",
-				field: "user_id",
+				url_submit: "/apis/number/info?",
+				url_get_obj: "/apis/number/info",
+				field: "number_id",
 				list_group: [],
 				query: {
-					"user_id": 0
+					"number_id": 0
 				},
 				form: {}
 			}

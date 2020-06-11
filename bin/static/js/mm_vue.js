@@ -58,29 +58,36 @@ define(["Vue"], function(Vue) {
 
 			/**
 			 * 转为键值
-			 * @param {Object} arr 
-			 * @param {String} key
-			 * @param {String} name
+			 * @param {Object} arr 数组
+			 * @param {String} key 键
+			 * @param {String} name 名称
 			 */
 			Vue.prototype.$to_kv = function(arr, key, name) {
 				var list = [];
-				if (key) {
-					list = [{ name: '', value: 0 }];
-					var n = name ? name : 'name';
-					for (var i = 0; i < arr.length; i++) {
-						var o = arr[i];
-						list.push({
-							name: o[n],
-							value: o[key]
-						});
-					}
-				} else {
-					for (var i = 0; i < arr.length; i++) {
-						var o = arr[i];
-						list.push({
-							name: o,
-							value: i
-						})
+				if(arr.length > 0){
+					if (key) {
+						if(arr[0].name !== ''){
+							list = [{ name: '', value: 0 }];
+						}
+						var n = name ? name : 'name';
+						for (var i = 0; i < arr.length; i++) {
+							var o = arr[i];
+							list.push({
+								name: o[n],
+								value: o[key]
+							});
+						}
+					} else {
+						if(arr[0] !== ''){
+							list = [{ name: '', value: '' }];
+						}
+						for (var i = 0; i < arr.length; i++) {
+							var o = arr[i];
+							list.push({
+								name: o,
+								value: i
+							})
+						}
 					}
 				}
 				return list;
@@ -146,14 +153,13 @@ define(["Vue"], function(Vue) {
 			 */
 			Vue.prototype.$get = function(url, query, func) {
 				var token = $.db.get("token");
-				// console.log('访问牌', token);
 				var queryStr = query ? $.toUrl(query) : "";
 				var _this = this;
 				$.http.get(url.replace("~/", host) + queryStr, function(json, status) {
 					if (json.error) {
 						var msg = json.error.message;
 						if (msg.indexOf('未登录') !== -1 || msg.indexOf('非法') !== -1) {
-							$.db.set("token", "");
+							$.db.set("token", "", 120);
 							_this.$router.push('/sign_in');
 						} else if (msg.indexOf('没有') !== -1) {
 							_this.$router.push('/not_power');

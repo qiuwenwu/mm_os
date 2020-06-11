@@ -93,14 +93,14 @@ Drive.prototype.model = function(fields) {
 	var min = 0;
 	var max = 0;
 
-	var note = note.replace("：", ":");
+	var note = note.replace("：", ":").replace('（', '(').replace('）',')');
 	var title = note.left(":", true).trim();
 	var desc = note.right(":");
 	var description = "";
-
+	var map = "";
 	if (desc) {
 		// 获取主要注释
-		description = desc.right(']', true).trim();
+		description = desc.right(']', true).left('(', true).trim();
 		var range = desc.between("[", "]");
 		if (range) {
 			// 取最小值
@@ -125,6 +125,7 @@ Drive.prototype.model = function(fields) {
 				}
 			}
 		}
+		map = desc.between("(", ")");
 	}
 	if (min === 0 && name.indexOf('_id') !== -1) {
 		min = 1;
@@ -201,6 +202,8 @@ Drive.prototype.model = function(fields) {
 		"decimal": decimal,
 		// 默认值
 		"default": dflt_value,
+		// 转换编排
+		"map": map,
 		// 联表入，唯一主键在其他表中，然后关联到该表
 		"join_in": [],
 		// 联表出，唯一主键在该表中，然后关联其他表
@@ -209,18 +212,6 @@ Drive.prototype.model = function(fields) {
 		"position": []
 	};
 };
-
-/*
-{
-  name: 'nickname',
-  cid: 10,
-  dflt_value: null,
-  notnull: true,
-  type: 'varchar(16)',
-  pk: false,
-  note: ''
-}
-*/
 
 /**
  * 从数据库更新配置
@@ -389,7 +380,9 @@ Drive.prototype.update_db = async function(db) {
 				}
 			}
 			note += o.description;
-
+			if(o.map){
+				note += '(' + o.map + ')'
+			}
 			var sql = "`{1}` {2} {3} {4} COMMENT '{5}'";
 			sql = sql.replace('{1}', o.name).replace('{2}', type).replace('{3}', notnull).replace('{4}', value).replace('{5}',
 				note);
@@ -554,6 +547,40 @@ Drive.prototype.new_event = async function(dir, path, scope) {
 };
 
 /**
+ * 获取格式
+ * @param {Object} obj
+ * @return {Object} 返回格式
+ */
+Drive.prototype.get_format = async function(obj){
+	var map = obj.map;
+	var format = {
+		key: obj.name.replace('ID', 'id').replace('_id', ''),
+		title: obj.title.replace('ID', '').replace('id', '')
+	};
+	if(map.indexOf('|') !== -1){
+		var list = map.split('|');
+		if(map.indexOf('0') !== 0){
+			list.unshift('');
+		}
+		format.list = list.map((value) => {
+			return value.replace(/[0-9]+/, '')
+		})
+	}
+	else {
+		if(map.indexOf('.') !== -1){
+			var arr = obj.map.split('.');
+			format.table = arr[0];
+			format.name = arr[1];
+		}
+		else {
+			format.table = obj.map;
+			format.name = 'name';
+		}
+	}
+	return format;
+};
+
+/**
  * 新建sql配置文件
  * @param {String} client 客户端配置保存路径
  * @param {String} manage 管理端配置保存路径
@@ -568,6 +595,7 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 	var field = "";
 	var field_obj = "";
 	var query_default = {};
+	var format = [];
 	var orderby = "";
 	var id = $.dict.user_id;
 	// 设置sql模板
@@ -577,7 +605,7 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 		var o = lt[i];
 		var p = o.type;
 		var n = o.name;
-		if (this.isCan(n, this.get_not)) {
+		if (this.isCan(n, this.get_not, p)) {
 			field += ",`" + n + "`";
 		}
 		if (this.isCan(n, this.getObj_not)) {
@@ -605,6 +633,12 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 				query_default[n] = "`" + n + "` = {" + id + "}";
 			}
 		}
+		if(o.map){
+			var fmt = await this.get_format(o);
+			if(fmt){
+				format.push(fmt);
+			}
+		}
 	}
 
 	if (keyword) {
@@ -621,9 +655,10 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 		field_obj: field_obj.replace(',', ''),
 		field_default: field.replace(',', ''),
 		method: 'get',
-		query: query,
-		query_default: query_default,
-		update: update
+		query,
+		query_default,
+		update,
+		format
 	};
 	if (client) {
 		var oj = Object.assign({}, m);
@@ -724,7 +759,7 @@ Drive.prototype.new_param = async function(client, manage, cover) {
 			// 参数介绍名
 			"title": o.title,
 			// 参数做用描述
-			"description": o.description,
+			"description": o.description + (o.map ? '(' + o.map + ')' : ''),
 			// 是否主键
 			"key": o.pk,
 			// 参数类型 string字符串、number数字、bool布尔、dateTime时间、object对象类型、array数组类型
@@ -923,8 +958,13 @@ Drive.prototype.isSet = function(name, arr) {
  * 是否排除
  * @param {String} name 名称
  * @param {Array} arr 匹配的对象
+ * @param {String} type 数据类型
+ * @return {Boolean} 是否可以
  */
-Drive.prototype.isCan = function(name, arr) {
+Drive.prototype.isCan = function(name, arr, type) {
+	if(type === 'text'){
+		return false;
+	}
 	var bl = false;
 	for (var i = 0; i < arr.length; i++) {
 		if (name.indexOf(arr[i]) !== -1) {

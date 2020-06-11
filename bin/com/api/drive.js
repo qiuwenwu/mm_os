@@ -355,7 +355,6 @@ Drive.prototype.getCache = async function(ctx) {
 		userID = id;
 	}
 	var data = await $.cache.get("api_" + userID + ":" + req.url);
-	// var data = await $.cache.get("api:" + req.url);
 	if (data) {
 		var obj = JSON.parse(data);
 		ctx.response.type = obj.type;
@@ -373,8 +372,8 @@ Drive.prototype.getCache = async function(ctx) {
 Drive.prototype.setCache = async function(ctx, body) {
 	var cg = this.config;
 	if (cg.cache && ctx.method === 'GET') {
-		ctx.set('Cache-Control', 'max-age=' + cg.cache);
 		if (cg.client_cache) {
+			ctx.set('Cache-Control', 'max-age=' + cg.cache);
 			ctx.etag = Date.parse(new Date()) / 1000 + cg.cache;
 			return " ";
 		} else {

@@ -56,6 +56,7 @@
 				url_submit: "${api.path}?",
 				url_get_obj: "${api.path}",
 				field: "${sql.key}",
+				list_group: [],
 				query: {
 					"${sql.key}": 0
 				},
@@ -63,30 +64,69 @@
 			}
 		},
 		methods: {
-
+			get_group() {
+				var _this = this;
+				this.$get('~/apis/user/group?', null, function(json) {
+					if (json.result) {
+						_this.list_group.clear();
+						_this.list_group.addList(json.result.list)
+					}
+				});
+			}
+		},
+		created() {
+			this.get_group();
 		}
 	}
 </script>
 
 <style>
 	/* 页面 */
-	#${id} {}
+	#$ {
+		id
+	}
+
+		{}
 
 	/* 表单 */
-	#${id} .mm_form {}
+	#$ {
+		id
+	}
+
+	.mm_form {}
 
 	/* 筛选栏栏 */
-	#${id} .mm_filter {}
+	#$ {
+		id
+	}
+
+	.mm_filter {}
 
 	/* 操作栏 */
-	#${id} .mm_action {}
+	#$ {
+		id
+	}
+
+	.mm_action {}
 
 	/* 模态窗 */
-	#${id} .mm_modal {}
+	#$ {
+		id
+	}
+
+	.mm_modal {}
 
 	/* 表格 */
-	#${id} .mm_table {}
+	#$ {
+		id
+	}
+
+	.mm_table {}
 
 	/* 数据统计 */
-	#${id} .mm_data_count {}
+	#$ {
+		id
+	}
+
+	.mm_data_count {}
 </style>

@@ -1778,7 +1778,7 @@ define(['jquery'], function(jquery) {
 		}
 	};
 	var mm_table = {
-		template: "<table :class=\"'mm_table_' + type\"><slot></slot></table>",
+		template: "<div :class=\"'mm_table_' + type\"><table><slot></slot></table></div>",
 		props: {
 			type: {
 				type: String,
@@ -2105,14 +2105,29 @@ define(['jquery'], function(jquery) {
 		mixins: [form_mixin],
 		methods: {
 			set: function set(e) {
-				var val = e.target.value;
-				this.$emit("input", val);
+				var value = e.target.value;
+				
+				if(value == 0){
+					var val = this.options[value];
+					if(!val || val.name == ''){
+						value = '';
+					}
+				}
+				
+				this.$emit("input", value);
 
-				if (this.value !== val) {
+				if (this.value !== value) {
 					this.$emit("change");
 				}
 			},
 			click_fun: function click_fun(value) {
+				if(value == 0){
+					var val = this.options[value];
+					if(!val || val.name == ''){
+						value = '';
+					}
+				}
+				
 				this.$emit("input", value);
 				this.func(value);
 			}

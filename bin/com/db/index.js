@@ -100,6 +100,9 @@ DB.prototype.update_config = async function(db, name, table, cover = true) {
 				}
 			}
 		}
+		else {
+			return "没有找到相关的数据表";
+		}
 	}
 	return null;
 };
