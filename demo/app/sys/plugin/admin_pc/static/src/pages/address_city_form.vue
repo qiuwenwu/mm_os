@@ -7,29 +7,13 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}城市</h5>
 					</header>
 					<dl>
-						<dt>头像</dt>
+						<dt>是否可见</dt>
 						<dd>
-							<mm_upload_img width="10rem" height="10rem" name="avatar" type="text" v-model="form.avatar"></mm_upload_img>
+							<mm_select v-model="form.show" :options="$to_kv(arr_show)" />
 						</dd>
-						<dt>昵称</dt>
+						<dt>所属省份</dt>
 						<dd>
-							<mm_input type="text" v-model="form.nickname" desc="由2-16个字符组成"></mm_input>
-						</dd>
-						<dt>会员级别</dt>
-						<dd>
-							<mm_select v-model="form.vip" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>管理级别</dt>
-						<dd>
-							<mm_select v-model="form.gm" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>商户级别</dt>
-						<dd>
-							<mm_select v-model="form.mc" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>个性签名</dt>
-						<dd>
-							<textarea v-model="form.signature" placeholder="由2-16个字符组成"></textarea>
+							<mm_select v-model="form.province_id" :options="$to_kv(list_address_province, 'province_id')" />
 						</dd>
 					</dl>
 					<footer>
@@ -56,26 +40,39 @@
 				url_submit: "/apis/sys/address_city?",
 				url_get_obj: "/apis/sys/address_city",
 				field: "city_id",
-				list_group: [],
 				query: {
 					"city_id": 0
 				},
-				form: {}
+				form: {
+						"city_id": 0,
+						"show": 0,
+						"province_id": 0,
+						"name": '',
+				},
+				//是否可见
+				'arr_show': ['否','是'],
+				//所属省份
+				'list_address_province': [],
 			}
 		},
 		methods: {
-			get_group() {
-				var _this = this;
-				this.$get('~/apis/user/group?', null, function(json) {
-					if (json.result) {
-						_this.list_group.clear();
-						_this.list_group.addList(json.result.list)
-					}
-				});
-			}
+				/**
+				 * 获取所属省份
+				 * @param {query} 查询条件
+				 */
+				get_address_province(query){
+					var _this = this;
+					this.$get('~/api/sys/address_province?size=0', query, function(json) {
+						if (json.result) {
+							_this.list_address_province.clear();
+							_this.list_address_province.addList(json.result.list)
+						}
+					});
+				},
 		},
 		created() {
-			this.get_group();
+			// 获取所属省份
+			this.get_address_province();
 		}
 	}
 </script>

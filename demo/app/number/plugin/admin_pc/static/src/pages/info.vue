@@ -29,7 +29,7 @@
 									<mm_select v-model="query.sid" title="制式" :options="$to_kv(arr_sid)" @change="search()" />
 								</mm_col>
 								<mm_col>
-									<mm_select v-model="query.uid" title="处理人ID" :options="$to_kv(list_account, 'uid')" @change="search()" />
+									<mm_select v-model="query.uid" title="处理人" :options="$to_kv(list_account, 'uid')" @change="search()" />
 								</mm_col>
 								<mm_col>
 									<mm_select v-model="query.order" title="订单状态" :options="$to_kv(arr_order)" @change="search()" />
@@ -79,7 +79,7 @@
 										<mm_reverse title="制式" v-model="query.orderby" field="sid" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_mediumint">
-										<mm_reverse title="处理人ID" v-model="query.orderby" field="uid" :func="search"></mm_reverse>
+										<mm_reverse title="处理人" v-model="query.orderby" field="uid" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_mediumint">
 										<mm_reverse title="每日推荐ID" v-model="query.orderby" field="rid" :func="search"></mm_reverse>
@@ -111,9 +111,6 @@
 									<th scope="col" class="th_int">
 										<mm_reverse title="收藏" v-model="query.orderby" field="collection" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
-										<mm_reverse title="排序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
-									</th>
 									<th scope="col" class="th_datetime">
 										<mm_reverse title="创建时间" v-model="query.orderby" field="createTime" :func="search"></mm_reverse>
 									</th>
@@ -141,6 +138,12 @@
 									<th scope="col" class="th_varchar">
 										<mm_reverse title="最低消费" v-model="query.orderby" field="diXiao" :func="search"></mm_reverse>
 									</th>
+									<th scope="col" class="th_text">
+										<mm_reverse title="操作日志" v-model="query.orderby" field="log" :func="search"></mm_reverse>
+									</th>
+									<th scope="col" class="th_text">
+										<mm_reverse title="备注" v-model="query.orderby" field="note" :func="search"></mm_reverse>
+									</th>
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>
 							</thead>
@@ -157,7 +160,7 @@
 									<td><span class="th_mediumint">{{ o.cityID }}</span></td>
 									<td><span class="th_mediumint">{{ o.gid }}</span></td>
 									<td><span class="th_mediumint">{{arr_sid[o.sid] }}</span></td>
-									<td><span class="th_mediumint">{{ get_name(list_account, o.name, 'uid') }}</span></td>
+									<td><span class="th_mediumint">{{ get_name(list_account, o.uid, 'uid') }}</span></td>
 									<td><span class="th_mediumint">{{ o.rid }}</span></td>
 									<td><span class="th_int">{{ o.average }}</span></td>
 									<td><span class="th_int">{{ o.score }}</span></td>
@@ -168,7 +171,6 @@
 									<td><span class="th_int">{{arr_order[o.order] }}</span></td>
 									<td><span class="th_int">{{ o.hot }}</span></td>
 									<td><span class="th_int">{{ o.collection }}</span></td>
-									<td><span class="th_int">{{ o.display }}</span></td>
 									<td><span class="th_datetime">{{ $to_time(o.createTime, 'yyyy-MM-dd hh:mm') }}</span></td>
 									<td><span class="th_datetime">{{ $to_time(o.topTime, 'yyyy-MM-dd hh:mm') }}</span></td>
 									<td><span class="th_datetime">{{ $to_time(o.updateTime, 'yyyy-MM-dd hh:mm') }}</span></td>
@@ -178,6 +180,8 @@
 									<td><span class="th_varchar">{{ o.group }}</span></td>
 									<td><span class="th_varchar">{{ o.desc }}</span></td>
 									<td><span class="th_varchar">{{ o.diXiao }}</span></td>
+									<td><span class="th_text">{{ o.log }}</span></td>
+									<td><span class="th_text">{{ o.note }}</span></td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./info_form?number_id=' + o[field]">修改</mm_btn>
 										<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
@@ -234,7 +238,7 @@
 						<dd>
 							<mm_select v-model="form.sid" :options="$to_kv(arr_sid)" />
 						</dd>
-						<dt>处理人ID</dt>
+						<dt>处理人</dt>
 						<dd>
 							<mm_select v-model="form.uid" :options="$to_kv(list_account, 'uid')" />
 						</dd>
@@ -272,11 +276,9 @@
 				},
 				// 查询条件
 				query: {
-					// 排序
-					orderby: "",
-					// 页码
+					//页码
 					page: 1,
-					// 页面大小
+					//页面大小
 					size: 10,
 					//号码ID
 					'number_id': 0,
@@ -342,6 +344,8 @@
 					'updateTime_min': '',
 					//更新时间——结束时间
 					'updateTime_max': '',
+					//排序
+					orderby: ""
 				},
 				form: {},
 				//颜色
@@ -371,7 +375,7 @@
 			 */
 			get_account(query){
 				var _this = this;
-				this.$get('~/api/user/account?', query, function(json) {
+				this.$get('~/api/user/account?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_account.clear();
 						_this.list_account.addList(json.result.list)

@@ -7,30 +7,20 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}${api.title}</h5>
 					</header>
 					<dl>
-						<dt>头像</dt>
+						<!--{loop field v idx}-->
+							<!--{if(v.format)}-->
+						<dt>${v.title}</dt>
+								<!--{if(v.format.table)}-->
 						<dd>
-							<mm_upload_img width="10rem" height="10rem" name="avatar" type="text" v-model="form.avatar"></mm_upload_img>
+							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label}, '${v.format.key}')" />
 						</dd>
-						<dt>昵称</dt>
+								<!--{else}-->
 						<dd>
-							<mm_input type="text" v-model="form.nickname" desc="由2-16个字符组成"></mm_input>
+							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label})" />
 						</dd>
-						<dt>会员级别</dt>
-						<dd>
-							<mm_select v-model="form.vip" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>管理级别</dt>
-						<dd>
-							<mm_select v-model="form.gm" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>商户级别</dt>
-						<dd>
-							<mm_select v-model="form.mc" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>个性签名</dt>
-						<dd>
-							<textarea v-model="form.signature" placeholder="由2-16个字符组成"></textarea>
-						</dd>
+								<!--{/if}-->
+							<!--{/if}-->
+						<!--{/loop}-->
 					</dl>
 					<footer>
 						<div class="mm_group">
@@ -56,26 +46,50 @@
 				url_submit: "${api.path}?",
 				url_get_obj: "${api.path}",
 				field: "${sql.key}",
-				list_group: [],
 				query: {
 					"${sql.key}": 0
 				},
-				form: {}
+				form: {
+					/*[loop field v idx]*/
+						/*[if v.type === 'number']*/
+						"${v.name}": 0,
+						/*[else]*/
+						"${v.name}": '',
+						/*[/if]*/
+					/*[/loop]*/
+				},
+				/*[loop js.data v idx]*/
+				// ${ v.title}
+				'${v.name}': [/*[loop v.value a idx]*//*[if idx == 0]*/'${a}'/*[else]*/,'${a}'/*[/if]*//*[/loop]*/],
+				/*[/loop]*/
 			}
 		},
 		methods: {
-			get_group() {
-				var _this = this;
-				this.$get('~/apis/user/group?', null, function(json) {
-					if (json.result) {
-						_this.list_group.clear();
-						_this.list_group.addList(json.result.list)
-					}
-				});
-			}
+			/*[loop js.data v idx]*/
+				/*[if(v.path)]*/
+				/**
+				 * 获取 ${v.title}
+				 * @param {query} 查询条件
+				 */
+				get_/*[v.basename]*/(query){
+					var _this = this;
+					this.$get('~${v.path}', query, function(json) {
+						if (json.result) {
+							_this/*['.' + v.name]*/.clear();
+							_this/*['.' + v.name]*/.addList(json.result.list)
+						}
+					});
+				},
+				/*[/if]*/
+			/*[/loop]*/
 		},
 		created() {
-			this.get_group();
+			/*[loop js.data v idx]*/
+				/*[if(v.path)]*/
+			// 获取 ${v.title}
+			this.get_/*[v.basename]*/();
+				/*[/if]*/
+			/*[/loop]*/
 		}
 	}
 </script>

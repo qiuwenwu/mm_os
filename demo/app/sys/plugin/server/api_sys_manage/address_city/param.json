@@ -128,7 +128,7 @@
         {
             "name": "province_id",
             "title": "所属省份ID",
-            "description": "(sys_address_province)",
+            "description": "当前城市隶属省份(sys_address_province)",
             "type": "number",
             "dataType": "mediumint",
             "number": {

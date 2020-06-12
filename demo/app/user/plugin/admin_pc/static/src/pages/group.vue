@@ -31,9 +31,6 @@
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
 									<th scope="col" class="th_smallint">
-										<mm_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
-									</th>
-									<th scope="col" class="th_smallint">
 										<mm_reverse title="等级划分" v-model="query.orderby" field="level" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_mediumint">
@@ -67,7 +64,6 @@
 								<tr v-for="(o, idx) in list" :key="idx">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 									<th scope="row"><span>{{ o[field] }}</span></th>
-									<td><span class="th_smallint">{{ o.display }}</span></td>
 									<td><span class="th_smallint">{{ o.level }}</span></td>
 									<td><span class="th_mediumint">{{ o.next_group_id }}</span></td>
 									<td><span class="th_int">{{ o.exp }}</span></td>
@@ -143,11 +139,9 @@
 				},
 				// 查询条件
 				query: {
-					// 排序
-					orderby: "",
-					// 页码
+					//页码
 					page: 1,
-					// 页面大小
+					//页面大小
 					size: 10,
 					//用户组ID
 					'group_id': 0,
@@ -177,6 +171,8 @@
 					'description': '',
 					//关键词
 					'keyword': '',
+					//排序
+					orderby: ""
 				},
 				form: {},
 				//颜色

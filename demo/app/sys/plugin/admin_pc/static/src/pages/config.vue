@@ -31,10 +31,10 @@
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
 									<th scope="col" class="th_varchar">
-										<mm_reverse title="数据类型" v-model="query.orderby" field="type" :func="search"></mm_reverse>
+										<mm_reverse title="变量名" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_varchar">
-										<mm_reverse title="变量名" v-model="query.orderby" field="name" :func="search"></mm_reverse>
+										<mm_reverse title="数据类型" v-model="query.orderby" field="type" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_varchar">
 										<mm_reverse title="变量标题" v-model="query.orderby" field="title" :func="search"></mm_reverse>
@@ -55,8 +55,8 @@
 								<tr v-for="(o, idx) in list" :key="idx">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 									<th scope="row"><span>{{ o[field] }}</span></th>
-									<td><span class="th_varchar">{{ o.type }}</span></td>
 									<td><span class="th_varchar">{{ o.name }}</span></td>
+									<td><span class="th_varchar">{{ o.type }}</span></td>
 									<td><span class="th_varchar">{{ o.title }}</span></td>
 									<td><span class="th_varchar">{{ o.value }}</span></td>
 									<td><span class="th_varchar">{{ o.description }}</span></td>
@@ -127,11 +127,9 @@
 				},
 				// 查询条件
 				query: {
-					// 排序
-					orderby: "",
-					// 页码
+					//页码
 					page: 1,
-					// 页面大小
+					//页面大小
 					size: 10,
 					//配置ID
 					'config_id': 0,
@@ -143,6 +141,8 @@
 					'description': '',
 					//关键词
 					'keyword': '',
+					//排序
+					orderby: ""
 				},
 				form: {},
 				//颜色

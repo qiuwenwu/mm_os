@@ -18,5 +18,6 @@
         "show_add": "`show` = `show` + {0}",
         "display_add": "`display` = `display` + {0}"
     },
-    "field_hide": []
+    "field_hide": [],
+    "format": []
 }

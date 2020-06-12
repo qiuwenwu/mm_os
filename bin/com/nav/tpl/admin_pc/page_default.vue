@@ -60,7 +60,7 @@
 									<!--{loop field v idx}-->
 										<!--{if(v.format)}-->
 											<!--{if(v.format.table)}-->
-									<td><span class="th_${v.dataType}">{{ get_name(${v.label}, o.${v.format.name}, '${v.format.key}') }}</span></td>
+									<td><span class="th_${v.dataType}">{{ get_name(${v.label}, o.${v.format.key}, '${v.format.key}') }}</span></td>
 											<!--{else}-->
 									<td><span class="th_${v.dataType}">{{ ${v.label}[o.${v.name}] }}</span></td>
 											<!--{/if}-->
@@ -150,11 +150,9 @@
 				},
 				// 查询条件
 				query: {
-					// 排序
-					orderby: "",
-					// 页码
+					//页码
 					page: 1,
-					// 页面大小
+					//页面大小
 					size: 10,
 					/*[loop js.query v idx]*/
 					// ${ v.title}
@@ -164,6 +162,8 @@
 					'${v.name}': 0,
 						/*[/if]*/
 					/*[/loop]*/
+					//排序
+					orderby: ""
 				},
 				form: {},
 				//颜色

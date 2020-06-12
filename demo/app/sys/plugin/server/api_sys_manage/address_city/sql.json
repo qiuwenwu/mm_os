@@ -29,7 +29,7 @@
             ]
         },
         {
-            "key": "province",
+            "key": "province_id",
             "title": "所属省份",
             "table": "sys_address_province",
             "name": "name"

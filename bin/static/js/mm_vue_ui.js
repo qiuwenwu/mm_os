@@ -2106,28 +2106,12 @@ define(['jquery'], function(jquery) {
 		methods: {
 			set: function set(e) {
 				var value = e.target.value;
-				
-				if(value == 0){
-					var val = this.options[value];
-					if(!val || val.name == ''){
-						value = '';
-					}
-				}
-				
 				this.$emit("input", value);
-
 				if (this.value !== value) {
 					this.$emit("change");
 				}
 			},
 			click_fun: function click_fun(value) {
-				if(value == 0){
-					var val = this.options[value];
-					if(!val || val.name == ''){
-						value = '';
-					}
-				}
-				
 				this.$emit("input", value);
 				this.func(value);
 			}
@@ -2318,7 +2302,6 @@ define(['jquery'], function(jquery) {
 			Vue.component("mm_select", mm_select);
 			Vue.component("mm_switch", mm_switch);
 			Vue.component("mm_nav", mm_nav);
-
 			Vue.component("mm_upload_img", mm_upload_img);
 
 		}

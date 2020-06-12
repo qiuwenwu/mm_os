@@ -7,30 +7,6 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}社交账户</h5>
 					</header>
 					<dl>
-						<dt>头像</dt>
-						<dd>
-							<mm_upload_img width="10rem" height="10rem" name="avatar" type="text" v-model="form.avatar"></mm_upload_img>
-						</dd>
-						<dt>昵称</dt>
-						<dd>
-							<mm_input type="text" v-model="form.nickname" desc="由2-16个字符组成"></mm_input>
-						</dd>
-						<dt>会员级别</dt>
-						<dd>
-							<mm_select v-model="form.vip" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>管理级别</dt>
-						<dd>
-							<mm_select v-model="form.gm" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>商户级别</dt>
-						<dd>
-							<mm_select v-model="form.mc" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
-						</dd>
-						<dt>个性签名</dt>
-						<dd>
-							<textarea v-model="form.signature" placeholder="由2-16个字符组成"></textarea>
-						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">
@@ -56,26 +32,27 @@
 				url_submit: "/apis/user/sns?",
 				url_get_obj: "/apis/user/sns",
 				field: "user_id",
-				list_group: [],
 				query: {
 					"user_id": 0
 				},
-				form: {}
+				form: {
+						"user_id": 0,
+						"qq": '',
+						"qq_state": 0,
+						"wechat": '',
+						"wechat_state": 0,
+						"mm": '',
+						"mm_state": 0,
+						"baidu": '',
+						"baidu_state": 0,
+						"taobao": '',
+						"taobao_state": 0,
+				},
 			}
 		},
 		methods: {
-			get_group() {
-				var _this = this;
-				this.$get('~/apis/user/group?', null, function(json) {
-					if (json.result) {
-						_this.list_group.clear();
-						_this.list_group.addList(json.result.list)
-					}
-				});
-			}
 		},
 		created() {
-			this.get_group();
 		}
 	}
 </script>

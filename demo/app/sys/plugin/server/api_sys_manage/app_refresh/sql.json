@@ -15,5 +15,6 @@
         "refresh_token": "`refresh_token` like '%{0}%'"
     },
     "update": {},
-    "field_hide": []
+    "field_hide": [],
+    "format": []
 }

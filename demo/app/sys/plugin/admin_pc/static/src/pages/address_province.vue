@@ -33,9 +33,6 @@
 									<th scope="col" class="th_smallint">
 										<mm_reverse title="是否可见" v-model="query.orderby" field="show" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_smallint">
-										<mm_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
-									</th>
 									<th scope="col" class="th_varchar">
 										<mm_reverse title="省份名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 									</th>
@@ -47,7 +44,6 @@
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 									<th scope="row"><span>{{ o[field] }}</span></th>
 									<td><span class="th_smallint">{{ o.show }}</span></td>
-									<td><span class="th_smallint">{{ o.display }}</span></td>
 									<td><span class="th_varchar">{{ o.name }}</span></td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./address_province_form?province_id=' + o[field]">修改</mm_btn>
@@ -115,11 +111,9 @@
 				},
 				// 查询条件
 				query: {
-					// 排序
-					orderby: "",
-					// 页码
+					//页码
 					page: 1,
-					// 页面大小
+					//页面大小
 					size: 10,
 					//省份ID
 					'province_id': 0,
@@ -135,6 +129,8 @@
 					'name': '',
 					//关键词
 					'keyword': '',
+					//排序
+					orderby: ""
 				},
 				form: {},
 				//颜色

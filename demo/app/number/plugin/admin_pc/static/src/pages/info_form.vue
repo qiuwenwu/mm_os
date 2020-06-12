@@ -7,29 +7,33 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}号码信息</h5>
 					</header>
 					<dl>
-						<dt>头像</dt>
+						<dt>是否私有</dt>
 						<dd>
-							<mm_upload_img width="10rem" height="10rem" name="avatar" type="text" v-model="form.avatar"></mm_upload_img>
+							<mm_select v-model="form.private" :options="$to_kv(arr_private)" />
 						</dd>
-						<dt>昵称</dt>
+						<dt>是否合约号</dt>
 						<dd>
-							<mm_input type="text" v-model="form.nickname" desc="由2-16个字符组成"></mm_input>
+							<mm_select v-model="form.heYue" :options="$to_kv(arr_heYue)" />
 						</dd>
-						<dt>会员级别</dt>
+						<dt>是否隐藏</dt>
 						<dd>
-							<mm_select v-model="form.vip" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
+							<mm_select v-model="form.hide" :options="$to_kv(arr_hide)" />
 						</dd>
-						<dt>管理级别</dt>
+						<dt>号码种类</dt>
 						<dd>
-							<mm_select v-model="form.gm" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
+							<mm_select v-model="form.kid" :options="$to_kv(arr_kid)" />
 						</dd>
-						<dt>商户级别</dt>
+						<dt>制式</dt>
 						<dd>
-							<mm_select v-model="form.mc" :options="$to_kv(['',1,2,3,4,5])"></mm_select>
+							<mm_select v-model="form.sid" :options="$to_kv(arr_sid)" />
 						</dd>
-						<dt>个性签名</dt>
+						<dt>处理人</dt>
 						<dd>
-							<textarea v-model="form.signature" placeholder="由2-16个字符组成"></textarea>
+							<mm_select v-model="form.uid" :options="$to_kv(list_account, 'uid')" />
+						</dd>
+						<dt>订单状态</dt>
+						<dd>
+							<mm_select v-model="form.order" :options="$to_kv(arr_order)" />
 						</dd>
 					</dl>
 					<footer>
@@ -56,26 +60,77 @@
 				url_submit: "/apis/number/info?",
 				url_get_obj: "/apis/number/info",
 				field: "number_id",
-				list_group: [],
 				query: {
 					"number_id": 0
 				},
-				form: {}
+				form: {
+						"number_id": 0,
+						"private": 0,
+						"heYue": 0,
+						"hide": 0,
+						"kid": 0,
+						"yid": 0,
+						"tid": 0,
+						"cityID": 0,
+						"gid": 0,
+						"sid": 0,
+						"uid": 0,
+						"rid": 0,
+						"average": 0,
+						"score": 0,
+						"huaFei": 0,
+						"maiJia": 0,
+						"daiLiJia": 0,
+						"diJia": 0,
+						"order": 0,
+						"hot": 0,
+						"collection": 0,
+						"createTime": '',
+						"topTime": '',
+						"updateTime": '',
+						"number": '',
+						"format": '',
+						"activity": '',
+						"group": '',
+						"desc": '',
+						"diXiao": '',
+						"log": '',
+						"note": '',
+				},
+				//是否私有
+				'arr_private': ['否','是'],
+				//是否合约号
+				'arr_heYue': ['否','是'],
+				//是否隐藏
+				'arr_hide': ['否','是'],
+				//号码种类
+				'arr_kid': ['','手机号码','固定电话号码','企业电话号码','QQ号码','车牌号码'],
+				//制式
+				'arr_sid': ['','移动','联通','电信'],
+				//处理人
+				'list_account': [],
+				//订单状态
+				'arr_order': ['','待售中','已预约','已售出','已下架','已删除'],
 			}
 		},
 		methods: {
-			get_group() {
-				var _this = this;
-				this.$get('~/apis/user/group?', null, function(json) {
-					if (json.result) {
-						_this.list_group.clear();
-						_this.list_group.addList(json.result.list)
-					}
-				});
-			}
+				/**
+				 * 获取处理人
+				 * @param {query} 查询条件
+				 */
+				get_account(query){
+					var _this = this;
+					this.$get('~/api/user/account?size=0', query, function(json) {
+						if (json.result) {
+							_this.list_account.clear();
+							_this.list_account.addList(json.result.list)
+						}
+					});
+				},
 		},
 		created() {
-			this.get_group();
+			// 获取处理人
+			this.get_account();
 		}
 	}
 </script>

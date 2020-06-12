@@ -171,7 +171,7 @@
         {
             "name": "private",
             "title": "是否私有",
-            "description": "私有号码为公司专有号码",
+            "description": "私有号码为公司专有号码(0否|1是)",
             "type": "number",
             "dataType": "tinyint",
             "number": {
@@ -181,7 +181,7 @@
         {
             "name": "heYue",
             "title": "是否合约号",
-            "description": "",
+            "description": "(0否|1是)",
             "type": "number",
             "dataType": "tinyint",
             "number": {
@@ -191,7 +191,7 @@
         {
             "name": "hide",
             "title": "是否隐藏",
-            "description": "",
+            "description": "(0否|1是)",
             "type": "number",
             "dataType": "tinyint",
             "number": {
@@ -201,7 +201,7 @@
         {
             "name": "kid",
             "title": "号码种类",
-            "description": "",
+            "description": "(1手机号码|2固定电话号码|3企业电话号码|4QQ号码|5车牌号码)",
             "type": "number",
             "dataType": "smallint",
             "number": {
@@ -271,7 +271,7 @@
         {
             "name": "sid",
             "title": "制式",
-            "description": "",
+            "description": "(1移动|2联通|3电信)",
             "type": "number",
             "dataType": "mediumint",
             "number": {
@@ -281,7 +281,7 @@
         {
             "name": "uid",
             "title": "处理人ID",
-            "description": "",
+            "description": "(user_account)",
             "type": "number",
             "dataType": "mediumint",
             "number": {
@@ -481,7 +481,7 @@
         {
             "name": "order",
             "title": "订单状态",
-            "description": "",
+            "description": "(1待售中|2已预约|3已售出|4已下架|5已删除)",
             "type": "number",
             "dataType": "int",
             "number": {
@@ -491,7 +491,7 @@
         {
             "name": "order_min",
             "title": "订单状态——最小值",
-            "description": "",
+            "description": "(1待售中|2已预约|3已售出|4已下架|5已删除)",
             "type": "number",
             "dataType": "int",
             "number": {
@@ -501,7 +501,7 @@
         {
             "name": "order_max",
             "title": "订单状态——最大值",
-            "description": "",
+            "description": "(1待售中|2已预约|3已售出|4已下架|5已删除)",
             "type": "number",
             "dataType": "int",
             "number": {

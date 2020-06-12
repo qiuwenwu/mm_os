@@ -113,7 +113,7 @@ caption{caption-side:bottom;padding-bottom:.5rem;padding-top:.5rem;text-align:le
 th{border:1px solid rgba(125,125,125,0.25);padding:0.5rem .75rem;text-align:inherit;}
 thead th>span{line-height: 2rem;}
 thead th{border-bottom:2px solid rgba(125,125,125,0.25);vertical-align:bottom;}
-tbody tr:hover { background-color: rgba(0,0,0,.075) !important; }
+tbody tr:hover { background-color: rgba(0,100,200,.075) !important; }
 td{border:1px solid rgba(125,125,125,0.25);padding:.5rem .75rem;white-space:nowrap;}
 dt{display:block;clear:left;float:left;font-weight:400;padding:.5rem; min-width: 6rem; }
 dt>span, dd>span{ line-height: 2rem; }

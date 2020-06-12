@@ -11,7 +11,7 @@ define(["Vue"], function(Vue) {
 			}
 		}
 		return "/";
-	}
+	};
 
 	var mm = {
 		/**
@@ -66,9 +66,6 @@ define(["Vue"], function(Vue) {
 				var list = [];
 				if(arr.length > 0){
 					if (key) {
-						if(arr[0].name !== ''){
-							list = [{ name: '', value: 0 }];
-						}
 						var n = name ? name : 'name';
 						for (var i = 0; i < arr.length; i++) {
 							var o = arr[i];
@@ -77,16 +74,25 @@ define(["Vue"], function(Vue) {
 								value: o[key]
 							});
 						}
-					} else {
-						if(arr[0] !== ''){
-							list = [{ name: '', value: '' }];
+						if(arr[0].name !== ''){
+							list.unshift({ name: '', value: '' });
 						}
+						else {
+							list[0].value = '';
+						}
+					} else {
 						for (var i = 0; i < arr.length; i++) {
 							var o = arr[i];
 							list.push({
 								name: o,
 								value: i
 							})
+						}
+						if(arr[0] !== ''){
+							list.unshift({ name: '', value: '' });
+						}
+						else {
+							list[0].value = '';
 						}
 					}
 				}

@@ -5,29 +5,7 @@
         {
             "name": "sys",
             "path": "/sys",
-            "redirect": "/sys/ad"
-        },
-        {
-            "name": "sys_ad",
-            "path": "/sys/ad",
-            "component": "/sys/admin_pc/src/pages/ad.vue",
-            "level": 3,
-            "oauth": {
-                "signIn": true,
-                "gm": 2,
-                "user_admin": []
-            }
-        },
-        {
-            "name": "sys_ad_form",
-            "path": "/sys/ad_form",
-            "component": "/sys/admin_pc/src/pages/ad_form.vue",
-            "level": 4,
-            "oauth": {
-                "signIn": true,
-                "gm": 2,
-                "user_admin": []
-            }
+            "redirect": "/sys/config"
         },
         {
             "name": "sys_address_area",
@@ -175,12 +153,6 @@
             "url": "/sys",
             "display": 0,
             "sub": [
-                {
-                    "title": "广告信息",
-                    "show": false,
-                    "name": "sys_ad",
-                    "url": "/sys/ad"
-                },
                 {
                     "title": "地区",
                     "show": false,

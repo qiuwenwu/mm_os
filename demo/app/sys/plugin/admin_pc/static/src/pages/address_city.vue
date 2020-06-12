@@ -17,6 +17,9 @@
 									<mm_select v-model="query.show" title="是否可见" :options="$to_kv(arr_show)" @change="search()" />
 								</mm_col>
 								<mm_col>
+									<mm_select v-model="query.province_id" title="所属省份" :options="$to_kv(list_address_province, 'province_id')" @change="search()" />
+								</mm_col>
+								<mm_col>
 									<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
 								</mm_col>
 							</mm_list>
@@ -36,11 +39,8 @@
 									<th scope="col" class="th_smallint">
 										<mm_reverse title="是否可见" v-model="query.orderby" field="show" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_smallint">
-										<mm_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
-									</th>
 									<th scope="col" class="th_mediumint">
-										<mm_reverse title="所属省份ID" v-model="query.orderby" field="province_id" :func="search"></mm_reverse>
+										<mm_reverse title="所属省份" v-model="query.orderby" field="province_id" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_varchar">
 										<mm_reverse title="城市名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
@@ -53,8 +53,7 @@
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 									<th scope="row"><span>{{ o[field] }}</span></th>
 									<td><span class="th_smallint">{{arr_show[o.show] }}</span></td>
-									<td><span class="th_smallint">{{ o.display }}</span></td>
-									<td><span class="th_mediumint">{{ o.province_id }}</span></td>
+									<td><span class="th_mediumint">{{ get_name(list_address_province, o.province_id, 'province_id') }}</span></td>
 									<td><span class="th_varchar">{{ o.name }}</span></td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./address_city_form?city_id=' + o[field]">修改</mm_btn>
@@ -96,6 +95,10 @@
 						<dd>
 							<mm_select v-model="form.show" :options="$to_kv(arr_show)" />
 						</dd>
+						<dt>所属省份</dt>
+						<dd>
+							<mm_select v-model="form.province_id" :options="$to_kv(list_address_province, 'province_id')" />
+						</dd>
 					</dl>
 				</mm_body>
 				<footer>
@@ -126,11 +129,9 @@
 				},
 				// 查询条件
 				query: {
-					// 排序
-					orderby: "",
-					// 页码
+					//页码
 					page: 1,
-					// 页面大小
+					//页面大小
 					size: 10,
 					//城市ID
 					'city_id': 0,
@@ -146,19 +147,38 @@
 					'name': '',
 					//关键词
 					'keyword': '',
+					//排序
+					orderby: ""
 				},
 				form: {},
 				//颜色
 				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
 				//是否可见
 				'arr_show': ['否','是'],
+				//所属省份
+				'list_address_province': [],
 				// 视图模型
 				vm: {}
 			}
 		},
 		methods: {
+			/**
+			 * 获取所属省份
+			 * @param {query} 查询条件
+			 */
+			get_address_province(query){
+				var _this = this;
+				this.$get('~/api/sys/address_province?size=0', query, function(json) {
+					if (json.result) {
+						_this.list_address_province.clear();
+						_this.list_address_province.addList(json.result.list)
+					}
+				});
+			},
 		},
 		created() {
+			// 获取所属省份
+			this.get_address_province();
 		}
 	}
 </script>

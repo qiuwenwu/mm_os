@@ -125,9 +125,8 @@
 
 <style>
 	main {
-		margin: .5rem;
-		width: calc(100% - 1rem);
-		height: calc(100% - 3rem);
+		padding: .5rem;
+		height: calc(100% - 2.5rem);
 	}
 	
 	.mm_side~.mm_main {

@@ -71,7 +71,7 @@
         {
             "name": "province_id",
             "title": "所属省份ID",
-            "description": "",
+            "description": "当前城市隶属省份",
             "type": "mediumint",
             "key": false,
             "auto": "",

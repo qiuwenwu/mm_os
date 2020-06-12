@@ -33,12 +33,6 @@
 									<th scope="col" class="th_mediumint">
 										<mm_reverse title="用户ID" v-model="query.orderby" field="user_id" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_datetime">
-										<mm_reverse title="创建时间" v-model="query.orderby" field="time_create" :func="search"></mm_reverse>
-									</th>
-									<th scope="col" class="th_timestamp">
-										<mm_reverse title="更新时间" v-model="query.orderby" field="time_update" :func="search"></mm_reverse>
-									</th>
 									<th scope="col" class="th_varchar">
 										<mm_reverse title="应用ID" v-model="query.orderby" field="appid" :func="search"></mm_reverse>
 									</th>
@@ -53,8 +47,6 @@
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 									<th scope="row"><span>{{ o[field] }}</span></th>
 									<td><span class="th_mediumint">{{ o.user_id }}</span></td>
-									<td><span class="th_datetime">{{ $to_time(o.time_create, 'yyyy-MM-dd hh:mm') }}</span></td>
-									<td><span class="th_timestamp">{{ $to_time(o.time_update, 'yyyy-MM-dd hh:mm') }}</span></td>
 									<td><span class="th_varchar">{{ o.appid }}</span></td>
 									<td><span class="th_varchar">{{ o.refresh_token }}</span></td>
 									<td>
@@ -123,11 +115,9 @@
 				},
 				// 查询条件
 				query: {
-					// 排序
-					orderby: "",
-					// 页码
+					//页码
 					page: 1,
-					// 页面大小
+					//页面大小
 					size: 10,
 					//刷新Token的ID
 					'refresh_id': 0,
@@ -139,6 +129,8 @@
 					'time_update_min': '',
 					//更新时间——结束时间
 					'time_update_max': '',
+					//排序
+					orderby: ""
 				},
 				form: {},
 				//颜色

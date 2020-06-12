@@ -554,7 +554,8 @@ Drive.prototype.new_event = async function(dir, path, scope) {
 Drive.prototype.get_format = async function(obj){
 	var map = obj.map;
 	var format = {
-		key: obj.name.replace('ID', 'id').replace('_id', ''),
+		// key: obj.name.replace('ID', 'id').replace('_id', ''),
+		key: obj.name,
 		title: obj.title.replace('ID', '').replace('id', '')
 	};
 	if(map.indexOf('|') !== -1){

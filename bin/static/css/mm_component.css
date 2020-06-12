@@ -58,9 +58,9 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appea
 
 /* 筛选面板 */
 .mm_filter {display:flex;}
-.mm_filter>h5 {float:left;flex:1;position:relative;border-right:2px solid #DBDBDB;background:#f3f9ff; width: 7rem;}
+.mm_filter>h5 {float:left;flex:1;position:relative;border-right:2px solid #DBDBDB;background:#f3f9ff; max-width: 7rem;min-width: 7rem;}
 .mm_filter>h5>span {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;}
-
+.mm_filter .mm_col>button:first-child { margin-left: 1.5rem; }
 
 /* 视图块主体 */
 .mm_view .mm_body {padding:1.5rem;}

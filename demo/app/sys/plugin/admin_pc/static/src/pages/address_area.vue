@@ -14,6 +14,12 @@
 									<mm_input v-model="query.keyword" title="关键词" desc="用户名 / 手机号 / 邮箱 / 姓名" @blur="search()" />
 								</mm_col>
 								<mm_col>
+									<mm_select v-model="query.show" title="是否可见" :options="$to_kv(arr_show)" @change="search()" />
+								</mm_col>
+								<mm_col>
+									<mm_select v-model="query.city_id" title="所属城市" :options="$to_kv(list_address_city, 'city_id')" @change="search()" />
+								</mm_col>
+								<mm_col>
 									<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
 								</mm_col>
 							</mm_list>
@@ -33,11 +39,8 @@
 									<th scope="col" class="th_smallint">
 										<mm_reverse title="是否可见" v-model="query.orderby" field="show" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_smallint">
-										<mm_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
-									</th>
 									<th scope="col" class="th_mediumint">
-										<mm_reverse title="所属城市ID" v-model="query.orderby" field="city_id" :func="search"></mm_reverse>
+										<mm_reverse title="所属城市" v-model="query.orderby" field="city_id" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_varchar">
 										<mm_reverse title="地区名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
@@ -49,9 +52,8 @@
 								<tr v-for="(o, idx) in list" :key="idx">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 									<th scope="row"><span>{{ o[field] }}</span></th>
-									<td><span class="th_smallint">{{ o.show }}</span></td>
-									<td><span class="th_smallint">{{ o.display }}</span></td>
-									<td><span class="th_mediumint">{{ o.city_id }}</span></td>
+									<td><span class="th_smallint">{{arr_show[o.show] }}</span></td>
+									<td><span class="th_mediumint">{{ get_name(list_address_city, o.city_id, 'city_id') }}</span></td>
 									<td><span class="th_varchar">{{ o.name }}</span></td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./address_area_form?area_id=' + o[field]">修改</mm_btn>
@@ -89,6 +91,14 @@
 				</header>
 				<mm_body>
 					<dl>
+						<dt>是否可见</dt>
+						<dd>
+							<mm_select v-model="form.show" :options="$to_kv(arr_show)" />
+						</dd>
+						<dt>所属城市</dt>
+						<dd>
+							<mm_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id')" />
+						</dd>
 					</dl>
 				</mm_body>
 				<footer>
@@ -119,11 +129,9 @@
 				},
 				// 查询条件
 				query: {
-					// 排序
-					orderby: "",
-					// 页码
+					//页码
 					page: 1,
-					// 页面大小
+					//页面大小
 					size: 10,
 					//地区ID
 					'area_id': 0,
@@ -139,17 +147,38 @@
 					'name': '',
 					//关键词
 					'keyword': '',
+					//排序
+					orderby: ""
 				},
 				form: {},
 				//颜色
 				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
+				//是否可见
+				'arr_show': ['否','是'],
+				//所属城市
+				'list_address_city': [],
 				// 视图模型
 				vm: {}
 			}
 		},
 		methods: {
+			/**
+			 * 获取所属城市
+			 * @param {query} 查询条件
+			 */
+			get_address_city(query){
+				var _this = this;
+				this.$get('~/api/sys/address_city?size=0', query, function(json) {
+					if (json.result) {
+						_this.list_address_city.clear();
+						_this.list_address_city.addList(json.result.list)
+					}
+				});
+			},
 		},
 		created() {
+			// 获取所属城市
+			this.get_address_city();
 		}
 	}
 </script>

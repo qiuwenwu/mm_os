@@ -22,7 +22,14 @@ ViewModel.prototype.field = async function(model) {
 	if (!list) {
 		return [];
 	}
-	var field = model.sql.field_default || '';
+	var field;
+	if(model.file.indexOf('_form') || model.file.indexOf('_view')){
+		field = model.sql.field_obj || '';
+	}
+	else {
+		field = model.sql.field_default || '';
+	}
+	
 	var arr = field.replace(/`/g, '').split(',');
 	var pm = [];
 	for (var i = 0; i < list.length; i++) {
@@ -32,18 +39,26 @@ ViewModel.prototype.field = async function(model) {
 			var obj = {
 				name,
 				title: o.title,
+				type: o.type,
 				dataType: o.dataType,
 				description: o.description
 			};
 			var format = model.sql.format.getObj({
 				key: name
 			});
+			if(!format){
+				format = model.sql.format.getObj({
+					id: name
+				});
+			}
 			if (format) {
+				obj.title = format.title;
 				obj.format = format;
 			}
 			pm.push(obj);
 		}
 	}
+	
 	return pm;
 };
 
@@ -96,7 +111,7 @@ ViewModel.prototype.js = async function(model) {
 					title: format.title,
 					name,
 					value: [],
-					path: "/api/" + format.table.replaceAll('_', '/') + "?"
+					path: "/api/" + format.table.replace('_', '/') + "?size=0"
 				});
 			} else {
 				var basename = format.key;

@@ -390,8 +390,9 @@ Drive.prototype.get_api = function(app, route) {
 	};
 	for (var i = 0; i < lt.length; i++) {
 		var o = lt[i];
-		if (o.config.path.indexOf(api_route) === 0) {
+		if (o.config.path === api_route) {
 			config = {
+				scope,
 				api: o.config,
 				param: o.param.config,
 				sql: o.sql.config
@@ -400,7 +401,6 @@ Drive.prototype.get_api = function(app, route) {
 		}
 	}
 	return config;
-	// $.log.debug('api', api_route, config);
 };
 
 /**
@@ -453,6 +453,7 @@ Drive.prototype.create_vue = async function(file, route) {
 		group: arr[arr.length - 2],
 		nav_config: this.config,
 		route,
+		scope: "",
 		api: {},
 		param: {},
 		sql: {}

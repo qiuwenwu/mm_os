@@ -21,8 +21,10 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "available",
@@ -40,13 +42,15 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
+            "map": "0否|1是",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "encrypt",
             "title": "加解密方式",
-            "description": "0明文模式，1兼容模式，2安全模式",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -59,8 +63,10 @@
             "max": 10,
             "decimal": 0,
             "default": "1",
+            "map": "1明文模式|2兼容模式|3安全模式",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "times_allow",
@@ -78,8 +84,10 @@
             "max": 32767,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "times_today",
@@ -97,13 +105,15 @@
             "max": 32767,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "max_age",
             "title": "有效期时长",
-            "description": "授权应用可以使用的时长，超时需重新申请（单位：天）",
+            "description": "授权应用可以使用的时长，超时需重新申请。单位：天",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -116,8 +126,10 @@
             "max": 32767,
             "decimal": 0,
             "default": "1825",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "user_id",
@@ -135,8 +147,10 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
+            "map": "user_account",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "times_count",
@@ -154,8 +168,10 @@
             "max": 2147483647,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "time_update",
@@ -173,8 +189,10 @@
             "max": 0,
             "decimal": 0,
             "default": "CURRENT_TIMESTAMP",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "name",
@@ -192,15 +210,17 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "appid",
             "title": "应用ID",
             "description": "用于应用授权访问时的账号",
             "type": "varchar",
-            "key": false,
+            "key": true,
             "auto": "",
             "symbol": false,
             "fill_zero": false,
@@ -211,8 +231,10 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "token",
@@ -230,8 +252,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "encoding_aes_key",
@@ -249,8 +273,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "appsecret",
@@ -268,8 +294,10 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "icon",
@@ -287,8 +315,10 @@
             "max": 255,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "url",
@@ -306,8 +336,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "bind_ip",
@@ -325,8 +357,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "scope",
@@ -344,8 +378,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "scope_not",
@@ -363,8 +399,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "users",
@@ -382,8 +420,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         }
     ]
 }
