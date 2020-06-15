@@ -7,6 +7,42 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}用户组</h5>
 					</header>
 					<dl>
+						<dt>等级划分</dt>
+						<dd>
+							<mm_number v-model="form.level" :min="0" :max="1000" />
+						</dd>
+						<dt>下级用户组ID</dt>
+						<dd>
+							<mm_input v-model="form.next_group_id" :minlength="0" :maxlength="0" placeholder="决定用户升级后所属用户组" />
+						</dd>
+						<dt>升级所需经验</dt>
+						<dd>
+							<mm_number v-model="form.exp" :min="0" :max="2147483647" />
+						</dd>
+						<dt>折扣</dt>
+						<dd>
+							<mm_number v-model="form.discount" :min="0" :max="0" />
+						</dd>
+						<dt>奖励比例</dt>
+						<dd>
+							<mm_number v-model="form.bonus" :min="0" :max="0" />
+						</dd>
+						<dt>应用</dt>
+						<dd>
+							<mm_input v-model="form.app" :minlength="0" :maxlength="0" placeholder="用于区分用户组使用范围，cms内容管理系统、bbs社区、mall商城" />
+						</dd>
+						<dt>用户名称</dt>
+						<dd>
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>描述</dt>
+						<dd>
+							<mm_input v-model="form.description" :minlength="0" :maxlength="0" placeholder="描述该用户组的特点或权限范围" />
+						</dd>
+						<dt>图标</dt>
+						<dd>
+							<mm_textarea v-model="form.icon" type="text" placeholder="用于标识用户组" />
+						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">

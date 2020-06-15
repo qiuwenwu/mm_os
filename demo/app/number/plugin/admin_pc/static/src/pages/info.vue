@@ -11,9 +11,6 @@
 							<h5><span>筛选条件</span></h5>
 							<mm_list col="3">
 								<mm_col>
-									<mm_input v-model="query.keyword" title="关键词" desc="用户名 / 手机号 / 邮箱 / 姓名" @blur="search()" />
-								</mm_col>
-								<mm_col>
 									<mm_select v-model="query.private" title="是否私有" :options="$to_kv(arr_private)" @change="search()" />
 								</mm_col>
 								<mm_col>

@@ -7,6 +7,90 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}用户账户</h5>
 					</header>
 					<dl>
+						<dt>账户状态</dt>
+						<dd>
+							<mm_number v-model="form.state" :min="0" :max="10" />
+						</dd>
+						<dt>会员级别</dt>
+						<dd>
+							<mm_number v-model="form.vip" :min="0" :max="10" />
+						</dd>
+						<dt>管理员级别</dt>
+						<dd>
+							<mm_number v-model="form.gm" :min="0" :max="10" />
+						</dd>
+						<dt>商家级别</dt>
+						<dd>
+							<mm_number v-model="form.mc" :min="0" :max="10" />
+						</dd>
+						<dt>推荐人ID</dt>
+						<dd>
+							<mm_input v-model="form.referee_id" :minlength="0" :maxlength="0" placeholder="用于推荐注册时积分奖级" />
+						</dd>
+						<dt>上次登录时间</dt>
+						<dd>
+							<mm_time v-model="form.login_time" type="datetime" />
+						</dd>
+						<dt>邀请注册码</dt>
+						<dd>
+							<mm_input v-model="form.invite_code" :minlength="0" :maxlength="0" placeholder="随着用户注册而生成" />
+						</dd>
+						<dt>手机号码</dt>
+						<dd>
+							<mm_input v-model="form.phone" :minlength="0" :maxlength="0" placeholder="用户的手机号码，用于找回密码时或登录时" />
+						</dd>
+						<dt>手机号码认证</dt>
+						<dd>
+							<mm_switch v-model="form.phone_state" />
+						</dd>
+						<dt>用户名</dt>
+						<dd>
+							<mm_input v-model="form.username" :minlength="0" :maxlength="0" placeholder="用户登录时所用的账户名称" />
+						</dd>
+						<dt>昵称</dt>
+						<dd>
+							<mm_input v-model="form.nickname" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>邮箱</dt>
+						<dd>
+							<mm_input v-model="form.email" :minlength="0" :maxlength="0" placeholder="用户的邮箱，用于找回密码时或登录时" />
+						</dd>
+						<dt>邮箱认证</dt>
+						<dd>
+							<mm_switch v-model="form.email_state" />
+						</dd>
+						<dt>所在用户组</dt>
+						<dd>
+							<mm_input v-model="form.user_group" :minlength="0" :maxlength="0" placeholder="多个用户组用“,“分隔" />
+						</dd>
+						<dt>所在管理组</dt>
+						<dd>
+							<mm_input v-model="form.user_admin" :minlength="0" :maxlength="0" placeholder="多个管理组用“,“分隔" />
+						</dd>
+						<dt>上次登录时的IP地址</dt>
+						<dd>
+							<mm_input v-model="form.login_ip" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>个性签名</dt>
+						<dd>
+							<mm_input v-model="form.signature" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>头像地址</dt>
+						<dd>
+							<mm_input v-model="form.avatar" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>好友</dt>
+						<dd>
+							<mm_textarea v-model="form.friends" type="text" placeholder="多个好友ID用“,”分隔" />
+						</dd>
+						<dt>所在管理组</dt>
+						<dd>
+							<mm_input v-model="form.admin_group" :minlength="0" :maxlength="0" placeholder="多个管理组用“,“分隔" />
+						</dd>
+						<dt>创建时间</dt>
+						<dd>
+							<mm_time v-model="form.create_time" type="datetime" />
+						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">

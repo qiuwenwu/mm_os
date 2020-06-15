@@ -11,7 +11,7 @@
 							<h5><span>筛选条件</span></h5>
 							<mm_list col="3">
 								<mm_col>
-									<mm_input v-model="query.keyword" title="关键词" desc="用户名 / 手机号 / 邮箱 / 姓名" @blur="search()" />
+									<mm_input v-model="query.keyword" title="关键词" desc="用于搜索应用名称(name)" @blur="search()" />
 								</mm_col>
 								<mm_col>
 									<mm_select v-model="query.available" title="是否可用" :options="$to_kv(arr_available)" @change="search()" />

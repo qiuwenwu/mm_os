@@ -7,6 +7,22 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}管理组</h5>
 					</header>
 					<dl>
+						<dt>分类</dt>
+						<dd>
+							<mm_input v-model="form.type" :minlength="0" :maxlength="0" placeholder="用于区分用户组使用范围" />
+						</dd>
+						<dt>管理组名称</dt>
+						<dd>
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>描述</dt>
+						<dd>
+							<mm_input v-model="form.description" :minlength="0" :maxlength="0" placeholder="描述该用户组的特点或权限范围" />
+						</dd>
+						<dt>图标</dt>
+						<dd>
+							<mm_textarea v-model="form.icon" type="text" placeholder="用于标识用户组" />
+						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">

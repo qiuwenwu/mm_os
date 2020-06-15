@@ -23,6 +23,22 @@
 						<dd>
 							<mm_select v-model="form.kid" :options="$to_kv(arr_kid)" />
 						</dd>
+						<dt>寓意</dt>
+						<dd>
+							<mm_input v-model="form.yid" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>套餐ID</dt>
+						<dd>
+							<mm_input v-model="form.tid" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>城市ID</dt>
+						<dd>
+							<mm_number v-model="form.cityID" :min="0" :max="8388607" />
+						</dd>
+						<dt>供应商ID</dt>
+						<dd>
+							<mm_input v-model="form.gid" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
 						<dt>制式</dt>
 						<dd>
 							<mm_select v-model="form.sid" :options="$to_kv(arr_sid)" />
@@ -31,9 +47,89 @@
 						<dd>
 							<mm_select v-model="form.uid" :options="$to_kv(list_account, 'uid')" />
 						</dd>
+						<dt>每日推荐ID</dt>
+						<dd>
+							<mm_input v-model="form.rid" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>均价</dt>
+						<dd>
+							<mm_number v-model="form.average" :min="0" :max="2147483647" />
+						</dd>
+						<dt>质量得分</dt>
+						<dd>
+							<mm_number v-model="form.score" :min="0" :max="2147483647" />
+						</dd>
+						<dt>话费</dt>
+						<dd>
+							<mm_number v-model="form.huaFei" :min="0" :max="2147483647" />
+						</dd>
+						<dt>卖价</dt>
+						<dd>
+							<mm_number v-model="form.maiJia" :min="0" :max="2147483647" />
+						</dd>
+						<dt>代理价</dt>
+						<dd>
+							<mm_number v-model="form.daiLiJia" :min="0" :max="2147483647" />
+						</dd>
+						<dt>底价</dt>
+						<dd>
+							<mm_number v-model="form.diJia" :min="0" :max="2147483647" />
+						</dd>
 						<dt>订单状态</dt>
 						<dd>
 							<mm_select v-model="form.order" :options="$to_kv(arr_order)" />
+						</dd>
+						<dt>热度</dt>
+						<dd>
+							<mm_number v-model="form.hot" :min="0" :max="2147483647" />
+						</dd>
+						<dt>收藏</dt>
+						<dd>
+							<mm_number v-model="form.collection" :min="0" :max="2147483647" />
+						</dd>
+						<dt>创建时间</dt>
+						<dd>
+							<mm_time v-model="form.createTime" type="datetime" />
+						</dd>
+						<dt>置顶时间</dt>
+						<dd>
+							<mm_time v-model="form.topTime" type="datetime" />
+						</dd>
+						<dt>更新时间</dt>
+						<dd>
+							<mm_time v-model="form.updateTime" type="datetime" />
+						</dd>
+						<dt>号码</dt>
+						<dd>
+							<mm_input v-model="form.number" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>格式</dt>
+						<dd>
+							<mm_input v-model="form.format" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>活动</dt>
+						<dd>
+							<mm_input v-model="form.activity" :minlength="0" :maxlength="0" placeholder="有推荐、特价、包邮等" />
+						</dd>
+						<dt>分组</dt>
+						<dd>
+							<mm_input v-model="form.group" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>描述</dt>
+						<dd>
+							<mm_input v-model="form.desc" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>最低消费</dt>
+						<dd>
+							<mm_input v-model="form.diXiao" :minlength="0" :maxlength="0" placeholder="0为无最低消费" />
+						</dd>
+						<dt>操作日志</dt>
+						<dd>
+							<mm_textarea v-model="form.log" type="text" placeholder="" />
+						</dd>
+						<dt>备注</dt>
+						<dd>
+							<mm_textarea v-model="form.note" type="text" placeholder="" />
 						</dd>
 					</dl>
 					<footer>

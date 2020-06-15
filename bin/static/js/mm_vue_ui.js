@@ -1818,8 +1818,13 @@ define(['jquery'], function(jquery) {
 		}
 	};
 	var mm_code = {
-		template: "<!-- \u9A8C\u8BC1\u7801 --><div class=\"mm_code\"><mm_icon :icon=\"icon\"></mm_icon><div class=\"title\" v-if=\"title\">{{ title }}</div><slot><mm_group><input type=\"text\" :value=\"value\" :placeholder=\"desc\" @input=\"$emit('input', $event.target.value)\"></input><button :class=\"'btn-' + type\" v-html=\"btn\"></button></mm_group></slot><div class=\"tip\" v-if=\"tip\" v-html=\"tip\"></div></div>",
+		template: "<!-- \u9A8C\u8BC1\u7801 --><div class=\"mm_code\"><mm_icon :icon=\"icon\"></mm_icon><div class=\"title\" v-if=\"title\">{{ title }}</div><slot><mm_group><input type=\"text\" :value=\"value\" :placeholder=\"desc || placeholder\" @input=\"$emit('input', $event.target.value)\"></input><button :class=\"'btn-' + type\" v-html=\"btn\"></button></mm_group></slot><div class=\"tip\" v-if=\"tip\" v-html=\"tip\"></div></div>",
 		mixins: [form_mixin],
+		props: {
+			placeholder: {
+				type: String
+			}
+		},
 		props: {
 			btn: {
 				type: String,
@@ -1836,9 +1841,15 @@ define(['jquery'], function(jquery) {
 			}
 		}
 	};
+	
 	var mm_input = {
-		template: "<!-- \u8F93\u5165\u6846 --><div class=\"mm_input\"><div class=\"title\" v-if=\"title\" v-html=\"title\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><input :type=\"type\" :value=\"value\" :min=\"min\" :max=\"max\" :minlength=\"min_length\" :maxlength=\"max_length\" :placeholder=\"desc\" @input=\"set\" :disabled=\"disabled\" @blur=\"$emit('blur')\" /><slot><span class=\"unit\" v-if=\"unit\">{{ unit }}</span></slot></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
+		template: "<!-- \u8F93\u5165\u6846 --><div class=\"mm_input\"><div class=\"title\" v-if=\"title\" v-html=\"title\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><input :type=\"type\" :value=\"value\" :min=\"min\" :max=\"max\" :minlength=\"min_length\" :maxlength=\"max_length\" :placeholder=\"desc || placeholder\" @input=\"set\" :disabled=\"disabled\" @blur=\"$emit('blur')\" /><slot><span class=\"unit\" v-if=\"unit\">{{ unit }}</span></slot></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
 		mixins: [form_mixin],
+		props: {
+			placeholder: {
+				type: String
+			}
+		},
 		methods: {
 			set: function set(e) {
 				if (this.type === "number") {
@@ -1865,7 +1876,7 @@ define(['jquery'], function(jquery) {
 		}
 	};
 	var mm_number = {
-		template: "<!-- \u6570\u5B57\u6846 --><div class=\"mm_number\"><div class=\"title\" v-if=\"title\" v-html=\"title\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><mm_btn class=\"btn_primary btn_del\" @click.native=\"del\"><span></span></mm_btn><input type=\"number\" :value=\"value\" :min=\"min\" :max=\"max\" @input=\"set\" @blur=\"setInt\" :disabled=\"disabled\"/><mm_btn class=\"btn_primary btn_add\" @click.native=\"add\"><span></span></mm_btn></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
+		template: "<!-- \u6570\u5B57\u6846 --><div class=\"mm_number\"><div class=\"title\" v-if=\"title\" v-html=\"title\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><mm_btn class=\"btn_primary btn_del\" @click.native=\"del\"><span></span></mm_btn><input type=\"number\" :value.number=\"value\" :min=\"min\" :max=\"max\" @input=\"set\" @blur=\"setInt\" :disabled=\"disabled\"/><mm_btn class=\"btn_primary btn_add\" @click.native=\"add\"><span></span></mm_btn></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
 		mixins: [form_mixin],
 		methods: {
 			setInt: function setInt(e) {
@@ -2267,7 +2278,40 @@ define(['jquery'], function(jquery) {
 			}
 		}
 	};
-
+	
+	var mm_time = {
+		template: "<!-- \u65F6\u95F4\u8F93\u5165\u6846 --><div class=\"mm_time\"><div class=\"title\" v-if=\"title\" v-html=\"title\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><input :type=\"type || 'datetime'\" :value=\"value\" @blur=\"set\" :disabled=\"disabled\"></select></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
+		mixins: [form_mixin],
+		methods: {
+			set: function set(e) {
+				this.$emit("input", e.target.value);
+			}
+		},
+		watch: {
+			value: function value(e){
+				if(this.value.indexOf('Z') !== -1){
+					this.$emit("input", new Date(this.value).toStr('yyyy-MM-dd hh:mm:ss'));
+				}
+			}
+		}
+	};
+	
+	var mm_textarea = {
+		template: "<!-- \u65F6\u95F4\u8F93\u5165\u6846 --><div class=\"mm_textarea\"><div class=\"title\" v-if=\"title\" v-html=\"title\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><textarea :value=\"value\" @blur=\"set\" :disabled=\"disabled\" :placeholder=\"desc || placeholder\" v-if=\"type == 'text'\"></textarea></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
+		mixins: [form_mixin],
+		props: {
+			placeholder: {
+				type: String
+			}
+		},
+		methods: {
+			set: function set(e) {
+				this.$emit("input", e.target.value);
+			}
+		}
+	};
+	
+	
 	return {
 		install: function install(Vue, options) {
 			Vue.component("mm_icon", mm_icon);
@@ -2296,6 +2340,8 @@ define(['jquery'], function(jquery) {
 			Vue.component("mm_code", mm_code);
 			Vue.component("mm_input", mm_input);
 			Vue.component("mm_number", mm_number);
+			Vue.component("mm_time", mm_time);
+			Vue.component("mm_textarea", mm_textarea);
 			Vue.component("mm_pager", mm_pager);
 			Vue.component("mm_radio", mm_radio);
 			Vue.component("mm_reverse", mm_reverse);
@@ -2303,7 +2349,6 @@ define(['jquery'], function(jquery) {
 			Vue.component("mm_switch", mm_switch);
 			Vue.component("mm_nav", mm_nav);
 			Vue.component("mm_upload_img", mm_upload_img);
-
 		}
 	};
 });

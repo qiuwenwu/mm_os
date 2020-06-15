@@ -10,9 +10,15 @@
 						<mm_form class="mm_filter">
 							<h5><span>筛选条件</span></h5>
 							<mm_list col="3">
+								<!--{if(param.list)}-->
+								<!--{loop param.list v idx}-->
+									<!--{if(v.name == 'keyword')}-->
 								<mm_col>
-									<mm_input v-model="query.keyword" title="关键词" desc="用户名 / 手机号 / 邮箱 / 姓名" @blur="search()" />
+									<mm_input v-model="query.keyword" title="${v.title}" desc="${v.description}" @blur="search()" />
 								</mm_col>
+									<!--{/if}-->
+								<!--{/loop}-->
+								<!--{/if}-->
 								<!--{loop field v idx}-->
 									<!--{if(v.format)}-->
 										<!--{if(v.format.table)}-->
@@ -44,11 +50,11 @@
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
 									<!--{loop field v idx}-->
-									<!--{if(idx > 0)}-->
+										<!--{if(idx > 0)}-->
 									<th scope="col" class="th_${v.dataType}">
 										<mm_reverse title="${v.title}" v-model="query.orderby" field="${v.name}" :func="search"></mm_reverse>
 									</th>
-									<!--{/if}-->
+										<!--{/if}-->
 									<!--{/loop}-->
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>

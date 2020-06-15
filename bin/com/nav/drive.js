@@ -25,7 +25,10 @@ class Drive extends Item {
 	constructor(dir, scope) {
 		super(dir, __dirname);
 		this.default_file = "./" + scope + ".nav.json";
-
+		
+		// 模板路径
+		this.tpl = "./tpl/";
+		
 		/* 通用项 */
 		// 配置参数
 		this.config = {
@@ -412,7 +415,7 @@ Drive.prototype.create_vue = async function(file, route) {
 	var l = $.slash;
 	var arr = file.split(l);
 	var name = arr[arr.length - 1].replace('.vue', '');
-	var f = "./tpl/";
+	var f = this.tpl;
 	var plugin = "";
 	var app = "";
 	if (arr.length > 5) {

@@ -36,9 +36,9 @@ define(function() {
 				obj: {},
 				// 查询参数
 				query: {
-					// // 当前页面
+					// 当前页面
 					// page: 1,
-					// // 页面大小
+					// 页面大小
 					// size: 10
 				},
 				// 配置
@@ -46,9 +46,7 @@ define(function() {
 					// 默认当前页面
 					page: 1,
 					// 默认页面大小
-					size: 10,
-					// 状态
-					state: 0
+					size: 10
 				},
 				// 加载进度
 				loading: 0,

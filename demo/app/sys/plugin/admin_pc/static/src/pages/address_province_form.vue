@@ -7,6 +7,14 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}省份</h5>
 					</header>
 					<dl>
+						<dt>是否可见</dt>
+						<dd>
+							<mm_number v-model="form.show" :min="0" :max="2" />
+						</dd>
+						<dt>省份名称</dt>
+						<dd>
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">

@@ -15,6 +15,10 @@
 						<dd>
 							<mm_select v-model="form.province_id" :options="$to_kv(list_address_province, 'province_id')" />
 						</dd>
+						<dt>城市名称</dt>
+						<dd>
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">

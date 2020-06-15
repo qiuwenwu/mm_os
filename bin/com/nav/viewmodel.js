@@ -36,13 +36,7 @@ ViewModel.prototype.field = async function(model) {
 		var o = list[i];
 		var name = o.name;
 		if (arr.indexOf(name) !== -1) {
-			var obj = {
-				name,
-				title: o.title,
-				type: o.type,
-				dataType: o.dataType,
-				description: o.description
-			};
+			var obj = Object.assign({name}, o);
 			var format = model.sql.format.getObj({
 				key: name
 			});

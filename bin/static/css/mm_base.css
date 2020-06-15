@@ -115,7 +115,7 @@ thead th>span{line-height: 2rem;}
 thead th{border-bottom:2px solid rgba(125,125,125,0.25);vertical-align:bottom;}
 tbody tr:hover { background-color: rgba(0,100,200,.075) !important; }
 td{border:1px solid rgba(125,125,125,0.25);padding:.5rem .75rem;white-space:nowrap;}
-dt{display:block;clear:left;float:left;font-weight:400;padding:.5rem; min-width: 6rem; }
+dt{display:block;clear:left;float:left;font-weight:400;padding:.5rem; min-width: 7rem; }
 dt>span, dd>span{ line-height: 2rem; }
 dd{display:block;padding:.5rem .75rem;float: left;}
 li{ position: relative; }

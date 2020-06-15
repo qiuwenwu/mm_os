@@ -8,8 +8,9 @@
 					</header>
 					<dl>
 						<!--{loop field v idx}-->
-							<!--{if(v.format)}-->
+							<!--{if idx > 0}-->
 						<dt>${v.title}</dt>
+							<!--{if(v.format)}-->
 								<!--{if(v.format.table)}-->
 						<dd>
 							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label}, '${v.format.key}')" />
@@ -17,6 +18,27 @@
 								<!--{else}-->
 						<dd>
 							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label})" />
+						</dd>
+								<!--{/if}-->
+							<!--{else if(v.dataType.indexOf('time') !== -1 || v.dataType.indexOf('date') !== -1)}-->
+						<dd>
+							<mm_time v-model="form.${v.name}" type="datetime" />
+						</dd>
+							<!--{else if(v.dataType.indexOf('tinyint') !== -1)}-->
+						<dd>
+							<mm_switch v-model="form.${v.name}" />
+						</dd>
+							<!--{else if(v.dataType.indexOf('text') !== -1)}-->
+						<dd>
+							<mm_textarea v-model="form.${v.name}" type="text" placeholder="${v.description}" />
+						</dd>
+							<!--{else if(v.type === 'number' && v.name.indexOf('id') === -1)}-->
+						<dd>
+							<mm_number v-model="form.${v.name}" :min="0" :max="${v.number ? v.number.max : 0}" />
+						</dd>
+							<!--{else}-->
+						<dd>
+							<mm_input v-model="form.${v.name}" :minlength="0" :maxlength="${v.string ? v.string.max : 0}" placeholder="${v.description}" />
 						</dd>
 								<!--{/if}-->
 							<!--{/if}-->

@@ -7,6 +7,30 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}系统配置</h5>
 					</header>
 					<dl>
+						<dt>变量名</dt>
+						<dd>
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>数据类型</dt>
+						<dd>
+							<mm_input v-model="form.type" :minlength="0" :maxlength="0" placeholder="string文本型、number数字型、boolean布尔型" />
+						</dd>
+						<dt>变量标题</dt>
+						<dd>
+							<mm_input v-model="form.title" :minlength="0" :maxlength="0" placeholder="可以用中文名" />
+						</dd>
+						<dt>变量值</dt>
+						<dd>
+							<mm_input v-model="form.value" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>变量描述</dt>
+						<dd>
+							<mm_input v-model="form.description" :minlength="0" :maxlength="0" placeholder="描述该变量的作用" />
+						</dd>
+						<dt>数据模型</dt>
+						<dd>
+							<mm_textarea v-model="form.model" type="text" placeholder="json格式，用于单选、多选模式" />
+						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">

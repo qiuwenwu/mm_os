@@ -7,6 +7,18 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}应用刷新</h5>
 					</header>
 					<dl>
+						<dt>用户ID</dt>
+						<dd>
+							<mm_input v-model="form.user_id" :minlength="0" :maxlength="0" placeholder="表示当前Token绑定的用户uid" />
+						</dd>
+						<dt>应用ID</dt>
+						<dd>
+							<mm_input v-model="form.appid" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>刷新令牌</dt>
+						<dd>
+							<mm_input v-model="form.refresh_token" :minlength="0" :maxlength="0" placeholder="用来刷新访问牌，保留30天" />
+						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">
