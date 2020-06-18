@@ -557,7 +557,7 @@ Drive.prototype.get_format = async function(db) {
 Drive.prototype.import_main = async function(db, file) {
 	var params = await this.get_params();
 	var format = await this.get_format(db);
-	file = file.fullname($.config.path.static);
+	file = file.fullname($.config.path.user || $.config.path.static);
 	if(!file.hasFile()){
 		return $.ret.error(30000, file + "文件不存在！");
 	}
@@ -631,13 +631,17 @@ Drive.prototype.export_main = async function(db, query, body) {
 			uid = db.user.user_id;
 		}
 		file = './user/' + uid + '/' + this.config.table + '.xlsx';
-		file.addDir($.config.path.static);
+		file.addDir($.config.path.user || $.config.path.static);
 	}
 	if (!fields && query.field) {
 		fields = query.field;
 	}
 	var params = await this.get_params(fields);
 	var format = await this.get_format(db);
+	
+	if(!path){
+		path = $.config.path.user;
+	}
 	file = file.fullname(path || $.config.path.static);
 	var excel = new Excel({
 		file,

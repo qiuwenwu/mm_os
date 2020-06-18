@@ -1,6 +1,6 @@
 {
 	"name": "mm_os",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"description": "这是超级美眉web、websocket函数式编程服务端框架。",
 	"main": "index.js",
 	"scripts": {

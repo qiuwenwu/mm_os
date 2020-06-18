@@ -739,7 +739,7 @@ MM.prototype.run_server = function(config) {
 		this.use(servers[k].call);
 	}
 	this.servers = servers;
-}
+};
 
 /**
  * 运行

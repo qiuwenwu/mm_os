@@ -24,10 +24,6 @@ define(function() {
 				url_upload: "",
 				// 获取的列表
 				list: [],
-				// 获取上一页列表
-				list_prev: [],
-				// 获取下一页列表
-				list_next: [],
 				// 视图&验证模型
 				vm: {},
 				// 提交表单
@@ -90,12 +86,17 @@ define(function() {
 			 * @param {String} name 事件名
 			 * @param {Object} param1 参数1
 			 * @param {Object} param2 参数2
+			 * @param {Object} param3 参数3
 			 * @return {Object} 返回事件特定值
 			 */
-			events: function events(name, param1, param2) {
+			events: function events(name, param1, param2, param3) {
 				// console.log(name);
 				if (this[name]) {
-					return this[name](param1, param2);
+					if (param3) {
+						return this[name](param1, param2, param3);
+					} else {
+						return this[name](param1, param2);
+					}
 				} else {
 					return null;
 				}
@@ -324,12 +325,7 @@ define(function() {
 			 * @param {Object} value 要添加的数据
 			 */
 			add_main: function add_main(value, func) {
-				var url = "";
-				if (this.url) {
-					url = this.url + "method=add";
-				} else {
-					url = this.url_add;
-				}
+				var url = this.url ? this.url + "method=add" : this.url_add;
 				if (!url) {
 					return;
 				}
@@ -351,11 +347,9 @@ define(function() {
 			 * @param {Function} func 删除回调函数函数
 			 */
 			del_main: function del_main(query, func) {
-				var url = "";
-				if (this.url) {
-					url = this.url + "method=del";
-				} else {
-					url = this.url_del;
+				var url = this.url ? this.url + "method=del" : this.url_del;
+				if (!url) {
+					return;
 				}
 				var _this = this;
 				this.$get(url, query, function(json) {
@@ -385,12 +379,7 @@ define(function() {
 			 * @param {Object} value 修改项
 			 */
 			set_main: function set_main(value, func) {
-				var url = "";
-				if (this.url) {
-					url = this.url + "method=set";
-				} else {
-					url = this.url_set;
-				}
+				var url = this.url ? this.url + "method=set" : this.url_set;
 				if (!url) {
 					return;
 				}
@@ -430,19 +419,14 @@ define(function() {
 			 * @param {Function} func 回调函数
 			 */
 			get_main: function get_main(query, func) {
-				var url = "";
-				if (this.url) {
-					url = this.url + "method=get";
-				} else {
-					url = this.url_get_obj;
-				}
+				var url = this.url ? this.url : this.url_get_obj;
 				if (url) {
 					var _this = this;
 					this.get_obj(query, function() {
-						_this.get_first(query, func);
+						_this.search(query, func);
 					});
 				} else {
-					this.get_first(query, func);
+					this.search(query, func);
 				}
 			},
 			/**
@@ -470,17 +454,14 @@ define(function() {
 			 */
 			get_obj_main: function get_obj_main(query, func) {
 				// console.log("get_obj_main");
-				var url = "";
-				if (this.url) {
-					url = this.url + "method=get";
-				} else {
-					url = this.url_get_obj;
-				}
+				var url = this.url ? this.url + "method=get_obj" : this.url_get_obj;
 				if (!url) {
 					return;
 				}
+
 				var _this = this;
 				this.$get(this.toUrl(query, url), null, function(json, status) {
+					_this.events("get_obj_after", json, func);
 					var res = json.result;
 					if (res) {
 						var obj;
@@ -501,30 +482,29 @@ define(function() {
 							} else {
 								$.push(_this.obj, obj);
 							}
+							var o = _this.obj;
+							for (var k in o) {
+								if (k.indexOf('time') !== -1) {
+									var v = new Date(o[k]);
+									o[k] = v.toStr('yyyy-MM-dd hh:mm:ss');
+								}
+							}
+							$.push(_this.form, _this.obj);
 						}
 					} else if (json.error) {
 						console.log(json.error.message);
 					} else {
 						_this.toast("服务器连接失败！");
 					}
-					_this.events("get_obj_after", res);
-
-					if (func) {
-						func(res);
-					}
 				});
 			},
 			/**
 			 * @description 获取到对象后事件
-			 * @param {Object} res 响应结果
+			 * @param {Object} json 响应结果
 			 */
-			get_obj_after: function get_obj_after(res) {
-				$.push(this.form, this.obj);
-				var o = this.form;
-				for (var k in o) {
-					if (k.indexOf('time') !== -1) {
-						o[k] = o[k].replace('T', ' ').replace('Z', '').replace('.000', '').replace('Z', '');
-					}
+			get_obj_after: function get_obj_after(json, func) {
+				if (func) {
+					func(json);
 				}
 			},
 			/**
@@ -533,8 +513,7 @@ define(function() {
 			 * @param {Function} func 回调函数
 			 */
 			get_list_main: function get_list_main(query, func) {
-				// console.log("get_list_main");
-				var url = this.url_get_list;
+				var url = this.url ? this.url : this.url_get_list;
 				if (!url) {
 					return;
 				}
@@ -542,11 +521,14 @@ define(function() {
 				this.loading = 0;
 				this.$get(this.toUrl(query, url), null, function(json, status) {
 					_this.loading = 100;
+					if (_this.clear_list) {
+						_this.list.clear();
+					}
+					_this.events("get_list_after", json, func, url);
 					var res = json.result;
 					if (res) {
-						if (_this.list.length === 0 && _this.count === 0) {
-							_this.list.addList(res.list);
-						}
+						_this.page_now = _this.query.page;
+						_this.list.addList(res.list);
 						if (res.count !== undefined) {
 							_this.count = res.count;
 						}
@@ -555,56 +537,32 @@ define(function() {
 					} else {
 						_this.toast("服务器连接失败！");
 					}
-
-					_this.events("get_list_after", res);
-					if (func) {
-						func(res);
-					}
 				});
 			},
 			/**
 			 * @description 获取到列表事件
 			 * @param {Object} res 响应结果
 			 */
-			get_list_after: function get_list_after(res) {
-				this.page_now = this.query.page;
+			get_list_after: function get_list_after(res, func, url) {
+				if (func) {
+					func(res, url);
+				}
 			},
 			/**
 			 * 搜索
 			 * @param {Object} query 查询条件
 			 * @param {Boolean} bl 是否重置再搜索
 			 */
-			search: function search(query, bl) {
-				if (bl) {
-					this.reset();
-				}
+			search: function search(query, func) {
 				if (query) {
 					$.push(this.query, query);
 				}
-				this.query.page = 1;
-				$.route.push("?" + this.toUrl(this.query));
-				this.get_first(this.query);
-			},
-			/**
-			 * 请求上下页数据
-			 * @param {Object} res 结果
-			 */
-			get_prev_next(res) {
-				var _this = this;
-				var query = this.query;
-				if (query.page < this.page_count) {
-					var q = Object.assign({}, query);
-					q.page += 1;
-					_this.get_list(q, function(res) {
-						_this.list_next = res.list;
-					});
-				}
-				if (query.page > 1) {
-					var q = Object.assign({}, query);
-					q.page -= 1;
-					_this.get_list(q, function(res) {
-						_this.list_prev = res.list;
-					});
+				var url = this.url ? this.url : this.url_get_list;
+				if(url){
+					this.query.page = 1;
+					this.count = 0;
+					$.route.push("?" + this.toUrl(this.query));
+					this.first(query, func);
 				}
 			},
 			/**
@@ -612,91 +570,66 @@ define(function() {
 			 * @param {Object} query 查询条件
 			 * @param {Function} func 回调函数
 			 */
-			get_first: function get_first(query, func) {
+			first: function first(query, func) {
 				var _this = this;
-				_this.loading = 0;
-				this.list.clear();
-				this.list_next.clear();
-				this.list_prev.clear();
-				_this.count = 0;
-				var q = Object.assign({
-					count_ret: "true"
-				}, query);
-				if (this.mode === "list") {
-					this.get_list(q, function(res) {
-						_this.loading = 100;
-						if (func) {
-							func(res);
-						}
-						_this.get_prev_next(res);
+				if (!this.count) {
+					var qy = Object.assign({}, this.query, {
+						count_ret: "true"
 					});
+					this.get_list(qy, func);
 				} else {
-					this.get_list(q, function(res) {
-						_this.loading = 100;
-						if (func) {
-							func(res);
-						}
-					});
+					this.get_list(query, func);
 				}
 			},
 			/**
 			 * @description 查询下一页数据
 			 * @param {Function} func 回调函数
 			 */
-			next: function next(func) {
+			next: function next(query, func) {
 				console.log("next");
-				var list_next = this.list_next;
-				this.list_prev = [];
-				this.list_prev.addList(this.list);
-				if (this.clear_list) {
-					this.list.clear()
-				}
-				this.list.addList(list_next);
-				list_next.clear();
-				if (this.query.page < this.page_count || this.page_count === 0) {
-					var q = Object.assign({}, this.query);
-					q.page += 1;
-					this.get_list(q, function(res, f) {
-						if (res.list) {
-							list_next.addList(res.list);
+				var _this = this;
+				_this.get_list(query, function(json, url) {
+					if (json.result) {
+						var list = json.result.list;
+						if (list.length > 0) {
+							var qy = Object.assign({}, query, {
+								page: query.page + 1
+							});
+							if (qy.page <= _this.page_count) {
+								delete qy.count_ret;
+								_this.$get(_this.toUrl(qy, url));
+							}
 						}
-						if (func) {
-							func(res);
-						}
-						return [];
-					});
-				}
+					}
+					if (func) {
+						func(json);
+					}
+				});
 			},
 			/**
 			 * @description 查询上一页数据
 			 * @param {Function} func 回调函数
 			 */
-			prev: function prev(func) {
+			prev: function prev(query, func) {
 				console.log("prev");
-				var lt = this.list;
-				this.list_next = [];
-				this.list_next.addList(this.list);
-				if (this.clear_list) {
-					this.list.clear();
-				}
-				var list_prev = this.list_prev;
-				list_prev.addList(lt);
-				this.list.clear();
-				this.list.addList(list_prev);
-				list_prev.clear();
-				var q = Object.assign({}, this.query);
-				if (q.page > 1) {
-					q.page -= 1;
-					this.get_list(q, function(res, f) {
-						if (res.list) {
-							list_prev.addList(res.list);
+				var _this = this;
+				this.get_list(query, function(json, url) {
+					if (json.result) {
+						var list = json.result.list;
+						if (list.length > 0) {
+							var qy = Object.assign({}, query, {
+								page: query.page - 1
+							});
+							if (qy.page >= 1) {
+								delete qy.count_ret;
+								_this.$get(_this.toUrl(qy, url));
+							}
 						}
-						if (func) {
-							func(res);
-						}
-						return [];
-					});
-				}
+					}
+					if (func) {
+						func(res);
+					}
+				});
 			},
 			/**
 			 * 重置
@@ -743,7 +676,7 @@ define(function() {
 					this.$post(url, param, function(json, status) {
 						_this.events("submit_after", json, func);
 						if (json.result) {
-							// _this.toast(json.result.tip);
+							_this.toast(json.result.tip);
 							_this.$back();
 						} else if (json.error) {
 							_this.toast(json.error.message);
@@ -793,14 +726,16 @@ define(function() {
 				var p = query.page;
 				query.page = page;
 				$.route.push("?" + this.toUrl(query));
-				if (p + 1 == page) {
-					this.next();
-				} else if (p - 1 == page) {
-					this.prev();
-				} else if (p == 1 && page !== 1) {
-					this.get_first(query);
-				} else if (p == this.page_count && page !== this.page_count) {
-					this.get_first(query);
+				if (this.page_count !== 0) {
+					if (p + 1 == page) {
+						this.next(query);
+					} else if (p - 1 == page) {
+						this.prev(query);
+					} else {
+						this.first(query);
+					}
+				} else {
+					this.first(query);
 				}
 			},
 			/**

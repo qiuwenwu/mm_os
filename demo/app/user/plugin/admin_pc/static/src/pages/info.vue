@@ -11,7 +11,7 @@
 							<h5><span>筛选条件</span></h5>
 							<mm_list col="3">
 								<mm_col>
-									<mm_input v-model="query.keyword" title="关键词" desc="用于搜索姓名(name)" @blur="search()" />
+									<mm_input v-model="query.keyword" title="关键词" desc="姓名" @blur="search()" />
 								</mm_col>
 								<mm_col>
 									<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>

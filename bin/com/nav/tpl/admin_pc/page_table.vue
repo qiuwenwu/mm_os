@@ -14,7 +14,7 @@
 								<!--{loop param.list v idx}-->
 									<!--{if(v.name == 'keyword')}-->
 								<mm_col>
-									<mm_input v-model="query.keyword" title="${v.title}" desc="${v.description.re}" @blur="search()" />
+									<mm_input v-model="query.keyword" title="${v.title}" desc="${v.description}" @blur="search()" />
 								</mm_col>
 									<!--{/if}-->
 								<!--{/loop}-->
@@ -213,24 +213,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#${id} {}
-
-	/* 表单 */
-	#${id} .mm_form {}
-
-	/* 筛选栏栏 */
-	#${id} .mm_filter {}
-
-	/* 操作栏 */
-	#${id} .mm_action {}
-
-	/* 模态窗 */
-	#${id} .mm_modal {}
-
-	/* 表格 */
-	#${id} .mm_table {}
-
-	/* 数据统计 */
-	#${id} .mm_data_count {}
 </style>
