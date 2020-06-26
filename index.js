@@ -104,7 +104,7 @@ class MM {
 				 * 是否启用定时任务服务
 				 * @type {Boolean}
 				 */
-				task: true,
+				task: false,
 				/**
 				 * 是否启用压缩
 				 * @type {Boolean}
@@ -402,7 +402,15 @@ class MM {
 				next();
 			}
 		});
-
+		
+		if (this.config.sys.task && $.event_admin) {
+			// 创建一个任务管理器
+			$.task = $.task_admin('sys');
+			$.task.update();
+			// 启动计时器
+			$.timer.start();
+			console.log('已启动定时任务！');
+		};
 		return server;
 	}
 }
@@ -758,18 +766,23 @@ MM.prototype.run = function(func) {
 			$.log.info('启动服务', `访问地址 http://${host}:${port}`);
 		}
 	}
-
-	if (!threads) {
-		threads = require('os').cpus().length;
-	}
-
-	if (cluster.isMaster) {
-		for (var i = 0; i < threads; i++) {
-			cluster.fork();
-		}
-		cluster.on('listening', function(worker, address) {});
-	} else if (cluster.isWorker) {
+	
+	if(threads == 1){
 		this.listen(port, host, func);
+	}
+	else {
+		if (!threads) {
+			threads = require('os').cpus().length;
+		}
+		
+		if (cluster.isMaster) {
+			for (var i = 0; i < threads; i++) {
+				cluster.fork();
+			}
+			cluster.on('listening', function(worker, address) {});
+		} else if (cluster.isWorker) {
+			this.listen(port, host, func);
+		}
 	}
 };
 
