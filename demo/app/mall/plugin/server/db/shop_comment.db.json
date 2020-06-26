@@ -42,7 +42,7 @@
             "max": 1,
             "decimal": 0,
             "default": "1",
-            "map": "",
+            "map": "0否|是",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -105,7 +105,7 @@
             "max": 8388607,
             "decimal": 0,
             "default": "1",
-            "map": "",
+            "map": "mall_shop.name",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -126,7 +126,7 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "user_account.nickname",
             "join_in": [],
             "join_out": [],
             "position": []

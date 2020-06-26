@@ -29,7 +29,7 @@
         {
             "name": "state",
             "title": "状态",
-            "description": "1待抓取、2抓取中、3待测评、4已关闭",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -42,7 +42,7 @@
             "max": 9,
             "decimal": 0,
             "default": "1",
-            "map": "",
+            "map": "1待抓取|2抓取中|3待测评|4已关闭",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -63,7 +63,7 @@
             "max": 2147483647,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "user_account.nickname",
             "join_in": [],
             "join_out": [],
             "position": []

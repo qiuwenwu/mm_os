@@ -42,7 +42,7 @@
             "max": 32767,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "query_article.title",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -63,7 +63,7 @@
             "max": 2147483647,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "user_account.nickname",
             "join_in": [],
             "join_out": [],
             "position": []

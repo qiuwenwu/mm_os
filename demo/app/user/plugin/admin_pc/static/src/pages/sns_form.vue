@@ -70,7 +70,7 @@
 		data() {
 			return {
 				url_submit: "/apis/user/sns?",
-				url_get_obj: "/apis/user/sns",
+				url_get_obj: "/apis/user/sns?method=get_obj",
 				field: "user_id",
 				query: {
 					"user_id": 0
@@ -88,6 +88,16 @@
 						"taobao": '',
 						"taobao_state": 0,
 				},
+				// QQ认证
+				'arr_qq_state': ['未认证','已认证'],
+				// 微信认证
+				'arr_wechat_state': ['未认证','已认证'],
+				// MM认证
+				'arr_mm_state': ['未认证','已认证'],
+				// 百度认证
+				'arr_baidu_state': ['未认证','已认证'],
+				// 淘宝认证
+				'arr_taobao_state': ['未认证','已认证'],
 			}
 		},
 		methods: {
@@ -98,52 +108,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

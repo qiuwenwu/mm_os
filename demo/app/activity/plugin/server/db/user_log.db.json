@@ -216,7 +216,7 @@
             "position": []
         },
         {
-            "name": "uin_prize winners",
+            "name": "uin_prize_winners",
             "title": "颁奖者uin",
             "description": "",
             "type": "varchar",

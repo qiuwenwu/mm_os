@@ -334,6 +334,8 @@ function delete_prop(obj, includeZero) {
 	return o;
 }
 
+
+
 /**
  * @namespace
  * @property {Object} pool 数据连接池, 用于存储有关数据库的操作类
@@ -972,6 +974,62 @@ if (typeof($) === "undefined") {
 
 /* == 数组原型函数 == */
 (function() {
+	/**
+	 * 列表转树形列表
+	 * @param {Array} list 列表
+	 * @param {String} id ID字段
+	 * @param {Number} value ID对应值
+	 * @param {String} father_id 上级ID字段
+	 * @param {String} sub 子类字段
+	 * @return {Array} 返回属性值
+	 */
+	function toTree(list, id, value = 0, father_id = 'father_id', sub = 'sub') {
+		var arr = [];
+		for (var i = 0; i < list.length; i++) {
+			var o = list[i];
+			if (o[father_id] === value) {
+				o[sub] = toTree(list, id, o[id]);
+				arr.push(o);
+			}
+		}
+		return arr;
+	}
+	
+	function toList(list, sub = 'sub', arr = []){
+		for(var i = 0; i < list.length; i++){
+			var o = list[i];
+			var lt = o[sub];
+			delete o[sub];
+			arr.push(o);
+			if(lt && lt.length > 0){
+				toList(lt, sub, arr);
+			}
+		}
+		return arr;
+	}
+	
+	/**
+	 * 列表转树形列表
+	 * @param {String} id ID字段
+	 * @param {Number} value ID对应值
+	 * @param {String} father_id 上级ID字段
+	 * @param {String} sub 子类字段
+	 * @return {Array} 返回数组
+	 */
+	Array.prototype.toTree = function(id, value = 0, father_id = 'father_id', sub = 'sub') {
+		return toTree(this, id, value, father_id, sub);
+	};
+	
+	/**
+	 * 列表转树形列表
+	 * @param {String} sub 子类字段
+	 * @param {Array} arr 结果数组
+	 * @return {Array} 返回数组
+	 */
+	Array.prototype.toList = function (sub = 'sub', arr = []){
+		return toList(this, sub, arr);
+	};
+	
 	/**
 	 * @description 拷贝对象
 	 * @param {Boolean} has 是否非空拷贝，如果含有数据才拷贝，不含数据不拷贝
@@ -2164,7 +2222,7 @@ if (typeof($) === "undefined") {
 		 */
 		set: function(key, value, longTime) {
 			var expires = null;
-			if(longTime){
+			if (longTime) {
 				var time = Date.now();
 				expires = time + longTime * 60000;
 			}
@@ -2188,14 +2246,12 @@ if (typeof($) === "undefined") {
 					if (data) {
 						if (data.expires) {
 							var time = new Date(data.expires);
-							if(time > Date.now()){
+							if (time > Date.now()) {
 								value = data.value;
-							}
-							else {
+							} else {
 								window.localStorage.removeItem(key);
 							}
-						}
-						else {
+						} else {
 							value = data.value;
 						}
 					}
@@ -2203,8 +2259,7 @@ if (typeof($) === "undefined") {
 					console.log(e);
 					value = text;
 				}
-			}
-			else {
+			} else {
 				value = text;
 			}
 			return value;

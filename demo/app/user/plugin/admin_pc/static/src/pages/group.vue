@@ -11,7 +11,10 @@
 							<h5><span>筛选条件</span></h5>
 							<mm_list col="3">
 								<mm_col>
-									<mm_input v-model="query.keyword" title="关键词" desc="用户名称 / 描述" @blur="search()" />
+									<mm_input v-model="query.keyword" title="关键词" desc="名称 / 描述" @blur="search()" />
+								</mm_col>
+								<mm_col>
+									<mm_select v-model="query.next_group_id" title="下级用户组" :options="$to_kv(list_group, 'group_id', 'name')" @change="search()" />
 								</mm_col>
 								<mm_col>
 									<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
@@ -30,49 +33,69 @@
 								<tr>
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
-									<th scope="col" class="th_smallint">
+									<th scope="col">
+										<mm_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
+									</th>
+									<th scope="col">
 										<mm_reverse title="等级划分" v-model="query.orderby" field="level" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_mediumint">
-										<mm_reverse title="下级用户组ID" v-model="query.orderby" field="next_group_id" :func="search"></mm_reverse>
+									<th scope="col">
+										<mm_reverse title="下级用户组" v-model="query.orderby" field="next_group_id" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="升级所需经验" v-model="query.orderby" field="exp" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_double">
+									<th scope="col">
 										<mm_reverse title="折扣" v-model="query.orderby" field="discount" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_double">
+									<th scope="col">
 										<mm_reverse title="奖励比例" v-model="query.orderby" field="bonus" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="应用" v-model="query.orderby" field="app" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
-										<mm_reverse title="用户名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
+									<th scope="col">
+										<mm_reverse title="名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="描述" v-model="query.orderby" field="description" :func="search"></mm_reverse>
-									</th>
-									<th scope="col" class="th_text">
-										<mm_reverse title="图标" v-model="query.orderby" field="icon" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(o, idx) in list" :key="idx">
+								<tr v-for="(o, idx) in list" :key="idx" :class="{'active': select == idx}" @click="selected(idx)">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
-									<th scope="row"><span>{{ o[field] }}</span></th>
-									<td><span class="th_smallint">{{ o.level }}</span></td>
-									<td><span class="th_mediumint">{{ o.next_group_id }}</span></td>
-									<td><span class="th_int">{{ o.exp }}</span></td>
-									<td><span class="th_double">{{ o.discount }}</span></td>
-									<td><span class="th_double">{{ o.bonus }}</span></td>
-									<td><span class="th_varchar">{{ o.app }}</span></td>
-									<td><span class="th_varchar">{{ o.name }}</span></td>
-									<td><span class="th_varchar">{{ o.description }}</span></td>
-									<td><span class="th_text">{{ o.icon }}</span></td>
+									<td>
+										<span>{{ o.group_id }}</span>
+									</td>
+									<td>
+										<input class="td_display" v-model.number="o.display" @blur="set(o)" min="0" max="1000" />
+									</td>
+									<td>
+										<span>{{ o.level }}</span>
+									</td>
+									<td>
+										<span>{{ get_name(list_group, o.next_group_id, 'group_id', 'name') }}</span>
+									</td>
+									<td>
+										<span>{{ o.exp }}</span>
+									</td>
+									<td>
+										<span>{{ o.discount }}</span>
+									</td>
+									<td>
+										<span>{{ o.bonus }}</span>
+									</td>
+									<td>
+										<span>{{ o.app }}</span>
+									</td>
+									<td>
+										<span>{{ o.name }}</span>
+									</td>
+									<td>
+										<span>{{ o.description }}</span>
+									</td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./group_form?group_id=' + o[field]">修改</mm_btn>
 										<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
@@ -109,6 +132,10 @@
 				</header>
 				<mm_body>
 					<dl>
+						<dt>下级用户组</dt>
+						<dd>
+							<mm_select v-model="form.next_group_id" :options="$to_kv(list_group, 'group_id', 'name')" />
+						</dd>
 					</dl>
 				</mm_body>
 				<footer>
@@ -143,70 +170,72 @@
 					page: 1,
 					//页面大小
 					size: 10,
-					//用户组ID
+					// 用户组ID
 					'group_id': 0,
-					//显示顺序——最小值
+					// 显示顺序——最小值
 					'display_min': 0,
-					//显示顺序——最大值
+					// 显示顺序——最大值
 					'display_max': 0,
-					//等级划分——最小值
+					// 等级划分——最小值
 					'level_min': 0,
-					//等级划分——最大值
+					// 等级划分——最大值
 					'level_max': 0,
-					//升级所需经验——最小值
+					// 升级所需经验——最小值
 					'exp_min': 0,
-					//升级所需经验——最大值
+					// 升级所需经验——最大值
 					'exp_max': 0,
-					//折扣——最小值
+					// 折扣——最小值
 					'discount_min': 0,
-					//折扣——最大值
+					// 折扣——最大值
 					'discount_max': 0,
-					//奖励比例——最小值
+					// 奖励比例——最小值
 					'bonus_min': 0,
-					//奖励比例——最大值
+					// 奖励比例——最大值
 					'bonus_max': 0,
-					//用户名称
+					// 名称
 					'name': '',
-					//描述
+					// 描述
 					'description': '',
-					//关键词
+					// 关键词
 					'keyword': '',
 					//排序
 					orderby: ""
 				},
 				form: {},
 				//颜色
-				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
+				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
+				// 下级用户组
+				'list_group': [],
 				// 视图模型
 				vm: {}
 			}
 		},
 		methods: {
+			/**
+			 * 获取下级用户组
+			 * @param {query} 查询条件
+			 */
+			get_group(query){
+				var _this = this;
+				if(!query){
+					query = {
+						field: "group_id,name"
+					};
+				}
+				this.$get('~/apis/user/group?size=0', query, function(json) {
+					if (json.result) {
+						_this.list_group.clear();
+						_this.list_group.addList(json.result.list)
+					}
+				});
+			},
 		},
 		created() {
+			// 获取下级用户组
+			this.get_group();
 		}
 	}
 </script>
 
 <style>
-	/* 页面 */
-	#user_group {}
-
-	/* 表单 */
-	#user_group .mm_form {}
-
-	/* 筛选栏栏 */
-	#user_group .mm_filter {}
-
-	/* 操作栏 */
-	#user_group .mm_action {}
-
-	/* 模态窗 */
-	#user_group .mm_modal {}
-
-	/* 表格 */
-	#user_group .mm_table {}
-
-	/* 数据统计 */
-	#user_group .mm_data_count {}
 </style>

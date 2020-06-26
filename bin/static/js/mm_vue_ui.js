@@ -1843,11 +1843,15 @@ define(['jquery'], function(jquery) {
 	};
 	
 	var mm_input = {
-		template: "<!-- \u8F93\u5165\u6846 --><div class=\"mm_input\"><div class=\"title\" v-if=\"title\" v-html=\"title\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><input :type=\"type\" :value=\"value\" :min=\"min\" :max=\"max\" :minlength=\"min_length\" :maxlength=\"max_length\" :placeholder=\"desc || placeholder\" @input=\"set\" :disabled=\"disabled\" @blur=\"$emit('blur')\" /><slot><span class=\"unit\" v-if=\"unit\">{{ unit }}</span></slot></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
+		template: "<!-- \u8F93\u5165\u6846 --><div class=\"mm_input\"><div class=\"title\" v-if=\"title\" v-html=\"title\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><input :type=\"type\" :value=\"value\" :min=\"min\" :max=\"max\" :minlength=\"min_length\" :maxlength=\"max_length\" :placeholder=\"desc || placeholder\" @input=\"set\" :disabled=\"disabled\" :required=\"required\" @blur=\"$emit('blur')\" /><slot><span class=\"unit\" v-if=\"unit\">{{ unit }}</span></slot></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
 		mixins: [form_mixin],
 		props: {
 			placeholder: {
 				type: String
+			},
+			required: {
+				type: Boolean,
+				default: false
 			}
 		},
 		methods: {
@@ -1882,7 +1886,6 @@ define(['jquery'], function(jquery) {
 			setInt: function setInt(e) {
 				var value = e.target.value ? e.target.value : "0";
 				var num = Number(value);
-				num = parseInt(num / this.num) * this.num;
 				this.call(num);
 			},
 			add: function add() {
@@ -1893,8 +1896,16 @@ define(['jquery'], function(jquery) {
 			},
 			set: function set(e) {
 				var value = e.target.value ? e.target.value : "0";
-				var num = Number(value);
-				e.target.value = this.call(num);
+				if(value == '-' || value.endsWith('.')){
+					
+				}
+				else if(value == '0-'){
+					e.target.value = '-';
+				}
+				else {
+					var num = Number(value);
+					e.target.value = this.call(num);
+				}
 			},
 			call: function call(num) {
 				if (num > this.max && this.max !== 0) {
@@ -1902,7 +1913,6 @@ define(['jquery'], function(jquery) {
 				} else if (num < this.min) {
 					num = this.min;
 				}
-
 				this.$emit("input", num);
 				return num;
 			}
@@ -2029,11 +2039,11 @@ define(['jquery'], function(jquery) {
 		}
 	};
 	var mm_reverse = {
-		template: "<div class=\"mm_reverse\"><div class=\"title\" v-if=\"title\" v-html=\"title\" @click=\"set\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><slot><div class=\"figure\" v-bind:class=\"{ 'reverse_arrow' : display !== '1' }\" @click=\"set\"><span class=\"up\" v-bind:class=\"{'active': seleted === 0 }\"></span><span class=\"down\" v-bind:class=\"{'active': seleted === 1 }\"></span></div></slot></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
+		template: "<div class=\"mm_reverse\"><div class=\"title\" v-if=\"title\" v-html=\"title\" @click=\"set\"></div><div class=\"value\" v-bind:class=\"{'disabled': disabled }\"><slot><div class=\"figure\" v-bind:class=\"{ 'reverse_arrow' : display !== '1' }\" @click=\"set\"><span class=\"up\" v-bind:class=\"{'active': selected === 0 }\"></span><span class=\"down\" v-bind:class=\"{'active': selected === 1 }\"></span></div></slot></div><div class=\"tip\" v-if=\"tip\">{{ tip }}</div></div>",
 		mixins: [form_mixin],
 		methods: {
 			set: function set() {
-				var n = this.seleted;
+				var n = this.selected;
 				n += 1;
 				var lt = this.ops;
 				var v = "";
@@ -2089,22 +2099,22 @@ define(['jquery'], function(jquery) {
 				}
 				return ["asc", "desc"]
 			},
-			seleted: function seleted() {
+			selected: function selected() {
 				if (this.ops) {
 					var lt = this.ops;
 					var val = this.value;
-					var seleted = 2;
+					var selected = 2;
 
 					for (var i = 0; i < lt.length; i++) {
 						var o = lt[i];
 
 						if (val.indexOf(o) !== -1) {
-							seleted = i;
+							selected = i;
 							break;
 						}
 					}
 
-					return seleted;
+					return selected;
 				} else {
 					return 0;
 				}
@@ -2201,7 +2211,11 @@ define(['jquery'], function(jquery) {
 	};
 
 	var mm_upload_img = {
-		template: "<!-- \u56FE\u7247\u4E0A\u4F20\u5668 --><div class=\"mm_upload_img\" @click=\"choose()\" v-bind:class=\"{ 'upload_add': !bg && !value }\">\t<mm_icon :src=\"value\" :style=\"'width:' + width + other\"></mm_icon>\t<slot></slot>\t<input type=\"file\" hidden @change=\"addImg\" :id=\"name\" accept=\"image/*\"/></div>",
+		template: "<!-- \u56FE\u7247\u4E0A\u4F20\u5668 --><div class=\"mm_upload_img\" v-bind:class=\"{ 'upload_add': !bg && !value }\">\t<div @click=\"choose()\"><mm_icon :src=\"value\" :style=\"'width:' + width + other\"></mm_icon>\t<slot></slot>\t<input type=\"file\" hidden @change=\"addImg\" :id=\"name\" accept=\"image/*\"/></div><div class=\"btns\"><mm_btn class='btn_default-x btn_link' v-if=\"value\" @click.native=\"preview = true\">预览</mm_btn><mm_btn class='btn_warning-x btn_link' v-if=\"value\" @click.native=\"$emit('input','')\">删除</mm_btn></div><mm_modal v-model=\"preview\" mask=\"true\"><div><img :src=\"value\" style=\"max-width:100%\" :alt=\"name\" /></div><mm_btn class=\"btn_close\" @click.native=\"preview = false\"><i class=\"fa-close\"></i></mm_btn></mm_modal></div>",
+		model: {
+			prop: 'value',
+			event: 'input'
+		},
 		props: {
 			name: {
 				type: String,
@@ -2246,7 +2260,8 @@ define(['jquery'], function(jquery) {
 			}
 
 			return {
-				other: other
+				other: other,
+				preview: false
 			};
 		},
 		methods: {
@@ -2289,8 +2304,14 @@ define(['jquery'], function(jquery) {
 		},
 		watch: {
 			value: function value(e){
-				if(this.value.indexOf('Z') !== -1){
-					this.$emit("input", new Date(this.value).toStr('yyyy-MM-dd hh:mm:ss'));
+				if(this.type === 'date'){
+					this.$emit("input", new Date(this.value).toStr('yyyy-MM-dd'));
+				}
+				else if(this.type === 'datetime-local'){
+					this.$emit("input", new Date(this.value).toStr('yyyy-MM-ddThh:mm:ss'));
+				}
+				else if(this.value.indexOf('Z') !== -1){
+					this.$emit("input", new Date(this.value).toStr('yyyy-MM-ddThh:mm'));
 				}
 			}
 		}

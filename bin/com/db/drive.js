@@ -34,7 +34,10 @@ class Drive extends Item {
 
 		// 是否设置以下字段为getObj查对象SQL时不可见
 		this.getObj_not = ['password', 'salt', 'display'];
-
+		
+		// 是否设置默认该表仅用户可访问
+		this.query_default_table = ['user'];
+		
 		/**
 		 * 配置参数
 		 */
@@ -554,7 +557,6 @@ Drive.prototype.new_event = async function(dir, path, scope) {
 Drive.prototype.get_format = async function(obj){
 	var map = obj.map;
 	var format = {
-		// key: obj.name.replace('ID', 'id').replace('_id', ''),
 		key: obj.name,
 		title: obj.title.replace('ID', '').replace('id', '')
 	};
@@ -572,6 +574,9 @@ Drive.prototype.get_format = async function(obj){
 			var arr = obj.map.split('.');
 			format.table = arr[0];
 			format.name = arr[1];
+			if(arr.length > 2){
+				format.id = arr[2];
+			}
 		}
 		else {
 			format.table = obj.map;
@@ -598,10 +603,11 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 	var query_default = {};
 	var format = [];
 	var orderby = "";
-	var id = $.dict.user_id;
+	var uid = $.dict.user_id;
 	// 设置sql模板
 	var len = lt.length;
 	var keyword = "";
+	var query_default_user = this.isSet(cg.table, this.query_default_table);
 	for (var i = 0; i < len; i++) {
 		var o = lt[i];
 		var p = o.type;
@@ -630,8 +636,8 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 				if (n === "sort" || n === "display" || n === "orderby") {
 					orderby = '`' + n + '` asc';
 				}
-			} else if (n === id) {
-				query_default[n] = "`" + n + "` = {" + id + "}";
+			} else if (n === uid && query_default_user) {
+				query_default[n] = "`" + n + "` = {" + uid + "}";
 			}
 		}
 		if(o.map){
@@ -655,7 +661,7 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 		orderby_default: '`' + cg.key + '` desc',
 		field_obj: field_obj.replace(',', ''),
 		field_default: field.replace(',', ''),
-		method: 'get',
+		method: 'get get_obj',
 		query,
 		query_default,
 		update,
@@ -666,7 +672,7 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 		if (orderby) {
 			oj.orderby_default = orderby;
 		}
-		if (oj.query_default[id]) {
+		if (oj.query_default[uid]) {
 			oj.filter = {
 				"table": "table",
 				"page": "page",
@@ -676,7 +682,7 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 				"field": "field",
 				"count_ret": "count_ret"
 			};
-			oj.filter[id] = id;
+			oj.filter[uid] = uid;
 		}
 		this.save_file(client + '/sql.json', oj, cover);
 	}
@@ -684,11 +690,11 @@ Drive.prototype.new_sql = async function(client, manage, cover) {
 		delete m.method;
 		m.field_hide = [];
 		m.name += 2;
-		m.field_obj = m.field_obj.replace(",`time_create`", "").replace(",`time_update`", "");
+		m.field_obj = m.field_obj.replace(",`time_create`", "").replace(",`time_update`", "").replace(",`create_time`", "").replace(",`update_time`", "");
 		delete m.query_default;
 		this.save_file(manage + '/sql.json', m, cover);
 	}
-}
+};
 
 /**
  * 保存sql配置

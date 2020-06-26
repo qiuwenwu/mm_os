@@ -159,9 +159,10 @@ define(["Vue"], function(Vue) {
 			 */
 			Vue.prototype.$get = function(url, query, func) {
 				var token = $.db.get("token");
-				var queryStr = query ? $.toUrl(query) : "";
+				var u = url.replace("~/", host);
+				u = query ? $.toUrl(query, u) : u;
 				var _this = this;
-				$.http.get(url.replace("~/", host) + queryStr, function(json, status) {
+				$.http.get(u, function(json, status) {
 					if (json.error) {
 						var msg = json.error.message;
 						if (msg.indexOf('未登录') !== -1 || msg.indexOf('非法') !== -1) {

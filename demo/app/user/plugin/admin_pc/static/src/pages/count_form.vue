@@ -13,7 +13,7 @@
 						</dd>
 						<dt>IQ智商</dt>
 						<dd>
-							<mm_number v-model="form.iq" :min="0" :max="0" />
+							<mm_number v-model="form.iq" :min="80" :max="200" />
 						</dd>
 						<dt>信用度</dt>
 						<dd>
@@ -90,7 +90,7 @@
 		data() {
 			return {
 				url_submit: "/apis/user/count?",
-				url_get_obj: "/apis/user/count",
+				url_get_obj: "/apis/user/count?method=get_obj",
 				field: "user_id",
 				query: {
 					"user_id": 0
@@ -123,52 +123,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

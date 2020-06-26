@@ -9,7 +9,7 @@
 					<dl>
 						<dt>是否可用</dt>
 						<dd>
-							<mm_select v-model="form.available" :options="$to_kv(arr_available)" />
+							<mm_switch v-model="form.available" />
 						</dd>
 						<dt>加解密方式</dt>
 						<dd>
@@ -29,19 +29,19 @@
 						</dd>
 						<dt>持有者</dt>
 						<dd>
-							<mm_select v-model="form.user_id" :options="$to_kv(list_account, 'user_id')" />
+							<mm_select v-model="form.user_id" :options="$to_kv(list_account, 'user_id', 'nickname')" />
 						</dd>
 						<dt>请求总次数</dt>
 						<dd>
 							<mm_number v-model="form.times_count" :min="0" :max="2147483647" />
 						</dd>
-						<dt>应用名称</dt>
+						<dt class="required">应用名称</dt>
 						<dd>
-							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="用于用户登陆时显示授权应用" />
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="用于用户登陆时显示授权应用" :required="true"/>
 						</dd>
-						<dt>应用ID</dt>
+						<dt class="required">应用ID</dt>
 						<dd>
-							<mm_input v-model="form.appid" :minlength="0" :maxlength="0" placeholder="用于应用授权访问时的账号" />
+							<mm_input v-model="form.appid" :minlength="0" :maxlength="0" placeholder="用于应用授权访问时的账号" :required="true"/>
 						</dd>
 						<dt>消息访问令牌</dt>
 						<dd>
@@ -51,13 +51,13 @@
 						<dd>
 							<mm_input v-model="form.encoding_aes_key" :minlength="0" :maxlength="0" placeholder="用于给应用发送消息时的加密钥匙" />
 						</dd>
-						<dt>应用密钥</dt>
+						<dt class="required">应用密钥</dt>
 						<dd>
-							<mm_input v-model="form.appsecret" :minlength="0" :maxlength="0" placeholder="用于应用授权访问时的密码" />
+							<mm_input v-model="form.appsecret" :minlength="0" :maxlength="0" placeholder="用于应用授权访问时的密码" :required="true"/>
 						</dd>
 						<dt>应用图标</dt>
 						<dd>
-							<mm_textarea v-model="form.icon" type="text" placeholder="用于用户登录时显示" />
+							<mm_upload_img width="10rem" height="10rem" name="icon" type="text" v-model="form.icon" />
 						</dd>
 						<dt>消息访问地址</dt>
 						<dd>
@@ -102,7 +102,7 @@
 		data() {
 			return {
 				url_submit: "/apis/sys/app?",
-				url_get_obj: "/apis/sys/app",
+				url_get_obj: "/apis/sys/app?method=get_obj",
 				field: "app_id",
 				query: {
 					"app_id": 0
@@ -128,11 +128,11 @@
 						"scope_not": '',
 						"users": '',
 				},
-				//是否可用
+				// 是否可用
 				'arr_available': ['否','是'],
-				//加解密方式
+				// 加解密方式
 				'arr_encrypt': ['','明文模式','兼容模式','安全模式'],
-				//持有者
+				// 持有者
 				'list_account': [],
 			}
 		},
@@ -143,7 +143,12 @@
 				 */
 				get_account(query){
 					var _this = this;
-					this.$get('~/api/user/account?size=0', query, function(json) {
+					if(!query){
+						query = {
+							field: "user_id,nickname"
+						};
+					}
+					this.$get('~/apis/user/account?size=0', query, function(json) {
 						if (json.result) {
 							_this.list_account.clear();
 							_this.list_account.addList(json.result.list)
@@ -159,52 +164,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

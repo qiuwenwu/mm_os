@@ -21,13 +21,15 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "sex",
             "title": "性别",
-            "description": "0未设置、1男、2女",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -40,13 +42,15 @@
             "max": 2,
             "decimal": 0,
             "default": "0",
+            "map": "0未设置|1男|2女",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "idcard_state",
             "title": "身份实名认证",
-            "description": "1为未认证，2为认证中，3为认证通过",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -59,8 +63,10 @@
             "max": 10,
             "decimal": 0,
             "default": "0",
+            "map": "1未认证|2认证中|3认证通过",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "age",
@@ -78,8 +84,10 @@
             "max": 150,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "province_id",
@@ -97,8 +105,10 @@
             "max": 2147483647,
             "decimal": 0,
             "default": "0",
+            "map": "sys_address_province",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "city_id",
@@ -116,8 +126,10 @@
             "max": 2147483647,
             "decimal": 0,
             "default": "0",
+            "map": "sys_address_city",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "birthday",
@@ -135,8 +147,10 @@
             "max": 0,
             "decimal": 0,
             "default": "1970-01-01",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "name",
@@ -154,8 +168,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "job",
@@ -173,8 +189,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "school",
@@ -192,8 +210,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "major",
@@ -211,8 +231,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "idcard",
@@ -230,8 +252,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "company_address",
@@ -249,8 +273,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "address",
@@ -268,8 +294,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "job_scope",
@@ -287,8 +315,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "company_business",
@@ -306,8 +336,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "idcard_img",
@@ -325,8 +357,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         }
     ]
 }

@@ -23,7 +23,7 @@
 									<!--{if(v.format)}-->
 										<!--{if(v.format.table)}-->
 								<mm_col>
-									<mm_select v-model="query.${v.format.key}" title="${v.title}" :options="$to_kv(${v.label}, '${v.format.key}')" @change="search()" />
+									<mm_select v-model="query.${v.format.key}" title="${v.title}" :options="$to_kv(${v.label}, '${v.format.id || v.format.key}', '${v.format.name}')" @change="search()" />
 								</mm_col>
 										<!--{else}-->
 								<mm_col>
@@ -51,7 +51,7 @@
 									<th scope="col" class="th_id"><span>#</span></th>
 									<!--{loop field v idx}-->
 										<!--{if(idx > 0)}-->
-									<th scope="col" class="th_${v.dataType}">
+									<th scope="col">
 										<mm_reverse title="${v.title}" v-model="query.orderby" field="${v.name}" :func="search"></mm_reverse>
 									</th>
 										<!--{/if}-->
@@ -62,19 +62,32 @@
 							<tbody>
 								<tr v-for="(o, idx) in list" :key="idx">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
-									<th scope="row"><span>{{ o[field] }}</span></th>
 									<!--{loop field v idx}-->
-										<!--{if(v.format)}-->
+									<td>
+										<!--{if(v.dataType === 'tinyint')}-->
+										<mm_switch v-model="o.${v.name}" @click.native="set(o)" />
+										<!--{else if(v.format)}-->
 											<!--{if(v.format.table)}-->
-									<td><span class="th_${v.dataType}">{{ get_name(${v.label}, o.${v.format.key}, '${v.format.key}') }}</span></td>
+										<span>{{ get_name(${v.label}, o.${v.format.key}, '${v.format.id || v.format.key}', '${v.format.name}') }}</span>
+											<!--{else if(v.name == 'state' || v.name == 'status')}-->
+										<span v-bind:class="arr_color[o.${v.name}]">{{ ${v.label}[o.${v.name}] }}</span>
 											<!--{else}-->
-									<td><span class="th_${v.dataType}">{{ ${v.label}[o.${v.name}] }}</span></td>
+										<span>{{ ${v.label}[o.${v.name}] }}</span>
 											<!--{/if}-->
-										<!--{else if(v.name.indexOf('time') !== -1 || v.name.indexOf('Time') !== -1)}-->
-									<td><span class="th_${v.dataType}">{{ $to_time(o.${v.name}, 'yyyy-MM-dd hh:mm') }}</span></td>
-										<!--{else if(idx > 0)}-->
-									<td><span class="th_${v.dataType}">{{ o.${v.name} }}</span></td>
+										<!--{else if(v.name.indexOf('img') !== -1 || v.name.indexOf('icon') !== -1)}-->
+										<img :src="o.${v.name}" alt="${v.title}" />
+										<!--{else if(v.dataType === 'date')}-->
+										<span>{{ $to_time(o.${v.name}, 'yyyy-MM-dd') }}</span>
+										<!--{else if(v.dataType === 'time')}-->
+										<span>{{ o.${v.name} }}</span>
+										<!--{else if(v.dataType === 'timestamp' || v.dataType === 'datetime')}-->
+										<span>{{ $to_time(o.${v.name}, 'yyyy-MM-dd hh:mm') }}</span>
+										<!--{else if(v.name === 'display' || v.name === 'orderby')}-->
+										<input class="td_display" v-model.number="o.${v.name}" @blur="set(o)" min="0" max="1000" />
+										<!--{else}-->
+										<span>{{ o.${v.name} }}</span>
 										<!--{/if}-->
+									</td>
 									<!--{/loop}-->
 									<td>
 										<mm_btn class="btn_primary" :url="'./${name}_form?${sql.key}=' + o[field]">修改</mm_btn>
@@ -117,7 +130,7 @@
 						<dt>${v.title}</dt>
 								<!--{if(v.format.table)}-->
 						<dd>
-							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label}, '${v.format.key}')" />
+							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label}, '${v.format.id || v.format.key}', '${v.format.name}')" />
 						</dd>
 								<!--{else}-->
 						<dd>
@@ -161,11 +174,11 @@
 					//页面大小
 					size: 10,
 					/*[loop js.query v idx]*/
-					// ${ v.title}
-						/*[if v.type == 'string']*/
-					'${v.name}': '',
-						/*[else]*/
+					// ${' ' + v.title}
+						/*[if v.type === 'number' && !v.select]*/
 					'${v.name}': 0,
+						/*[else]*/
+					'${v.name}': '',
 						/*[/if]*/
 					/*[/loop]*/
 					//排序
@@ -173,9 +186,9 @@
 				},
 				form: {},
 				//颜色
-				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
+				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
 				/*[loop js.data v idx]*/
-				// ${ v.title}
+				// ${' ' + v.title}
 				'${v.name}': [/*[loop v.value a idx]*//*[if idx == 0]*/'${a}'/*[else]*/,'${a}'/*[/if]*//*[/loop]*/],
 				/*[/loop]*/
 				// 视图模型
@@ -191,6 +204,11 @@
 			 */
 			get_/*[v.basename]*/(query){
 				var _this = this;
+				if(!query){
+					query = {
+						field: "${v.id},${v.field}"
+					};
+				}
 				this.$get('~${v.path}', query, function(json) {
 					if (json.result) {
 						_this/*['.' + v.name]*/.clear();

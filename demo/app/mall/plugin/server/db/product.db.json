@@ -42,7 +42,7 @@
             "max": 1,
             "decimal": 0,
             "default": "1",
-            "map": "",
+            "map": "0否|1是",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -50,7 +50,7 @@
         {
             "name": "state",
             "title": "状态",
-            "description": "1出售中，2预售中，3已下架，4已删除，5已违规",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -63,7 +63,7 @@
             "max": 5,
             "decimal": 0,
             "default": "1",
-            "map": "",
+            "map": "1出售中|2预售中|3已下架|4已删除|5已违规",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -84,7 +84,7 @@
             "max": 1000,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "mall_product_type.name",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -113,7 +113,7 @@
         {
             "name": "channel_id",
             "title": "频道ID",
-            "description": "该产品所属频道，仅该频道列表可以看到该产品",
+            "description": "该产品所属频道，该频道列表可以看到该产品",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -126,7 +126,7 @@
             "max": 10000,
             "decimal": 0,
             "default": "1",
-            "map": "",
+            "map": "mall_product_channel.name",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -147,7 +147,7 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "mall_shop.name",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -168,7 +168,7 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "sys_address_city",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -363,9 +363,9 @@
             "position": []
         },
         {
-            "name": "img",
-            "title": "封面图",
-            "description": "用于显示于产品列表页，多个封面图用换行分隔",
+            "name": "tag",
+            "title": "标签",
+            "description": "用于标注产品所属相关内容，多个标签用空格隔开",
             "type": "varchar",
             "key": false,
             "auto": "",
@@ -384,17 +384,17 @@
             "position": []
         },
         {
-            "name": "tag",
-            "title": "标签",
-            "description": "用于标注产品所属相关内容，多个标签用空格隔开",
-            "type": "varchar",
+            "name": "img",
+            "title": "封面图",
+            "description": "用于显示于产品列表页，多个封面图用换行分隔",
+            "type": "text",
             "key": false,
             "auto": "",
             "symbol": false,
             "fill_zero": false,
             "not_null": 0,
             "min_length": 0,
-            "max_length": 255,
+            "max_length": 0,
             "min": 0,
             "max": 0,
             "decimal": 0,

@@ -7,17 +7,17 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}城市</h5>
 					</header>
 					<dl>
-						<dt>是否可见</dt>
+						<dt>显示位置</dt>
 						<dd>
 							<mm_select v-model="form.show" :options="$to_kv(arr_show)" />
 						</dd>
 						<dt>所属省份</dt>
 						<dd>
-							<mm_select v-model="form.province_id" :options="$to_kv(list_address_province, 'province_id')" />
+							<mm_select v-model="form.province_id" :options="$to_kv(list_address_province, 'province_id', 'name')" />
 						</dd>
-						<dt>城市名称</dt>
+						<dt class="required">城市名称</dt>
 						<dd>
-							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" :required="true"/>
 						</dd>
 					</dl>
 					<footer>
@@ -42,7 +42,7 @@
 		data() {
 			return {
 				url_submit: "/apis/sys/address_city?",
-				url_get_obj: "/apis/sys/address_city",
+				url_get_obj: "/apis/sys/address_city?method=get_obj",
 				field: "city_id",
 				query: {
 					"city_id": 0
@@ -53,9 +53,9 @@
 						"province_id": 0,
 						"name": '',
 				},
-				//是否可见
-				'arr_show': ['否','是'],
-				//所属省份
+				// 显示位置
+				'arr_show': ['仅表单可见','表单和搜索可见','均可见'],
+				// 所属省份
 				'list_address_province': [],
 			}
 		},
@@ -66,7 +66,12 @@
 				 */
 				get_address_province(query){
 					var _this = this;
-					this.$get('~/api/sys/address_province?size=0', query, function(json) {
+					if(!query){
+						query = {
+							field: "province_id,name"
+						};
+					}
+					this.$get('~/apis/sys/address_province?size=0', query, function(json) {
 						if (json.result) {
 							_this.list_address_province.clear();
 							_this.list_address_province.addList(json.result.list)
@@ -82,52 +87,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

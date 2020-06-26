@@ -1,13 +1,13 @@
 @charset utf-8;
 /* 隐性元素 */
-::-webkit-datetime-edit{background:url(/img/select.png);padding:1px;}
-::-webkit-datetime-edit-fields-wrapper{background-color:#eee;}
-::-webkit-datetime-edit-text{color:#4D90FE;padding:0 .3em;}
-::-webkit-datetime-edit-year-field{color:purple;}
-::-webkit-datetime-edit-month-field{color:blue;}
-::-webkit-datetime-edit-day-field{color:green;}
+/* ::-webkit-datetime-edit{background:url(/img/select.png);padding:1px;} */
+/* ::-webkit-datetime-edit-fields-wrapper{background-color:#eee;} */
+/* ::-webkit-datetime-edit-text{color:#4D90FE; padding:0 .25rem; content: "-";} */
+::-webkit-datetime-edit-year-field{/* color:#38f; */}
+::-webkit-datetime-edit-month-field{/* color:#26d2ff; */}
+::-webkit-datetime-edit-day-field{/* color:#04BE02; */}
 ::-webkit-inner-spin-button{visibility:hidden;}
-::-webkit-calendar-picker-indicator{background-color:#eee;background-image:0;border:1px solid rgba(125,125,125,0.25);border-radius: 0.25rem;box-shadow:inset 0 1px #fff, 0 1px #eee;color:#666;}
+/* ::-webkit-calendar-picker-indicator{background-color:#eee;background-image:0;border:1px solid rgba(125,125,125,0.25);border-radius: 0.25rem;box-shadow:inset 0 1px #fff, 0 1px #eee;color:#666;} */
 
 
 /* 滚动条凹槽的颜色，还可以设置边框属性 */
@@ -42,7 +42,6 @@ html{height:100%;overflow:hidden;font-family:"Helvetica Neue", helvetica, arial,
 body{height:100%;overflow:auto;background-color:#ededed;color:#333;line-height:1.5;overflow-x:hidden;/* letter-spacing:0.125rem; */}
 
 /** 不可见元素 **/
-[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto;}
 [type=search]{-webkit-appearance:none;outline-offset:-2px;}
 [type=search]::-webkit-search-decoration{-webkit-appearance:none;}
 [hidden],.hidden{display:none!important;}
@@ -91,20 +90,27 @@ select{-moz-appearance:none;-webkit-appearance:none;appearance:none;background:u
 
 optgroup{line-height:inherit;}
 textarea{overflow-x:hidden;overflow-y:auto;resize:vertical;min-width:15rem; padding: .5rem; min-height: 5rem;}
-form textarea{min-width:15rem; width:100%; padding: .5rem; min-height: 5rem;}
+form textarea{min-width:20rem; width:100%; padding: .5rem; min-height: 10rem;}
 input:focus,select:focus,button:focus,textarea:focus{
 	border-color:#38f;box-shadow:0 0 0 .25rem rgba(38, 210, 255, .25); z-index:20;
 }
 
-input[type=text],input[type=number],input[type=password],input[type=tel],input[type=email],input[type=date],input[type=datetime],input[type=time],input[type=datetime-local]
+input[type=text],input[type=number],input[type=password],input[type=tel],input[type=email]
 {
 	height:2rem;line-height:2rem; border: 1px solid rgba(125,125,125,0.25); padding-left: 0.5rem; padding-right: 0.5rem; border-radius: .25rem;
 	min-width: 10rem;
 }
+input[type=date],input[type=datetime],input[type=time],input[type=datetime-local],input[type=month]{
+	-webkit-appearance:listbox;
+	border: 1px solid rgba(125,125,125,0.25);
+	height:2rem;
+	line-height:2rem;
+	border-radius: .25rem;
+	padding-left: .5rem;
+}
+/* input[type=date]::-webkit-inner-spin-button { visibility: hidden; } */
 input[type=number] { min-width: 4rem; }
-input[type=datetime-local] { min-width: initial; }
 input[type=radio],input[type=checkbox]{box-sizing:border-box;padding:0;}
-input[type=date],input[type=time],input[type=datetime-local],input[type=month]{-webkit-appearance:listbox;}
 fieldset{border:0;min-width:0;}
 label~label {margin-left:1rem;}
 
@@ -114,8 +120,11 @@ th{border:1px solid rgba(125,125,125,0.25);padding:0.5rem .75rem;text-align:inhe
 thead th>span{line-height: 2rem;}
 thead th{border-bottom:2px solid rgba(125,125,125,0.25);vertical-align:bottom;}
 tbody tr:hover { background-color: rgba(0,100,200,.075) !important; }
+tbody tr.active { background-color: rgba(0,100,200,.075) !important; }
+
 td{border:1px solid rgba(125,125,125,0.25);padding:.5rem .75rem;white-space:nowrap;}
-dt{display:block;clear:left;float:left;font-weight:400;padding:.5rem; min-width: 7rem; }
+dt{display:block;clear:left;float:left;font-weight:400;padding:.5rem; min-width: 7rem; position: relative; }
+dt.required::before {position: absolute; content: "*"; color: red; left: 0; top: 50%; transform: translateY(-37.5%); }
 dt>span, dd>span{ line-height: 2rem; }
 dd{display:block;padding:.5rem .75rem;float: left;}
 li{ position: relative; }
@@ -124,7 +133,10 @@ dl,dd{display:block;}
 form dl { margin: 0.5rem 1rem 1rem 1rem; }
 dl::before,dl::after,ul::before,ul::after,ol::before,ol::after{content: "";display:block; clear: both;}
 ol { padding-left: 2.5rem;padding-right: 1rem; }
-
+/* 合法选择器 */
+/* input:valid { border-color: #38f; } */
+/* 非法选择器 */
+input:invalid { border-color: #f12f04; }
 
 /* ===  内容标签  === */
 sub,sup{line-height:0;position:relative;vertical-align:baseline;}

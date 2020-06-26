@@ -13,11 +13,11 @@
 						</dd>
 						<dt>所属城市</dt>
 						<dd>
-							<mm_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id')" />
+							<mm_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name')" />
 						</dd>
-						<dt>地区名称</dt>
+						<dt class="required">地区名称</dt>
 						<dd>
-							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" :required="true"/>
 						</dd>
 					</dl>
 					<footer>
@@ -42,7 +42,7 @@
 		data() {
 			return {
 				url_submit: "/apis/sys/address_area?",
-				url_get_obj: "/apis/sys/address_area",
+				url_get_obj: "/apis/sys/address_area?method=get_obj",
 				field: "area_id",
 				query: {
 					"area_id": 0
@@ -53,9 +53,9 @@
 						"city_id": 0,
 						"name": '',
 				},
-				//是否可见
-				'arr_show': ['否','是'],
-				//所属城市
+				// 是否可见
+				'arr_show': ['仅表单可见','表单和搜索可见','均可见'],
+				// 所属城市
 				'list_address_city': [],
 			}
 		},
@@ -66,7 +66,12 @@
 				 */
 				get_address_city(query){
 					var _this = this;
-					this.$get('~/api/sys/address_city?size=0', query, function(json) {
+					if(!query){
+						query = {
+							field: "city_id,name"
+						};
+					}
+					this.$get('~/apis/sys/address_city?size=0', query, function(json) {
 						if (json.result) {
 							_this.list_address_city.clear();
 							_this.list_address_city.addList(json.result.list)
@@ -82,52 +87,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

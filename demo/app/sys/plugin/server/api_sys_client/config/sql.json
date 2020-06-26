@@ -6,7 +6,7 @@
     "orderby_default": "`config_id` desc",
     "field_obj": "`config_id`,`name`,`type`,`title`,`value`,`description`,`model`",
     "field_default": "`config_id`,`name`,`type`,`title`,`value`,`description`",
-    "method": "get",
+    "method": "get get_obj",
     "query": {
         "type": "`type` like '%{0}%'",
         "name": "`name` like '%{0}%'",

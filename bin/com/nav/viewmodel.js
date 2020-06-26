@@ -23,13 +23,17 @@ ViewModel.prototype.field = async function(model) {
 		return [];
 	}
 	var field;
-	if(model.file.indexOf('_form') || model.file.indexOf('_view')){
+	if(model.file.indexOf('_form') !== -1 || model.file.indexOf('_view') !== -1){
 		field = model.sql.field_obj || '';
 	}
 	else {
 		field = model.sql.field_default || '';
 	}
-	
+	var requireds = [];
+	var add = model.param.add;
+	if(add){
+		requireds = add.body_required;
+	}
 	var arr = field.replace(/`/g, '').split(',');
 	var pm = [];
 	for (var i = 0; i < list.length; i++) {
@@ -40,19 +44,16 @@ ViewModel.prototype.field = async function(model) {
 			var format = model.sql.format.getObj({
 				key: name
 			});
-			if(!format){
-				format = model.sql.format.getObj({
-					id: name
-				});
-			}
 			if (format) {
 				obj.title = format.title;
 				obj.format = format;
 			}
+			if(requireds.indexOf(name) !== -1){
+				obj.required = true;
+			}
 			pm.push(obj);
 		}
 	}
-	
 	return pm;
 };
 
@@ -90,7 +91,7 @@ ViewModel.prototype.js = async function(model) {
 		query: []
 	};
 	var field = model.field;
-	// var path_start = model.file.indexOf('admin') !== -1 ? '/apis/' : '/api/';
+	var path_start = model.file.indexOf('admin') !== -1 ? '/apis/' : '/api/';
 	
 	for (var i = 0; i < field.length; i++) {
 		var o = field[i];
@@ -99,13 +100,16 @@ ViewModel.prototype.js = async function(model) {
 			if (format.table) {
 				var basename = format.table.split('_').splice(1).join('_');
 				var name = "list_" + basename;
+				var id = format.id || format.key;
 				o.label = name;
 				js.data.push({
 					basename,
 					title: format.title,
+					id,
 					name,
+					field: format.name,
 					value: [],
-					path: "/api/" + format.table.replace('_', '/') + "?size=0"
+					path: path_start + format.table.replace('_', '/') + "?size=0"
 				});
 			} else {
 				var basename = format.key;
@@ -131,7 +135,8 @@ ViewModel.prototype.js = async function(model) {
 				js.query.push({
 					title: o.title,
 					name: o.name,
-					type: o.type
+					type: o.type,
+					select: o.description ? (o.description.indexOf('(') !== -1) : false
 				});
 			}
 		}

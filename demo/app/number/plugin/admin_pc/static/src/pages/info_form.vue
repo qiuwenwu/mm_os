@@ -9,15 +9,15 @@
 					<dl>
 						<dt>是否私有</dt>
 						<dd>
-							<mm_select v-model="form.private" :options="$to_kv(arr_private)" />
+							<mm_switch v-model="form.private" />
 						</dd>
 						<dt>是否合约号</dt>
 						<dd>
-							<mm_select v-model="form.heYue" :options="$to_kv(arr_heYue)" />
+							<mm_switch v-model="form.heYue" />
 						</dd>
 						<dt>是否隐藏</dt>
 						<dd>
-							<mm_select v-model="form.hide" :options="$to_kv(arr_hide)" />
+							<mm_switch v-model="form.hide" />
 						</dd>
 						<dt>号码种类</dt>
 						<dd>
@@ -45,7 +45,7 @@
 						</dd>
 						<dt>处理人</dt>
 						<dd>
-							<mm_select v-model="form.uid" :options="$to_kv(list_account, 'uid')" />
+							<mm_select v-model="form.user_id" :options="$to_kv(list_account, 'user_id', 'nickname')" />
 						</dd>
 						<dt>每日推荐ID</dt>
 						<dd>
@@ -89,19 +89,19 @@
 						</dd>
 						<dt>创建时间</dt>
 						<dd>
-							<mm_time v-model="form.createTime" type="datetime" />
+							<mm_time v-model="form.createTime" type="datetime-local" />
 						</dd>
 						<dt>置顶时间</dt>
 						<dd>
-							<mm_time v-model="form.topTime" type="datetime" />
+							<mm_time v-model="form.topTime" type="datetime-local" />
 						</dd>
 						<dt>更新时间</dt>
 						<dd>
-							<mm_time v-model="form.updateTime" type="datetime" />
+							<mm_time v-model="form.updateTime" type="datetime-local" />
 						</dd>
-						<dt>号码</dt>
+						<dt class="required">号码</dt>
 						<dd>
-							<mm_input v-model="form.number" :minlength="0" :maxlength="0" placeholder="" />
+							<mm_input v-model="form.number" :minlength="0" :maxlength="0" placeholder="" :required="true"/>
 						</dd>
 						<dt>格式</dt>
 						<dd>
@@ -109,7 +109,7 @@
 						</dd>
 						<dt>活动</dt>
 						<dd>
-							<mm_input v-model="form.activity" :minlength="0" :maxlength="0" placeholder="有推荐、特价、包邮等" />
+							<mm_input v-model="form.activity" :minlength="0" :maxlength="0" placeholder="有推荐 / 特价 / 包邮等" />
 						</dd>
 						<dt>分组</dt>
 						<dd>
@@ -154,7 +154,7 @@
 		data() {
 			return {
 				url_submit: "/apis/number/info?",
-				url_get_obj: "/apis/number/info",
+				url_get_obj: "/apis/number/info?method=get_obj",
 				field: "number_id",
 				query: {
 					"number_id": 0
@@ -170,7 +170,7 @@
 						"cityID": 0,
 						"gid": 0,
 						"sid": 0,
-						"uid": 0,
+						"user_id": 0,
 						"rid": 0,
 						"average": 0,
 						"score": 0,
@@ -193,19 +193,19 @@
 						"log": '',
 						"note": '',
 				},
-				//是否私有
+				// 是否私有
 				'arr_private': ['否','是'],
-				//是否合约号
+				// 是否合约号
 				'arr_heYue': ['否','是'],
-				//是否隐藏
+				// 是否隐藏
 				'arr_hide': ['否','是'],
-				//号码种类
+				// 号码种类
 				'arr_kid': ['','手机号码','固定电话号码','企业电话号码','QQ号码','车牌号码'],
-				//制式
+				// 制式
 				'arr_sid': ['','移动','联通','电信'],
-				//处理人
+				// 处理人
 				'list_account': [],
-				//订单状态
+				// 订单状态
 				'arr_order': ['','待售中','已预约','已售出','已下架','已删除'],
 			}
 		},
@@ -216,7 +216,12 @@
 				 */
 				get_account(query){
 					var _this = this;
-					this.$get('~/api/user/account?size=0', query, function(json) {
+					if(!query){
+						query = {
+							field: "user_id,nickname"
+						};
+					}
+					this.$get('~/apis/user/account?size=0', query, function(json) {
 						if (json.result) {
 							_this.list_account.clear();
 							_this.list_account.addList(json.result.list)
@@ -232,52 +237,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

@@ -16,5 +16,12 @@
     },
     "update": {},
     "field_hide": [],
-    "format": []
+    "format": [
+        {
+            "key": "user_id",
+            "title": "用户",
+            "table": "user_account",
+            "name": "nickname"
+        }
+    ]
 }

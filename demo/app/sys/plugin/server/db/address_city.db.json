@@ -28,8 +28,8 @@
         },
         {
             "name": "show",
-            "title": "是否可见",
-            "description": "0为仅表单可见，1为仅表单和搜索时可见 ，2为均可见",
+            "title": "显示位置",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -42,7 +42,7 @@
             "max": 2,
             "decimal": 0,
             "default": "0",
-            "map": "0否|1是",
+            "map": "0仅表单可见|1表单和搜索可见|2均可见",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -71,7 +71,7 @@
         {
             "name": "province_id",
             "title": "所属省份ID",
-            "description": "当前城市隶属省份",
+            "description": "",
             "type": "mediumint",
             "key": false,
             "auto": "",

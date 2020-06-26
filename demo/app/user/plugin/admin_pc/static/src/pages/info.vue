@@ -14,6 +14,18 @@
 									<mm_input v-model="query.keyword" title="关键词" desc="姓名" @blur="search()" />
 								</mm_col>
 								<mm_col>
+									<mm_select v-model="query.sex" title="性别" :options="$to_kv(arr_sex)" @change="search()" />
+								</mm_col>
+								<mm_col>
+									<mm_select v-model="query.idcard_state" title="身份实名认证" :options="$to_kv(arr_idcard_state)" @change="search()" />
+								</mm_col>
+								<mm_col>
+									<mm_select v-model="query.province_id" title="省份" :options="$to_kv(list_address_province, 'province_id', 'name')" @change="search()" />
+								</mm_col>
+								<mm_col>
+									<mm_select v-model="query.city_id" title="所在城市" :options="$to_kv(list_address_city, 'city_id', 'name')" @change="search()" />
+								</mm_col>
+								<mm_col>
 									<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
 								</mm_col>
 							</mm_list>
@@ -30,77 +42,105 @@
 								<tr>
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
-									<th scope="col" class="th_smallint">
+									<th scope="col">
 										<mm_reverse title="性别" v-model="query.orderby" field="sex" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_smallint">
+									<th scope="col">
 										<mm_reverse title="身份实名认证" v-model="query.orderby" field="idcard_state" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_smallint">
+									<th scope="col">
 										<mm_reverse title="年龄" v-model="query.orderby" field="age" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
-										<mm_reverse title="省份ID" v-model="query.orderby" field="province_id" :func="search"></mm_reverse>
+									<th scope="col">
+										<mm_reverse title="省份" v-model="query.orderby" field="province_id" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
-										<mm_reverse title="所在城市ID" v-model="query.orderby" field="city_id" :func="search"></mm_reverse>
+									<th scope="col">
+										<mm_reverse title="所在城市" v-model="query.orderby" field="city_id" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_date">
+									<th scope="col">
 										<mm_reverse title="生日" v-model="query.orderby" field="birthday" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="姓名" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="职业" v-model="query.orderby" field="job" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="毕业学校" v-model="query.orderby" field="school" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="所学专业" v-model="query.orderby" field="major" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="身份证号" v-model="query.orderby" field="idcard" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="公司地址" v-model="query.orderby" field="company_address" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="详细地址" v-model="query.orderby" field="address" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="工作范围" v-model="query.orderby" field="job_scope" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="公司经营范围" v-model="query.orderby" field="company_business" :func="search"></mm_reverse>
-									</th>
-									<th scope="col" class="th_text">
-										<mm_reverse title="身份证图片" v-model="query.orderby" field="idcard_img" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(o, idx) in list" :key="idx">
+								<tr v-for="(o, idx) in list" :key="idx" :class="{'active': select == idx}" @click="selected(idx)">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
-									<th scope="row"><span>{{ o[field] }}</span></th>
-									<td><span class="th_smallint">{{ o.sex }}</span></td>
-									<td><span class="th_smallint">{{ o.idcard_state }}</span></td>
-									<td><span class="th_smallint">{{ o.age }}</span></td>
-									<td><span class="th_int">{{ o.province_id }}</span></td>
-									<td><span class="th_int">{{ o.city_id }}</span></td>
-									<td><span class="th_date">{{ o.birthday }}</span></td>
-									<td><span class="th_varchar">{{ o.name }}</span></td>
-									<td><span class="th_varchar">{{ o.job }}</span></td>
-									<td><span class="th_varchar">{{ o.school }}</span></td>
-									<td><span class="th_varchar">{{ o.major }}</span></td>
-									<td><span class="th_varchar">{{ o.idcard }}</span></td>
-									<td><span class="th_varchar">{{ o.company_address }}</span></td>
-									<td><span class="th_varchar">{{ o.address }}</span></td>
-									<td><span class="th_varchar">{{ o.job_scope }}</span></td>
-									<td><span class="th_varchar">{{ o.company_business }}</span></td>
-									<td><span class="th_text">{{ o.idcard_img }}</span></td>
+									<td>
+										<span>{{ o.user_id }}</span>
+									</td>
+									<td>
+										<span>{{arr_sex[o.sex] }}</span>
+									</td>
+									<td>
+										<span>{{arr_idcard_state[o.idcard_state] }}</span>
+									</td>
+									<td>
+										<span>{{ o.age }}</span>
+									</td>
+									<td>
+										<span>{{ get_name(list_address_province, o.province_id, 'province_id', 'name') }}</span>
+									</td>
+									<td>
+										<span>{{ get_name(list_address_city, o.city_id, 'city_id', 'name') }}</span>
+									</td>
+									<td>
+										<span>{{ $to_time(o.birthday, 'yyyy-MM-dd') }}</span>
+									</td>
+									<td>
+										<span>{{ o.name }}</span>
+									</td>
+									<td>
+										<span>{{ o.job }}</span>
+									</td>
+									<td>
+										<span>{{ o.school }}</span>
+									</td>
+									<td>
+										<span>{{ o.major }}</span>
+									</td>
+									<td>
+										<span>{{ o.idcard }}</span>
+									</td>
+									<td>
+										<span>{{ o.company_address }}</span>
+									</td>
+									<td>
+										<span>{{ o.address }}</span>
+									</td>
+									<td>
+										<span>{{ o.job_scope }}</span>
+									</td>
+									<td>
+										<span>{{ o.company_business }}</span>
+									</td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./info_form?user_id=' + o[field]">修改</mm_btn>
 										<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
@@ -137,6 +177,22 @@
 				</header>
 				<mm_body>
 					<dl>
+						<dt>性别</dt>
+						<dd>
+							<mm_select v-model="form.sex" :options="$to_kv(arr_sex)" />
+						</dd>
+						<dt>身份实名认证</dt>
+						<dd>
+							<mm_select v-model="form.idcard_state" :options="$to_kv(arr_idcard_state)" />
+						</dd>
+						<dt>省份</dt>
+						<dd>
+							<mm_select v-model="form.province_id" :options="$to_kv(list_address_province, 'province_id', 'name')" />
+						</dd>
+						<dt>所在城市</dt>
+						<dd>
+							<mm_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name')" />
+						</dd>
 					</dl>
 				</mm_body>
 				<footer>
@@ -171,64 +227,92 @@
 					page: 1,
 					//页面大小
 					size: 10,
-					//用户ID
+					// 用户ID
 					'user_id': 0,
-					//性别——最小值
-					'sex_min': 0,
-					//性别——最大值
-					'sex_max': 0,
-					//身份实名认证——最小值
-					'idcard_state_min': 0,
-					//身份实名认证——最大值
-					'idcard_state_max': 0,
-					//年龄——最小值
+					// 性别——最小值
+					'sex_min': '',
+					// 性别——最大值
+					'sex_max': '',
+					// 身份实名认证——最小值
+					'idcard_state_min': '',
+					// 身份实名认证——最大值
+					'idcard_state_max': '',
+					// 年龄——最小值
 					'age_min': 0,
-					//年龄——最大值
+					// 年龄——最大值
 					'age_max': 0,
-					//生日——开始时间
+					// 生日——开始时间
 					'birthday_min': '',
-					//生日——结束时间
+					// 生日——结束时间
 					'birthday_max': '',
-					//姓名
+					// 姓名
 					'name': '',
-					//关键词
+					// 关键词
 					'keyword': '',
 					//排序
 					orderby: ""
 				},
 				form: {},
 				//颜色
-				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
+				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
+				// 性别
+				'arr_sex': ['未设置','男','女'],
+				// 身份实名认证
+				'arr_idcard_state': ['','未认证','认证中','认证通过'],
+				// 省份
+				'list_address_province': [],
+				// 所在城市
+				'list_address_city': [],
 				// 视图模型
 				vm: {}
 			}
 		},
 		methods: {
+			/**
+			 * 获取省份
+			 * @param {query} 查询条件
+			 */
+			get_address_province(query){
+				var _this = this;
+				if(!query){
+					query = {
+						field: "province_id,name"
+					};
+				}
+				this.$get('~/apis/sys/address_province?size=0', query, function(json) {
+					if (json.result) {
+						_this.list_address_province.clear();
+						_this.list_address_province.addList(json.result.list)
+					}
+				});
+			},
+			/**
+			 * 获取所在城市
+			 * @param {query} 查询条件
+			 */
+			get_address_city(query){
+				var _this = this;
+				if(!query){
+					query = {
+						field: "city_id,name"
+					};
+				}
+				this.$get('~/apis/sys/address_city?size=0', query, function(json) {
+					if (json.result) {
+						_this.list_address_city.clear();
+						_this.list_address_city.addList(json.result.list)
+					}
+				});
+			},
 		},
 		created() {
+			// 获取省份
+			this.get_address_province();
+			// 获取所在城市
+			this.get_address_city();
 		}
 	}
 </script>
 
 <style>
-	/* 页面 */
-	#user_info {}
-
-	/* 表单 */
-	#user_info .mm_form {}
-
-	/* 筛选栏栏 */
-	#user_info .mm_filter {}
-
-	/* 操作栏 */
-	#user_info .mm_action {}
-
-	/* 模态窗 */
-	#user_info .mm_modal {}
-
-	/* 表格 */
-	#user_info .mm_table {}
-
-	/* 数据统计 */
-	#user_info .mm_data_count {}
 </style>

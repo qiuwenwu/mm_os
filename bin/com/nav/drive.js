@@ -27,7 +27,7 @@ class Drive extends Item {
 		this.default_file = "./" + scope + ".nav.json";
 		
 		// 模板路径
-		this.tpl = "./tpl/";
+		this.tpl_path = "./tpl/";
 		
 		/* 通用项 */
 		// 配置参数
@@ -330,6 +330,7 @@ Drive.prototype.new_config = function(file) {
 	cg.main = [{
 		"title": title,
 		"name": app,
+		"icon": '<i class="fa-cog"></i>',
 		"url": "/" + app,
 		"display": 0,
 		"sub": nav
@@ -413,14 +414,14 @@ Drive.prototype.get_api = function(app, route) {
  */
 Drive.prototype.create_vue = async function(file, route) {
 	var l = $.slash;
-	var arr = file.split(l);
+	var arr = file.replace($.runPath, '/').split(l);
 	var name = arr[arr.length - 1].replace('.vue', '');
-	var f = this.tpl;
+	var f = this.tpl_path;
 	var plugin = "";
 	var app = "";
-	if (arr.length > 5) {
-		plugin = arr[6];
-		app = arr[4];
+	if (arr.length > 3) {
+		plugin = arr[3];
+		app = arr[1];
 		f += plugin + '/';
 	} else if (file.indexOf('mobile' + l) !== -1) {
 		f += "mobile/";
@@ -468,6 +469,9 @@ Drive.prototype.create_vue = async function(file, route) {
 	if(vue)
 	{
 		file.saveText(vue);
+	}
+	else {
+		console.log(tpl.error);
 	}
 };
 

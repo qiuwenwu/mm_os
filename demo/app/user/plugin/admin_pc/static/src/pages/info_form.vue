@@ -9,27 +9,27 @@
 					<dl>
 						<dt>性别</dt>
 						<dd>
-							<mm_number v-model="form.sex" :min="0" :max="2" />
+							<mm_select v-model="form.sex" :options="$to_kv(arr_sex)" />
 						</dd>
 						<dt>身份实名认证</dt>
 						<dd>
-							<mm_input v-model="form.idcard_state" :minlength="0" :maxlength="0" placeholder="1为未认证，2为认证中，3为认证通过" />
+							<mm_select v-model="form.idcard_state" :options="$to_kv(arr_idcard_state)" />
 						</dd>
 						<dt>年龄</dt>
 						<dd>
 							<mm_number v-model="form.age" :min="0" :max="150" />
 						</dd>
-						<dt>省份ID</dt>
+						<dt>省份</dt>
 						<dd>
-							<mm_input v-model="form.province_id" :minlength="0" :maxlength="0" placeholder="用户所在地的省份" />
+							<mm_select v-model="form.province_id" :options="$to_kv(list_address_province, 'province_id', 'name')" />
 						</dd>
-						<dt>所在城市ID</dt>
+						<dt>所在城市</dt>
 						<dd>
-							<mm_input v-model="form.city_id" :minlength="0" :maxlength="0" placeholder="" />
+							<mm_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name')" />
 						</dd>
 						<dt>生日</dt>
 						<dd>
-							<mm_time v-model="form.birthday" type="datetime" />
+							<mm_time v-model="form.birthday" type="date" />
 						</dd>
 						<dt>姓名</dt>
 						<dd>
@@ -69,7 +69,7 @@
 						</dd>
 						<dt>身份证图片</dt>
 						<dd>
-							<mm_textarea v-model="form.idcard_img" type="text" placeholder="保存json格式" />
+							<mm_upload_img width="10rem" height="10rem" name="idcard_img" type="text" v-model="form.idcard_img" />
 						</dd>
 					</dl>
 					<footer>
@@ -94,7 +94,7 @@
 		data() {
 			return {
 				url_submit: "/apis/user/info?",
-				url_get_obj: "/apis/user/info",
+				url_get_obj: "/apis/user/info?method=get_obj",
 				field: "user_id",
 				query: {
 					"user_id": 0
@@ -118,62 +118,62 @@
 						"company_business": '',
 						"idcard_img": '',
 				},
+				// 性别
+				'arr_sex': ['未设置','男','女'],
+				// 身份实名认证
+				'arr_idcard_state': ['','未认证','认证中','认证通过'],
+				// 省份
+				'list_address_province': [],
+				// 所在城市
+				'list_address_city': [],
 			}
 		},
 		methods: {
+				/**
+				 * 获取省份
+				 * @param {query} 查询条件
+				 */
+				get_address_province(query){
+					var _this = this;
+					if(!query){
+						query = {
+							field: "province_id,name"
+						};
+					}
+					this.$get('~/apis/sys/address_province?size=0', query, function(json) {
+						if (json.result) {
+							_this.list_address_province.clear();
+							_this.list_address_province.addList(json.result.list)
+						}
+					});
+				},
+				/**
+				 * 获取所在城市
+				 * @param {query} 查询条件
+				 */
+				get_address_city(query){
+					var _this = this;
+					if(!query){
+						query = {
+							field: "city_id,name"
+						};
+					}
+					this.$get('~/apis/sys/address_city?size=0', query, function(json) {
+						if (json.result) {
+							_this.list_address_city.clear();
+							_this.list_address_city.addList(json.result.list)
+						}
+					});
+				},
 		},
 		created() {
+			// 获取省份
+			this.get_address_province();
+			// 获取所在城市
+			this.get_address_city();
 		}
 	}
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

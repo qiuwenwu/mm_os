@@ -63,7 +63,7 @@
             "key": "user_id",
             "title": "持有者",
             "table": "user_account",
-            "name": "name"
+            "name": "nickname"
         }
     ]
 }

@@ -7,13 +7,17 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}管理组</h5>
 					</header>
 					<dl>
-						<dt>分类</dt>
+						<dt>上级</dt>
 						<dd>
-							<mm_input v-model="form.type" :minlength="0" :maxlength="0" placeholder="用于区分用户组使用范围" />
+							<mm_select v-model="form.father_id" :options="$to_kv(list_admin, 'admin_id', 'name')" />
 						</dd>
-						<dt>管理组名称</dt>
+						<dt class="required">名称</dt>
 						<dd>
-							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" :required="true"/>
+						</dd>
+						<dt>部门</dt>
+						<dd>
+							<mm_input v-model="form.department" :minlength="0" :maxlength="0" placeholder="用于区分管理组织结构" />
 						</dd>
 						<dt>描述</dt>
 						<dd>
@@ -21,7 +25,7 @@
 						</dd>
 						<dt>图标</dt>
 						<dd>
-							<mm_textarea v-model="form.icon" type="text" placeholder="用于标识用户组" />
+							<mm_upload_img width="10rem" height="10rem" name="icon" type="text" v-model="form.icon" />
 						</dd>
 					</dl>
 					<footer>
@@ -46,74 +50,49 @@
 		data() {
 			return {
 				url_submit: "/apis/user/admin?",
-				url_get_obj: "/apis/user/admin",
+				url_get_obj: "/apis/user/admin?method=get_obj",
 				field: "admin_id",
 				query: {
 					"admin_id": 0
 				},
 				form: {
 						"admin_id": 0,
-						"type": '',
+						"father_id": 0,
 						"name": '',
+						"department": '',
 						"description": '',
 						"icon": '',
 				},
+				// 上级
+				'list_admin': [],
 			}
 		},
 		methods: {
+				/**
+				 * 获取上级
+				 * @param {query} 查询条件
+				 */
+				get_admin(query){
+					var _this = this;
+					if(!query){
+						query = {
+							field: "admin_id,name"
+						};
+					}
+					this.$get('~/apis/user/admin?size=0', query, function(json) {
+						if (json.result) {
+							_this.list_admin.clear();
+							_this.list_admin.addList(json.result.list)
+						}
+					});
+				},
 		},
 		created() {
+			// 获取上级
+			this.get_admin();
 		}
 	}
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

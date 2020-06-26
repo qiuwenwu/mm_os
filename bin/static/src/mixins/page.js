@@ -51,7 +51,7 @@ define(function() {
 				// 提交进度
 				posting: 0,
 				// 选中项
-				selete: 0,
+				select: $.db.get('select'),
 				// 查询结果匹配数统计
 				count: 0,
 				// 显示隐藏，true显示，false隐藏
@@ -423,10 +423,10 @@ define(function() {
 				if (url) {
 					var _this = this;
 					this.get_obj(query, function() {
-						_this.search(query, func);
+						_this.get_create(query, func);
 					});
 				} else {
-					this.search(query, func);
+					this.get_create(query, func);
 				}
 			},
 			/**
@@ -485,8 +485,11 @@ define(function() {
 							var o = _this.obj;
 							for (var k in o) {
 								if (k.indexOf('time') !== -1) {
-									var v = new Date(o[k]);
-									o[k] = v.toStr('yyyy-MM-dd hh:mm:ss');
+									var val = o[k];
+									if(val.indexOf('T') !== -1){
+										var v = new Date(o[k]);
+										o[k] = v.toStr('yyyy-MM-dd hh:mm:ss');
+									}
 								}
 							}
 							$.push(_this.form, _this.obj);
@@ -560,6 +563,17 @@ define(function() {
 				var url = this.url ? this.url : this.url_get_list;
 				if(url){
 					this.query.page = 1;
+					this.count = 0;
+					$.route.push("?" + this.toUrl(this.query));
+					this.first(query, func);
+				}
+			},
+			get_create: function get_create(query, func){
+				if (query) {
+					$.push(this.query, query);
+				}
+				var url = this.url ? this.url : this.url_get_list;
+				if(url){
 					this.count = 0;
 					$.route.push("?" + this.toUrl(this.query));
 					this.first(query, func);
@@ -725,7 +739,7 @@ define(function() {
 				var query = this.query;
 				var p = query.page;
 				query.page = page;
-				$.route.push("?" + this.toUrl(query));
+				this.$router.push("?" + this.toUrl(query));
 				if (this.page_count !== 0) {
 					if (p + 1 == page) {
 						this.next(query);
@@ -822,7 +836,7 @@ define(function() {
 			 * @param {Object} param 参数
 			 */
 			end_before: function end_before(param) {
-				this.reset();
+				// this.reset();
 			},
 			/**
 			 * 选择项全改
@@ -875,6 +889,14 @@ define(function() {
 				return ids.indexOf('|' + id + '|') !== -1;
 			},
 			/**
+			 * 选中
+			 * @param {Number} index 项目索引
+			 */
+			selected: function selected(index) {
+				this.select = index;
+				$.db.set('select', index, 120);
+			},
+			/**
 			 * 页面改变时
 			 * @param {Object} e 事件
 			 */
@@ -895,10 +917,14 @@ define(function() {
 			 * @param {Array} list 用来取名的列表
 			 * @param {String} arr_str id集合
 			 * @param {String} key 键
+			 * @param {String} name 名
 			 * @param {String} span 分隔符
 			 */
-			get_name(list, arr_str, key, span) {
-				var name = "";
+			get_name(list, arr_str, key, name, span) {
+				if(!name){
+					name = "name";
+				}
+				var value = "";
 				if (arr_str) {
 					if (typeof(arr_str) == 'string') {
 						if (!span) {
@@ -910,7 +936,7 @@ define(function() {
 						for (var i = 0; i < list.length; i++) {
 							var o = list[i];
 							if (o[key] == id) {
-								name += '|' + o.name;
+								value += '|' + o[name];
 							}
 						}
 					} else {
@@ -918,13 +944,13 @@ define(function() {
 						for (var i = 0; i < list.length; i++) {
 							var o = list[i];
 							if (o[key] == id) {
-								name = o.name;
+								value = o[name];
 								break
 							}
 						}
 					}
 				}
-				return name.replace('|', '');
+				return value.replace('|', '');
 			},
 			/**
 			 * 取消并返回

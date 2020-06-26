@@ -11,6 +11,9 @@
 							<h5><span>筛选条件</span></h5>
 							<mm_list col="3">
 								<mm_col>
+									<mm_select v-model="query.user_id" title="用户" :options="$to_kv(list_account, 'user_id', 'nickname')" @change="search()" />
+								</mm_col>
+								<mm_col>
 									<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
 								</mm_col>
 							</mm_list>
@@ -27,25 +30,45 @@
 								<tr>
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
-									<th scope="col" class="th_mediumint">
-										<mm_reverse title="用户ID" v-model="query.orderby" field="user_id" :func="search"></mm_reverse>
+									<th scope="col">
+										<mm_reverse title="用户" v-model="query.orderby" field="user_id" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
+										<mm_reverse title="创建时间" v-model="query.orderby" field="time_create" :func="search"></mm_reverse>
+									</th>
+									<th scope="col">
+										<mm_reverse title="更新时间" v-model="query.orderby" field="time_update" :func="search"></mm_reverse>
+									</th>
+									<th scope="col">
 										<mm_reverse title="应用ID" v-model="query.orderby" field="appid" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
 										<mm_reverse title="刷新令牌" v-model="query.orderby" field="refresh_token" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(o, idx) in list" :key="idx">
+								<tr v-for="(o, idx) in list" :key="idx" :class="{'active': select == idx}" @click="selected(idx)">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
-									<th scope="row"><span>{{ o[field] }}</span></th>
-									<td><span class="th_mediumint">{{ o.user_id }}</span></td>
-									<td><span class="th_varchar">{{ o.appid }}</span></td>
-									<td><span class="th_varchar">{{ o.refresh_token }}</span></td>
+									<td>
+										<span>{{ o.refresh_id }}</span>
+									</td>
+									<td>
+										<span>{{ get_name(list_account, o.user_id, 'user_id', 'nickname') }}</span>
+									</td>
+									<td>
+										<span>{{ $to_time(o.time_create, 'yyyy-MM-dd hh:mm') }}</span>
+									</td>
+									<td>
+										<span>{{ $to_time(o.time_update, 'yyyy-MM-dd hh:mm') }}</span>
+									</td>
+									<td>
+										<span>{{ o.appid }}</span>
+									</td>
+									<td>
+										<span>{{ o.refresh_token }}</span>
+									</td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./app_refresh_form?refresh_id=' + o[field]">修改</mm_btn>
 										<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
@@ -82,6 +105,10 @@
 				</header>
 				<mm_body>
 					<dl>
+						<dt>用户</dt>
+						<dd>
+							<mm_select v-model="form.user_id" :options="$to_kv(list_account, 'user_id', 'nickname')" />
+						</dd>
 					</dl>
 				</mm_body>
 				<footer>
@@ -116,52 +143,54 @@
 					page: 1,
 					//页面大小
 					size: 10,
-					//刷新Token的ID
+					// 刷新Token的ID
 					'refresh_id': 0,
-					//创建时间——开始时间
+					// 创建时间——开始时间
 					'time_create_min': '',
-					//创建时间——结束时间
+					// 创建时间——结束时间
 					'time_create_max': '',
-					//更新时间——开始时间
+					// 更新时间——开始时间
 					'time_update_min': '',
-					//更新时间——结束时间
+					// 更新时间——结束时间
 					'time_update_max': '',
 					//排序
 					orderby: ""
 				},
 				form: {},
 				//颜色
-				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
+				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
+				// 用户
+				'list_account': [],
 				// 视图模型
 				vm: {}
 			}
 		},
 		methods: {
+			/**
+			 * 获取用户
+			 * @param {query} 查询条件
+			 */
+			get_account(query){
+				var _this = this;
+				if(!query){
+					query = {
+						field: "user_id,nickname"
+					};
+				}
+				this.$get('~/apis/user/account?size=0', query, function(json) {
+					if (json.result) {
+						_this.list_account.clear();
+						_this.list_account.addList(json.result.list)
+					}
+				});
+			},
 		},
 		created() {
+			// 获取用户
+			this.get_account();
 		}
 	}
 </script>
 
 <style>
-	/* 页面 */
-	#sys_app_refresh {}
-
-	/* 表单 */
-	#sys_app_refresh .mm_form {}
-
-	/* 筛选栏栏 */
-	#sys_app_refresh .mm_filter {}
-
-	/* 操作栏 */
-	#sys_app_refresh .mm_action {}
-
-	/* 模态窗 */
-	#sys_app_refresh .mm_modal {}
-
-	/* 表格 */
-	#sys_app_refresh .mm_table {}
-
-	/* 数据统计 */
-	#sys_app_refresh .mm_data_count {}
 </style>

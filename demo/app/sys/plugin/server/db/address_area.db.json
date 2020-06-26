@@ -29,7 +29,7 @@
         {
             "name": "show",
             "title": "是否可见",
-            "description": "0为仅表单可见，1为仅表单和搜索时可见 ，2为均可见",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -42,7 +42,7 @@
             "max": 2,
             "decimal": 0,
             "default": "0",
-            "map": "0否|1是",
+            "map": "0仅表单可见|1表单和搜索可见|2均可见",
             "join_in": [],
             "join_out": [],
             "position": []

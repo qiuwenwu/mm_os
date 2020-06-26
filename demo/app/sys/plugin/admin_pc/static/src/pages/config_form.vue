@@ -7,13 +7,13 @@
 						<h5>{{ form[field] ? '修改' : '创建' }}系统配置</h5>
 					</header>
 					<dl>
-						<dt>变量名</dt>
+						<dt class="required">变量名</dt>
 						<dd>
-							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" :required="true"/>
 						</dd>
-						<dt>数据类型</dt>
+						<dt class="required">数据类型</dt>
 						<dd>
-							<mm_input v-model="form.type" :minlength="0" :maxlength="0" placeholder="string文本型、number数字型、boolean布尔型" />
+							<mm_input v-model="form.type" :minlength="0" :maxlength="0" placeholder="string文本型 / number数字型 / boolean布尔型" :required="true"/>
 						</dd>
 						<dt>变量标题</dt>
 						<dd>
@@ -29,7 +29,7 @@
 						</dd>
 						<dt>数据模型</dt>
 						<dd>
-							<mm_textarea v-model="form.model" type="text" placeholder="json格式，用于单选、多选模式" />
+							<mm_textarea v-model="form.model" type="text" placeholder="json格式，用于单选 / 多选模式" />
 						</dd>
 					</dl>
 					<footer>
@@ -54,7 +54,7 @@
 		data() {
 			return {
 				url_submit: "/apis/sys/config?",
-				url_get_obj: "/apis/sys/config",
+				url_get_obj: "/apis/sys/config?method=get_obj",
 				field: "config_id",
 				query: {
 					"config_id": 0
@@ -78,52 +78,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

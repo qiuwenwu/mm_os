@@ -29,7 +29,7 @@
         {
             "name": "state",
             "title": "付款状态",
-            "description": "1待付款，2待确认，3已完成，4已取消",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -42,7 +42,7 @@
             "max": 10,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "1待付款|2待确认|3已完成|4已取消",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -63,7 +63,7 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "user_account.nickname.user_id",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -84,7 +84,7 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "user_account.nickname.user_id",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -105,7 +105,7 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "pay_seller",
             "join_in": [],
             "join_out": [],
             "position": []

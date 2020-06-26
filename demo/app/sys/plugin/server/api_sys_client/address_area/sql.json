@@ -6,7 +6,7 @@
     "orderby_default": "`display` asc",
     "field_obj": "`area_id`,`show`,`city_id`,`name`",
     "field_default": "`area_id`,`show`,`display`,`city_id`,`name`",
-    "method": "get",
+    "method": "get get_obj",
     "query": {
         "show_min": "`show` >= {0}",
         "show_max": "`show` <= {0}",
@@ -25,8 +25,9 @@
             "key": "show",
             "title": "是否可见",
             "list": [
-                "否",
-                "是"
+                "仅表单可见",
+                "表单和搜索可见",
+                "均可见"
             ]
         },
         {

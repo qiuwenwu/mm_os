@@ -14,6 +14,9 @@
 									<mm_input v-model="query.keyword" title="关键词" desc="省份名称" @blur="search()" />
 								</mm_col>
 								<mm_col>
+									<mm_select v-model="query.show" title="是否可见" :options="$to_kv(arr_show)" @change="search()" />
+								</mm_col>
+								<mm_col>
 									<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
 								</mm_col>
 							</mm_list>
@@ -30,21 +33,33 @@
 								<tr>
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
-									<th scope="col" class="th_smallint">
+									<th scope="col">
 										<mm_reverse title="是否可见" v-model="query.orderby" field="show" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_varchar">
+									<th scope="col">
+										<mm_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
+									</th>
+									<th scope="col">
 										<mm_reverse title="省份名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(o, idx) in list" :key="idx">
+								<tr v-for="(o, idx) in list" :key="idx" :class="{'active': select == idx}" @click="selected(idx)">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
-									<th scope="row"><span>{{ o[field] }}</span></th>
-									<td><span class="th_smallint">{{ o.show }}</span></td>
-									<td><span class="th_varchar">{{ o.name }}</span></td>
+									<td>
+										<span>{{ o.province_id }}</span>
+									</td>
+									<td>
+										<span>{{arr_show[o.show] }}</span>
+									</td>
+									<td>
+										<input class="td_display" v-model.number="o.display" @blur="set(o)" min="0" max="1000" />
+									</td>
+									<td>
+										<span>{{ o.name }}</span>
+									</td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./address_province_form?province_id=' + o[field]">修改</mm_btn>
 										<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
@@ -81,6 +96,10 @@
 				</header>
 				<mm_body>
 					<dl>
+						<dt>是否可见</dt>
+						<dd>
+							<mm_select v-model="form.show" :options="$to_kv(arr_show)" />
+						</dd>
 					</dl>
 				</mm_body>
 				<footer>
@@ -115,26 +134,28 @@
 					page: 1,
 					//页面大小
 					size: 10,
-					//省份ID
+					// 省份ID
 					'province_id': 0,
-					//是否可见——最小值
-					'show_min': 0,
-					//是否可见——最大值
-					'show_max': 0,
-					//显示顺序——最小值
+					// 是否可见——最小值
+					'show_min': '',
+					// 是否可见——最大值
+					'show_max': '',
+					// 显示顺序——最小值
 					'display_min': 0,
-					//显示顺序——最大值
+					// 显示顺序——最大值
 					'display_max': 0,
-					//省份名称
+					// 省份名称
 					'name': '',
-					//关键词
+					// 关键词
 					'keyword': '',
 					//排序
 					orderby: ""
 				},
 				form: {},
 				//颜色
-				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
+				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
+				// 是否可见
+				'arr_show': ['仅表单可见','表单和搜索可见','均可见'],
 				// 视图模型
 				vm: {}
 			}
@@ -147,24 +168,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#sys_address_province {}
-
-	/* 表单 */
-	#sys_address_province .mm_form {}
-
-	/* 筛选栏栏 */
-	#sys_address_province .mm_filter {}
-
-	/* 操作栏 */
-	#sys_address_province .mm_action {}
-
-	/* 模态窗 */
-	#sys_address_province .mm_modal {}
-
-	/* 表格 */
-	#sys_address_province .mm_table {}
-
-	/* 数据统计 */
-	#sys_address_province .mm_data_count {}
 </style>

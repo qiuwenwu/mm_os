@@ -40,6 +40,7 @@
         {
             "title": "号码",
             "name": "number",
+            "icon": "<i class=\"fa-phone\"></i>",
             "url": "/number",
             "display": 0,
             "sub": [

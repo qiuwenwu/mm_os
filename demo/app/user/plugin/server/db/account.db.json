@@ -21,13 +21,15 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "state",
             "title": "账户状态",
-            "description": "1为可用，2为异常，3为已冻结，4为已注销",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -40,8 +42,10 @@
             "max": 10,
             "decimal": 0,
             "default": "1",
+            "map": "1可用|2异常|3已冻结|4已注销",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "vip",
@@ -59,8 +63,10 @@
             "max": 10,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "gm",
@@ -78,8 +84,10 @@
             "max": 10,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "mc",
@@ -97,8 +105,52 @@
             "max": 10,
             "decimal": 0,
             "default": "0",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
+        },
+        {
+            "name": "group_id",
+            "title": "所在用户组",
+            "description": "决定用户身份和权限",
+            "type": "smallint",
+            "key": false,
+            "auto": "",
+            "symbol": false,
+            "fill_zero": false,
+            "not_null": 1,
+            "min_length": 0,
+            "max_length": 6,
+            "min": 1,
+            "max": 32767,
+            "decimal": 0,
+            "default": "0",
+            "map": "user_group",
+            "join_in": [],
+            "join_out": [],
+            "position": []
+        },
+        {
+            "name": "admin_id",
+            "title": "所在管理组",
+            "description": "决定用户身份和权限",
+            "type": "smallint",
+            "key": false,
+            "auto": "",
+            "symbol": false,
+            "fill_zero": false,
+            "not_null": 1,
+            "min_length": 0,
+            "max_length": 6,
+            "min": 1,
+            "max": 32767,
+            "decimal": 0,
+            "default": "0",
+            "map": "user_admin",
+            "join_in": [],
+            "join_out": [],
+            "position": []
         },
         {
             "name": "referee_id",
@@ -116,8 +168,10 @@
             "max": 8388607,
             "decimal": 0,
             "default": "0",
+            "map": "user_account.nickname.user_id",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "login_time",
@@ -135,8 +189,10 @@
             "max": 0,
             "decimal": 0,
             "default": "CURRENT_TIMESTAMP",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "salt",
@@ -154,8 +210,10 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "invite_code",
@@ -173,8 +231,10 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "phone",
@@ -192,14 +252,16 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "phone_state",
-            "title": "手机号码认证",
-            "description": "0为未认证，1为认证通过",
-            "type": "tinyint",
+            "title": "手机认证",
+            "description": "",
+            "type": "smallint",
             "key": false,
             "auto": "",
             "symbol": false,
@@ -211,8 +273,10 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
+            "map": "0未认证|1审核中|2已认证",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "username",
@@ -230,8 +294,10 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "nickname",
@@ -249,8 +315,10 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "password",
@@ -268,8 +336,10 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "email",
@@ -287,14 +357,16 @@
             "max": 0,
             "decimal": 0,
             "default": "",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "email_state",
             "title": "邮箱认证",
-            "description": "0为未认证，1为认证通过",
-            "type": "tinyint",
+            "description": "",
+            "type": "smallint",
             "key": false,
             "auto": "",
             "symbol": false,
@@ -306,46 +378,10 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
+            "map": "0未认证|1审核中|2已认证",
             "join_in": [],
-            "join_out": []
-        },
-        {
-            "name": "user_group",
-            "title": "所在用户组",
-            "description": "多个用户组用“,“分隔",
-            "type": "varchar",
-            "key": false,
-            "auto": "",
-            "symbol": false,
-            "fill_zero": false,
-            "not_null": 0,
-            "min_length": 0,
-            "max_length": 64,
-            "min": 0,
-            "max": 0,
-            "decimal": 0,
-            "default": null,
-            "join_in": [],
-            "join_out": []
-        },
-        {
-            "name": "user_admin",
-            "title": "所在管理组",
-            "description": "多个管理组用“,“分隔",
-            "type": "varchar",
-            "key": false,
-            "auto": "",
-            "symbol": false,
-            "fill_zero": false,
-            "not_null": 0,
-            "min_length": 0,
-            "max_length": 64,
-            "min": 0,
-            "max": 0,
-            "decimal": 0,
-            "default": null,
-            "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "login_ip",
@@ -363,8 +399,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "signature",
@@ -382,8 +420,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "avatar",
@@ -401,8 +441,10 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "friends",
@@ -420,33 +462,16 @@
             "max": 0,
             "decimal": 0,
             "default": null,
+            "map": "",
             "join_in": [],
-            "join_out": []
-        },
-        {
-            "name": "admin_group",
-            "title": "所在管理组",
-            "description": "多个管理组用“,“分隔",
-            "type": "varchar",
-            "key": false,
-            "auto": "",
-            "symbol": false,
-            "fill_zero": false,
-            "not_null": 0,
-            "min_length": 0,
-            "max_length": 64,
-            "min": 0,
-            "max": 0,
-            "decimal": 0,
-            "default": null,
-            "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         },
         {
             "name": "create_time",
             "title": "创建时间",
             "description": "",
-            "type": "datetime",
+            "type": "timestamp",
             "key": false,
             "auto": "",
             "symbol": false,
@@ -457,9 +482,11 @@
             "min": 0,
             "max": 0,
             "decimal": 0,
-            "default": "1970-01-01 00:00:00",
+            "default": "CURRENT_TIMESTAMP",
+            "map": "",
             "join_in": [],
-            "join_out": []
+            "join_out": [],
+            "position": []
         }
     ]
 }

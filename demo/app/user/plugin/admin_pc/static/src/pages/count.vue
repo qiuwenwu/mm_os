@@ -27,73 +27,105 @@
 								<tr>
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
-									<th scope="col" class="th_smallint">
+									<th scope="col">
 										<mm_reverse title="等级" v-model="query.orderby" field="level" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_smallint">
+									<th scope="col">
 										<mm_reverse title="IQ智商" v-model="query.orderby" field="iq" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="信用度" v-model="query.orderby" field="credit" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="积分" v-model="query.orderby" field="credit_points" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="经验值" v-model="query.orderby" field="exp" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="拓展积分1" v-model="query.orderby" field="extcredits1" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="拓展积分2" v-model="query.orderby" field="extcredits2" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="拓展积分3" v-model="query.orderby" field="extcredits3" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="拓展积分4" v-model="query.orderby" field="extcredits4" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="拓展积分5" v-model="query.orderby" field="extcredits5" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="拓展积分6" v-model="query.orderby" field="extcredits6" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="拓展积分7" v-model="query.orderby" field="extcredits7" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_int">
+									<th scope="col">
 										<mm_reverse title="拓展积分8" v-model="query.orderby" field="extcredits8" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_double">
+									<th scope="col">
 										<mm_reverse title="钱" v-model="query.orderby" field="money" :func="search"></mm_reverse>
 									</th>
-									<th scope="col" class="th_decimal">
+									<th scope="col">
 										<mm_reverse title="货币" v-model="query.orderby" field="coin" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(o, idx) in list" :key="idx">
+								<tr v-for="(o, idx) in list" :key="idx" :class="{'active': select == idx}" @click="selected(idx)">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
-									<th scope="row"><span>{{ o[field] }}</span></th>
-									<td><span class="th_smallint">{{ o.level }}</span></td>
-									<td><span class="th_smallint">{{ o.iq }}</span></td>
-									<td><span class="th_int">{{ o.credit }}</span></td>
-									<td><span class="th_int">{{ o.credit_points }}</span></td>
-									<td><span class="th_int">{{ o.exp }}</span></td>
-									<td><span class="th_int">{{ o.extcredits1 }}</span></td>
-									<td><span class="th_int">{{ o.extcredits2 }}</span></td>
-									<td><span class="th_int">{{ o.extcredits3 }}</span></td>
-									<td><span class="th_int">{{ o.extcredits4 }}</span></td>
-									<td><span class="th_int">{{ o.extcredits5 }}</span></td>
-									<td><span class="th_int">{{ o.extcredits6 }}</span></td>
-									<td><span class="th_int">{{ o.extcredits7 }}</span></td>
-									<td><span class="th_int">{{ o.extcredits8 }}</span></td>
-									<td><span class="th_double">{{ o.money }}</span></td>
-									<td><span class="th_decimal">{{ o.coin }}</span></td>
+									<td>
+										<span>{{ o.user_id }}</span>
+									</td>
+									<td>
+										<span>{{ o.level }}</span>
+									</td>
+									<td>
+										<span>{{ o.iq }}</span>
+									</td>
+									<td>
+										<span>{{ o.credit }}</span>
+									</td>
+									<td>
+										<span>{{ o.credit_points }}</span>
+									</td>
+									<td>
+										<span>{{ o.exp }}</span>
+									</td>
+									<td>
+										<span>{{ o.extcredits1 }}</span>
+									</td>
+									<td>
+										<span>{{ o.extcredits2 }}</span>
+									</td>
+									<td>
+										<span>{{ o.extcredits3 }}</span>
+									</td>
+									<td>
+										<span>{{ o.extcredits4 }}</span>
+									</td>
+									<td>
+										<span>{{ o.extcredits5 }}</span>
+									</td>
+									<td>
+										<span>{{ o.extcredits6 }}</span>
+									</td>
+									<td>
+										<span>{{ o.extcredits7 }}</span>
+									</td>
+									<td>
+										<span>{{ o.extcredits8 }}</span>
+									</td>
+									<td>
+										<span>{{ o.money }}</span>
+									</td>
+									<td>
+										<span>{{ o.coin }}</span>
+									</td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./count_form?user_id=' + o[field]">修改</mm_btn>
 										<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
@@ -164,74 +196,74 @@
 					page: 1,
 					//页面大小
 					size: 10,
-					//用户ID
+					// 用户ID
 					'user_id': 0,
-					//等级——最小值
+					// 等级——最小值
 					'level_min': 0,
-					//等级——最大值
+					// 等级——最大值
 					'level_max': 0,
-					//IQ智商——最小值
+					// IQ智商——最小值
 					'iq_min': 0,
-					//IQ智商——最大值
+					// IQ智商——最大值
 					'iq_max': 0,
-					//信用度——最小值
+					// 信用度——最小值
 					'credit_min': 0,
-					//信用度——最大值
+					// 信用度——最大值
 					'credit_max': 0,
-					//积分——最小值
+					// 积分——最小值
 					'credit_points_min': 0,
-					//积分——最大值
+					// 积分——最大值
 					'credit_points_max': 0,
-					//经验值——最小值
+					// 经验值——最小值
 					'exp_min': 0,
-					//经验值——最大值
+					// 经验值——最大值
 					'exp_max': 0,
-					//拓展积分1——最小值
+					// 拓展积分1——最小值
 					'extcredits1_min': 0,
-					//拓展积分1——最大值
+					// 拓展积分1——最大值
 					'extcredits1_max': 0,
-					//拓展积分2——最小值
+					// 拓展积分2——最小值
 					'extcredits2_min': 0,
-					//拓展积分2——最大值
+					// 拓展积分2——最大值
 					'extcredits2_max': 0,
-					//拓展积分3——最小值
+					// 拓展积分3——最小值
 					'extcredits3_min': 0,
-					//拓展积分3——最大值
+					// 拓展积分3——最大值
 					'extcredits3_max': 0,
-					//拓展积分4——最小值
+					// 拓展积分4——最小值
 					'extcredits4_min': 0,
-					//拓展积分4——最大值
+					// 拓展积分4——最大值
 					'extcredits4_max': 0,
-					//拓展积分5——最小值
+					// 拓展积分5——最小值
 					'extcredits5_min': 0,
-					//拓展积分5——最大值
+					// 拓展积分5——最大值
 					'extcredits5_max': 0,
-					//拓展积分6——最小值
+					// 拓展积分6——最小值
 					'extcredits6_min': 0,
-					//拓展积分6——最大值
+					// 拓展积分6——最大值
 					'extcredits6_max': 0,
-					//拓展积分7——最小值
+					// 拓展积分7——最小值
 					'extcredits7_min': 0,
-					//拓展积分7——最大值
+					// 拓展积分7——最大值
 					'extcredits7_max': 0,
-					//拓展积分8——最小值
+					// 拓展积分8——最小值
 					'extcredits8_min': 0,
-					//拓展积分8——最大值
+					// 拓展积分8——最大值
 					'extcredits8_max': 0,
-					//钱——最小值
+					// 钱——最小值
 					'money_min': 0,
-					//钱——最大值
+					// 钱——最大值
 					'money_max': 0,
-					//货币——最小值
+					// 货币——最小值
 					'coin_min': 0,
-					//货币——最大值
+					// 货币——最大值
 					'coin_max': 0,
 					//排序
 					orderby: ""
 				},
 				form: {},
 				//颜色
-				arr_color: ['', 'font_success', 'font_warning', 'font_yellow', 'font_default'],
+				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
 				// 视图模型
 				vm: {}
 			}
@@ -244,24 +276,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#user_count {}
-
-	/* 表单 */
-	#user_count .mm_form {}
-
-	/* 筛选栏栏 */
-	#user_count .mm_filter {}
-
-	/* 操作栏 */
-	#user_count .mm_action {}
-
-	/* 模态窗 */
-	#user_count .mm_modal {}
-
-	/* 表格 */
-	#user_count .mm_table {}
-
-	/* 数据统计 */
-	#user_count .mm_data_count {}
 </style>

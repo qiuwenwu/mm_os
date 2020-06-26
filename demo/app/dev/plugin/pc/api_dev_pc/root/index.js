@@ -1,4 +1,4 @@
-const file = './app/dev/plugin//static/index.html'.fullname();
+const file = './../../static/index.html'.fullname(__dirname);
 
 /**
  * @description 接口主函数

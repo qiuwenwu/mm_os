@@ -13,7 +13,7 @@
 							<!--{if(v.format)}-->
 								<!--{if(v.format.table)}-->
 						<dd>
-							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label}, '${v.format.key}')" />
+							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label}, '${v.format.id || v.format.key}', '${v.format.name}')" />
 						</dd>
 								<!--{else}-->
 						<dd>
@@ -30,7 +30,7 @@
 						</dd>
 							<!--{else if(v.dataType.indexOf('text') !== -1)}-->
 						<dd>
-							<mm_textarea v-model="form.${v.name}" type="text" placeholder="${v.description}" />
+							<mm_textarea v-model="form.${v.name}" type="text" placeholder="${v.description.replace(/\([0-9A-Za-z_]+\)/g, '').replace('用于搜索', '').replace(/、/g, ' / ')}" />
 						</dd>
 							<!--{else if(v.type === 'number' && v.name.indexOf('id') === -1)}-->
 						<dd>
@@ -38,7 +38,7 @@
 						</dd>
 							<!--{else}-->
 						<dd>
-							<mm_input v-model="form.${v.name}" :minlength="0" :maxlength="${v.string ? v.string.max : 0}" placeholder="${v.description}" />
+							<mm_input v-model="form.${v.name}" :minlength="0" :maxlength="${v.string ? v.string.max : 0}" placeholder="${v.description.replace(/\([0-9A-Za-z_]+\)/g, '').replace('用于搜索', '').replace(/、/g, ' / ')}" />
 						</dd>
 								<!--{/if}-->
 							<!--{/if}-->
@@ -56,6 +56,7 @@
 	</main>
 </template>
 
+
 <script>
 	import mixin from '/src/mixins/page.js';
 
@@ -65,7 +66,7 @@
 		data() {
 			return {
 				url_submit: "${api.path}?",
-				url_get_obj: "${api.path}",
+				url_get_obj: "${api.path}?method=get_obj",
 				field: "${sql.key}",
 				query: {
 					"${sql.key}": 0
@@ -80,7 +81,7 @@
 					/*[/loop]*/
 				},
 				/*[loop js.data v idx]*/
-				// ${ v.title}
+				// ${' ' + v.title}
 				'${v.name}': [/*[loop v.value a idx]*//*[if idx == 0]*/'${a}'/*[else]*/,'${a}'/*[/if]*//*[/loop]*/],
 				/*[/loop]*/
 			}
@@ -94,6 +95,11 @@
 				 */
 				get_/*[v.basename]*/(query){
 					var _this = this;
+					if(!query){
+						query = {
+							field: "${v.id},${v.field}"
+						};
+					}
 					this.$get('~${v.path}', query, function(json) {
 						if (json.result) {
 							_this/*['.' + v.name]*/.clear();

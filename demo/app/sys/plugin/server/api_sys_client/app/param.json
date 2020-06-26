@@ -245,7 +245,7 @@
         {
             "name": "user_id",
             "title": "持有者ID",
-            "description": "该客户端所有人的ID(user_account)",
+            "description": "该客户端所有人的ID(user_account.nickname)",
             "type": "number",
             "dataType": "mediumint",
             "number": {

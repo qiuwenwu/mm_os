@@ -71,7 +71,7 @@ class Drive extends Item {
 			// 分隔符 用于查询时的多条件处理
 			"separator": "|",
 			// 支持的方法 add增、del删、set改、get查, 只填get表示只支持查询 // import export del_repeat",
-			"method": "add del set get import export del_repeat",
+			"method": "add del set get get_obj import export del_repeat",
 			// sql查询语句
 			"query": {},
 			// 默认查询, 当查询条件中不包含该项时，默认添加该项。 例如: { "age": "`age` < 20" } , 当查询参含有age，不调用该项，不存在时，sql会增加该项
@@ -221,9 +221,10 @@ Drive.prototype.ready = async function(db, query, body) {
  * 查询(主要)
  * @param {Object} db 数据库操作类
  * @param {Object} query 查询条件
+ * @param {Object} method 方法
  * @return {Object} 返回查询结果
  */
-Drive.prototype.get_main = async function(db, query) {
+Drive.prototype.get_main = async function(db, query, method) {
 	var ret;
 	var {
 		cg,
@@ -245,6 +246,8 @@ Drive.prototype.get_main = async function(db, query) {
 				return $.ret.error(70003, '不合法的查询参数');
 			}
 			db.field = cg.field.replace("{0}", field);
+		} else if (method === 'get_obj' && cg.field_obj) {
+			db.field = cg.field_obj + '';
 		} else if (cg.field_default) {
 			db.field = cg.field_default + '';
 		}
@@ -312,6 +315,28 @@ Drive.prototype.get_main = async function(db, query) {
  */
 Drive.prototype.get = async function(db, query, body) {
 	return await this.get_main(db, query);
+};
+
+/**
+ * 查询单条数据
+ * @param {Object} db 数据库操作类
+ * @param {Object} query 查询条件
+ * @param {Object} body 修改项
+ * @return {Object} 返回查询结果
+ */
+Drive.prototype.get_obj = async function(db, query, body) {
+	query.page = 1;
+	query.size = 1;
+	var ret = await this.get_main(db, query, 'get_obj');
+	if (ret.result) {
+		var list = ret.result.list;
+		if (list.length > 0) {
+			return $.ret.obj(list[0]);
+		} else {
+			return $.ret.obj(null);
+		}
+	}
+	return ret;
 };
 
 /**
@@ -484,7 +509,7 @@ Drive.prototype.addOrSet = async function(db, query, body) {
  */
 Drive.prototype.get_params = async function(fields) {
 	var cg = this.config;
-	if(cg.params){
+	if (cg.params) {
 		return cg.params;
 	}
 	var params;
@@ -539,7 +564,7 @@ Drive.prototype.get_format = async function(db) {
 	for (var i = 0; i < fmt.length; i++) {
 		var o = fmt[i];
 		if (o.table) {
-			if (o.list || o.list.length == 0) {
+			if (!o.list || o.list.length == 0) {
 				dbs.table = o.table;
 				o.list = await dbs.getSql(o.where, null, o.id + "," + o.name);
 			}
@@ -558,7 +583,7 @@ Drive.prototype.import_main = async function(db, file) {
 	var params = await this.get_params();
 	var format = await this.get_format(db);
 	file = file.fullname($.config.path.user || $.config.path.static);
-	if(!file.hasFile()){
+	if (!file.hasFile()) {
 		return $.ret.error(30000, file + "文件不存在！");
 	}
 	var excel = new Excel({
@@ -569,7 +594,7 @@ Drive.prototype.import_main = async function(db, file) {
 	var jarr = await excel.load();
 	var list = [];
 	var errors = [];
-	db.table = this.config.table;
+	db.table = db.table || this.config.table;
 	for (var i = 0; i < jarr.length; i++) {
 		var o = jarr[i];
 		var n = await db.add(o);
@@ -625,12 +650,13 @@ Drive.prototype.export_main = async function(db, query, body) {
 		file,
 		fields
 	} = body;
+	var table = db.table || this.config.table;
 	if (!file) {
 		var uid = 0;
 		if (db.user) {
 			uid = db.user.user_id;
 		}
-		file = './user/' + uid + '/' + this.config.table + '.xlsx';
+		file = './user/' + uid + '/' + table + '.xlsx';
 		file.addDir($.config.path.user || $.config.path.static);
 	}
 	if (!fields && query.field) {
@@ -638,8 +664,8 @@ Drive.prototype.export_main = async function(db, query, body) {
 	}
 	var params = await this.get_params(fields);
 	var format = await this.get_format(db);
-	
-	if(!path){
+
+	if (!path) {
 		path = $.config.path.user;
 	}
 	file = file.fullname(path || $.config.path.static);
@@ -694,7 +720,6 @@ Drive.prototype.del_repeat_main = async function(db, params) {
 	if (list.length) {
 		db.page = 1;
 		db.size = 1;
-		var table = db.table;
 		var key = this.config.key;
 		for (var i = 0; i < list.length; i++) {
 			var o = list[i];
@@ -763,9 +788,6 @@ Drive.prototype.main = async function(params, db) {
 			}
 		} else {
 			db.table = cg.table + '';
-			if (table) {
-				db.table = table;
-			}
 		}
 
 		return await this[method](db, query, body);

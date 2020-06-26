@@ -9,11 +9,11 @@
 					<dl>
 						<dt>是否可见</dt>
 						<dd>
-							<mm_number v-model="form.show" :min="0" :max="2" />
+							<mm_select v-model="form.show" :options="$to_kv(arr_show)" />
 						</dd>
-						<dt>省份名称</dt>
+						<dt class="required">省份名称</dt>
 						<dd>
-							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" />
+							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" :required="true"/>
 						</dd>
 					</dl>
 					<footer>
@@ -38,7 +38,7 @@
 		data() {
 			return {
 				url_submit: "/apis/sys/address_province?",
-				url_get_obj: "/apis/sys/address_province",
+				url_get_obj: "/apis/sys/address_province?method=get_obj",
 				field: "province_id",
 				query: {
 					"province_id": 0
@@ -48,6 +48,8 @@
 						"show": 0,
 						"name": '',
 				},
+				// 是否可见
+				'arr_show': ['仅表单可见','表单和搜索可见','均可见'],
 			}
 		},
 		methods: {
@@ -58,52 +60,4 @@
 </script>
 
 <style>
-	/* 页面 */
-	#$ {
-		id
-	}
-
-		{}
-
-	/* 表单 */
-	#$ {
-		id
-	}
-
-	.mm_form {}
-
-	/* 筛选栏栏 */
-	#$ {
-		id
-	}
-
-	.mm_filter {}
-
-	/* 操作栏 */
-	#$ {
-		id
-	}
-
-	.mm_action {}
-
-	/* 模态窗 */
-	#$ {
-		id
-	}
-
-	.mm_modal {}
-
-	/* 表格 */
-	#$ {
-		id
-	}
-
-	.mm_table {}
-
-	/* 数据统计 */
-	#$ {
-		id
-	}
-
-	.mm_data_count {}
 </style>

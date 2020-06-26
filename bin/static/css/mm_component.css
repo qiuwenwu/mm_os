@@ -58,6 +58,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appea
 
 /* 筛选面板 */
 .mm_filter {display:flex;}
+.mm_filter>*{width:100%;}
 .mm_filter>h5 {float:left;flex:1;position:relative;border-right:2px solid #DBDBDB;background:#f3f9ff; max-width: 7rem;min-width: 7rem;}
 .mm_filter>h5>span {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;}
 .mm_filter .mm_col>button:first-child { margin-left: 1.5rem; }
@@ -256,9 +257,15 @@ table .mm_reverse .title {min-width:initial;padding-left:0;float: left; white-sp
 
 /* 表格中的按钮 */
 table .mm_btn {border-radius:.25rem;display:inline-block;height:1.5rem;line-height:1.5rem;padding-left:0.75rem;padding-right:0.75rem;margin-right:.5rem;font-size:.75rem;}
-
+table .icon,table .avatar { width: 2.5rem; }
+table .img { min-width: 5rem; }
 
 /* 图片上传 */
+.mm_upload_img {position: relative;}
+.mm_upload_img .btns{position:absolute;left:calc(100% + 1rem);bottom: 0;}
+.mm_upload_img .btn_link{font-size: .625rem; padding:0 .5rem; height: 1.5rem; line-height: 1.5rem;white-space:nowrap;margin-top: .5rem; }
+.mm_upload_img .from_default { min-width: 75%; }
+.mm_upload_img .btn_close { position: absolute; left: 50%; bottom: -3rem; transform: translateX(-50%); border: 1px solid rgb(105, 105, 105); background: rgba(255,255,255,0.7); border-radius: 50%; padding: 0 .05rem .1rem 0; width: 2rem; height: 2rem; color: rgb(105, 105, 105); }
 .mm_upload_img .mm_icon {border-radius:0.25rem;border:1px dashed rgba(125,125,125,0.5);}
 .mm_upload_img .mm_icon img {display:none;}
 .upload_add .mm_icon::before,.upload_add .mm_icon::after {content:"";display:block;transform:translate(-50%,-50%);position:absolute;top:50%;left:50%;background:rgba(125,125,125,0.5);}
@@ -297,3 +304,4 @@ table .mm_btn {border-radius:.25rem;display:inline-block;height:1.5rem;line-heig
 
 
 #slide_top img {border-radius:0.25rem;}
+.td_display { width: 3rem; text-align: center;border-radius: .25rem; border: 1px solid #DBDBDB; }

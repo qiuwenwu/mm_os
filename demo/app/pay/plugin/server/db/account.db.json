@@ -29,7 +29,7 @@
         {
             "name": "state",
             "title": "状态",
-            "description": "1为正常，2为异常，3为冻结，4为注销",
+            "description": "",
             "type": "smallint",
             "key": false,
             "auto": "",
@@ -42,7 +42,7 @@
             "max": 10,
             "decimal": 0,
             "default": "1",
-            "map": "",
+            "map": "1正常|2异常|3冻结|4注销",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -92,7 +92,7 @@
         {
             "name": "bank_state",
             "title": "微信认证",
-            "description": "0未认证，1已认证",
+            "description": "",
             "type": "tinyint",
             "key": false,
             "auto": "",
@@ -105,7 +105,7 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "0未认证|1已认证",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -134,7 +134,7 @@
         {
             "name": "wechat_state",
             "title": "微信认证",
-            "description": "0未认证，1已认证",
+            "description": "",
             "type": "tinyint",
             "key": false,
             "auto": "",
@@ -147,7 +147,7 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "0未认证|1已认证",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -176,7 +176,7 @@
         {
             "name": "alipay_state",
             "title": "微信认证",
-            "description": "0未认证，1已认证",
+            "description": "",
             "type": "tinyint",
             "key": false,
             "auto": "",
@@ -189,7 +189,7 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "0未认证|1已认证",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -218,7 +218,7 @@
         {
             "name": "btc_state",
             "title": "比特币地址认证",
-            "description": "0未认证，1已认证",
+            "description": "",
             "type": "tinyint",
             "key": false,
             "auto": "",
@@ -231,7 +231,7 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "0未认证|1已认证",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -260,7 +260,7 @@
         {
             "name": "eth_state",
             "title": "以太币地址认证",
-            "description": "0未认证，1已认证",
+            "description": "",
             "type": "tinyint",
             "key": false,
             "auto": "",
@@ -273,7 +273,7 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "0未认证|1已认证",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -302,7 +302,7 @@
         {
             "name": "eos_state",
             "title": "柚子币地址认证",
-            "description": "0未认证，1已认证",
+            "description": "",
             "type": "tinyint",
             "key": false,
             "auto": "",
@@ -315,7 +315,7 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "0未认证|1已认证",
             "join_in": [],
             "join_out": [],
             "position": []
@@ -344,7 +344,7 @@
         {
             "name": "mm_state",
             "title": "美眉币地址认证",
-            "description": "0未认证，1已认证",
+            "description": "",
             "type": "tinyint",
             "key": false,
             "auto": "",
@@ -357,7 +357,7 @@
             "max": 1,
             "decimal": 0,
             "default": "0",
-            "map": "",
+            "map": "0未认证|1已认证",
             "join_in": [],
             "join_out": [],
             "position": []
