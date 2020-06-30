@@ -299,7 +299,7 @@ define(function() {
 			 * @param {Object} param 提交参数
 			 */
 			submit_before: function(param) {
-				return $.delete(param);
+				return param;
 			},
 			upload: function upload(param, func) {
 				var pm = this.events("upload_before", param) || param;

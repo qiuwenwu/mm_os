@@ -13,15 +13,15 @@
 						</dd>
 						<dt>1日权重</dt>
 						<dd>
-							<mm_number v-model="form.weigth_1" :min="-10" :max="10" />
+							<mm_number v-model="form.weight_1" :min="-10" :max="10" />
 						</dd>
 						<dt>4日权重</dt>
 						<dd>
-							<mm_number v-model="form.weigth_4" :min="-10" :max="10" />
+							<mm_number v-model="form.weight_4" :min="-10" :max="10" />
 						</dd>
 						<dt>7日权重</dt>
 						<dd>
-							<mm_number v-model="form.weigth_7" :min="-10" :max="10" />
+							<mm_number v-model="form.weight_7" :min="-10" :max="10" />
 						</dd>
 						<dt>1日涨跌幅度</dt>
 						<dd>
@@ -110,9 +110,9 @@
 				form: {
 						"formula_id": 0,
 						"score": 0,
-						"weigth_1": 0,
-						"weigth_4": 0,
-						"weigth_7": 0,
+						"weight_1": 0,
+						"weight_4": 0,
+						"weight_7": 0,
 						"extent_1": 0,
 						"extent_4": 0,
 						"extent_7": 0,

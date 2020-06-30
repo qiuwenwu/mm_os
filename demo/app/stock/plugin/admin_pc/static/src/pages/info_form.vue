@@ -11,21 +11,9 @@
 						<dd>
 							<mm_input v-model="form.name" :minlength="0" :maxlength="0" placeholder="" :required="true"/>
 						</dd>
-						<dt>公司名称</dt>
-						<dd>
-							<mm_input v-model="form.company" :minlength="0" :maxlength="0" placeholder="" />
-						</dd>
-						<dt>股票简介</dt>
-						<dd>
-							<mm_input v-model="form.description" :minlength="0" :maxlength="0" placeholder="" />
-						</dd>
 						<dt>分红频率</dt>
 						<dd>
 							<mm_number v-model="form.bonus" :min="0" :max="0" />
-						</dd>
-						<dt>发行价格</dt>
-						<dd>
-							<mm_number v-model="form.issue_price" :min="0" :max="0" />
 						</dd>
 						<dt>市盈率</dt>
 						<dd>
@@ -34,6 +22,10 @@
 						<dt>市净率</dt>
 						<dd>
 							<mm_number v-model="form.pb" :min="0" :max="0" />
+						</dd>
+						<dt>发行价格</dt>
+						<dd>
+							<mm_number v-model="form.issue_price" :min="0" :max="0" />
 						</dd>
 						<dt>公司利润</dt>
 						<dd>
@@ -46,6 +38,14 @@
 						<dt>上市时间</dt>
 						<dd>
 							<mm_time v-model="form.time_to_market" type="date" />
+						</dd>
+						<dt>公司名称</dt>
+						<dd>
+							<mm_input v-model="form.company" :minlength="0" :maxlength="0" placeholder="" />
+						</dd>
+						<dt>股票简介</dt>
+						<dd>
+							<mm_input v-model="form.description" :minlength="0" :maxlength="0" placeholder="" />
 						</dd>
 					</dl>
 					<footer>
@@ -78,15 +78,15 @@
 				form: {
 						"code": '',
 						"name": '',
-						"company": '',
-						"description": '',
 						"bonus": 0,
-						"issue_price": 0,
 						"pe": 0,
 						"pb": 0,
+						"issue_price": 0,
 						"profit": 0,
 						"num": 0,
 						"time_to_market": '',
+						"company": '',
+						"description": '',
 				},
 			}
 		},

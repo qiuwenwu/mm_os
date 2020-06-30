@@ -34,22 +34,16 @@
 										<mm_reverse title="股票名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 									</th>
 									<th scope="col">
-										<mm_reverse title="公司名称" v-model="query.orderby" field="company" :func="search"></mm_reverse>
-									</th>
-									<th scope="col">
-										<mm_reverse title="股票简介" v-model="query.orderby" field="description" :func="search"></mm_reverse>
-									</th>
-									<th scope="col">
 										<mm_reverse title="分红频率" v-model="query.orderby" field="bonus" :func="search"></mm_reverse>
-									</th>
-									<th scope="col">
-										<mm_reverse title="发行价格" v-model="query.orderby" field="issue_price" :func="search"></mm_reverse>
 									</th>
 									<th scope="col">
 										<mm_reverse title="市盈率" v-model="query.orderby" field="pe" :func="search"></mm_reverse>
 									</th>
 									<th scope="col">
 										<mm_reverse title="市净率" v-model="query.orderby" field="pb" :func="search"></mm_reverse>
+									</th>
+									<th scope="col">
+										<mm_reverse title="发行价格" v-model="query.orderby" field="issue_price" :func="search"></mm_reverse>
 									</th>
 									<th scope="col">
 										<mm_reverse title="公司利润" v-model="query.orderby" field="profit" :func="search"></mm_reverse>
@@ -59,6 +53,15 @@
 									</th>
 									<th scope="col">
 										<mm_reverse title="上市时间" v-model="query.orderby" field="time_to_market" :func="search"></mm_reverse>
+									</th>
+									<th scope="col">
+										<mm_reverse title="公司名称" v-model="query.orderby" field="company" :func="search"></mm_reverse>
+									</th>
+									<th scope="col">
+										<mm_reverse title="股票简介" v-model="query.orderby" field="description" :func="search"></mm_reverse>
+									</th>
+									<th scope="col">
+										<mm_reverse title="创建时间" v-model="query.orderby" field="create_time" :func="search"></mm_reverse>
 									</th>
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>
@@ -73,22 +76,16 @@
 										<span>{{ o.name }}</span>
 									</td>
 									<td>
-										<span>{{ o.company }}</span>
-									</td>
-									<td>
-										<span>{{ o.description }}</span>
-									</td>
-									<td>
 										<span>{{ o.bonus }}</span>
-									</td>
-									<td>
-										<span>{{ o.issue_price }}</span>
 									</td>
 									<td>
 										<span>{{ o.pe }}</span>
 									</td>
 									<td>
 										<span>{{ o.pb }}</span>
+									</td>
+									<td>
+										<span>{{ o.issue_price }}</span>
 									</td>
 									<td>
 										<span>{{ o.profit }}</span>
@@ -98,6 +95,15 @@
 									</td>
 									<td>
 										<span>{{ $to_time(o.time_to_market, 'yyyy-MM-dd') }}</span>
+									</td>
+									<td>
+										<span>{{ o.company }}</span>
+									</td>
+									<td>
+										<span>{{ o.description }}</span>
+									</td>
+									<td>
+										<span>{{ $to_time(o.create_time, 'yyyy-MM-dd hh:mm') }}</span>
 									</td>
 									<td>
 										<mm_btn class="btn_primary" :url="'./info_form?code=' + o[field]">修改</mm_btn>
@@ -171,16 +177,10 @@
 					size: 10,
 					// 股票名称
 					'name': '',
-					// 股票简介
-					'description': '',
 					// 分红频率——最小值
 					'bonus_min': 0,
 					// 分红频率——最大值
 					'bonus_max': 0,
-					// 发行价格——最小值
-					'issue_price_min': 0,
-					// 发行价格——最大值
-					'issue_price_max': 0,
 					// 市盈率——最小值
 					'pe_min': 0,
 					// 市盈率——最大值
@@ -189,6 +189,10 @@
 					'pb_min': 0,
 					// 市净率——最大值
 					'pb_max': 0,
+					// 发行价格——最小值
+					'issue_price_min': 0,
+					// 发行价格——最大值
+					'issue_price_max': 0,
 					// 公司利润——最小值
 					'profit_min': 0,
 					// 公司利润——最大值
@@ -201,6 +205,12 @@
 					'time_to_market_min': '',
 					// 上市时间——结束时间
 					'time_to_market_max': '',
+					// 股票简介
+					'description': '',
+					// 创建时间——开始时间
+					'create_time_min': '',
+					// 创建时间——结束时间
+					'create_time_max': '',
 					// 关键词
 					'keyword': '',
 					//排序

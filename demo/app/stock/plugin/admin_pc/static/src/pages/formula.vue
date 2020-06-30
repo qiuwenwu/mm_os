@@ -34,13 +34,13 @@
 										<mm_reverse title="人工得分" v-model="query.orderby" field="score" :func="search"></mm_reverse>
 									</th>
 									<th scope="col">
-										<mm_reverse title="1日权重" v-model="query.orderby" field="weigth_1" :func="search"></mm_reverse>
+										<mm_reverse title="1日权重" v-model="query.orderby" field="weight_1" :func="search"></mm_reverse>
 									</th>
 									<th scope="col">
-										<mm_reverse title="4日权重" v-model="query.orderby" field="weigth_4" :func="search"></mm_reverse>
+										<mm_reverse title="4日权重" v-model="query.orderby" field="weight_4" :func="search"></mm_reverse>
 									</th>
 									<th scope="col">
-										<mm_reverse title="7日权重" v-model="query.orderby" field="weigth_7" :func="search"></mm_reverse>
+										<mm_reverse title="7日权重" v-model="query.orderby" field="weight_7" :func="search"></mm_reverse>
 									</th>
 									<th scope="col">
 										<mm_reverse title="1日涨跌幅度" v-model="query.orderby" field="extent_1" :func="search"></mm_reverse>
@@ -97,13 +97,13 @@
 										<span>{{ o.score }}</span>
 									</td>
 									<td>
-										<span>{{ o.weigth_1 }}</span>
+										<span>{{ o.weight_1 }}</span>
 									</td>
 									<td>
-										<span>{{ o.weigth_4 }}</span>
+										<span>{{ o.weight_4 }}</span>
 									</td>
 									<td>
-										<span>{{ o.weigth_7 }}</span>
+										<span>{{ o.weight_7 }}</span>
 									</td>
 									<td>
 										<span>{{ o.extent_1 }}</span>
@@ -224,17 +224,17 @@
 					// 人工得分——最大值
 					'score_max': 0,
 					// 1日权重——最小值
-					'weigth_1_min': 0,
+					'weight_1_min': 0,
 					// 1日权重——最大值
-					'weigth_1_max': 0,
+					'weight_1_max': 0,
 					// 4日权重——最小值
-					'weigth_4_min': 0,
+					'weight_4_min': 0,
 					// 4日权重——最大值
-					'weigth_4_max': 0,
+					'weight_4_max': 0,
 					// 7日权重——最小值
-					'weigth_7_min': 0,
+					'weight_7_min': 0,
 					// 7日权重——最大值
-					'weigth_7_max': 0,
+					'weight_7_max': 0,
 					// 1日涨跌幅度——最小值
 					'extent_1_min': 0,
 					// 1日涨跌幅度——最大值

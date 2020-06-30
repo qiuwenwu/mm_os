@@ -43,6 +43,58 @@
 						<dd>
 							<mm_number v-model="form.VOL" :min="0" :max="2147483647" />
 						</dd>
+						<dt>人工得分</dt>
+						<dd>
+							<mm_number v-model="form.score" :min="0" :max="99" />
+						</dd>
+						<dt>1日权重</dt>
+						<dd>
+							<mm_number v-model="form.weight_1" :min="-99" :max="99" />
+						</dd>
+						<dt>4日权重</dt>
+						<dd>
+							<mm_number v-model="form.weight_4" :min="-99" :max="99" />
+						</dd>
+						<dt>7日权重</dt>
+						<dd>
+							<mm_number v-model="form.weight_7" :min="-99" :max="99" />
+						</dd>
+						<dt>1日涨跌</dt>
+						<dd>
+							<mm_number v-model="form.extent_1" :min="-100" :max="100" />
+						</dd>
+						<dt>4日涨跌</dt>
+						<dd>
+							<mm_number v-model="form.extent_4" :min="-100" :max="100" />
+						</dd>
+						<dt>7日涨跌</dt>
+						<dd>
+							<mm_number v-model="form.extent_7" :min="-100" :max="100" />
+						</dd>
+						<dt>做T建议</dt>
+						<dd>
+							<mm_input v-model="form.action_day" :minlength="0" :maxlength="0" placeholder="买 / 卖 / 留" />
+						</dd>
+						<dt>长线建议</dt>
+						<dd>
+							<mm_input v-model="form.action_week" :minlength="0" :maxlength="0" placeholder="买 / 卖 / 留" />
+						</dd>
+						<dt>综合建议</dt>
+						<dd>
+							<mm_input v-model="form.action" :minlength="0" :maxlength="0" placeholder="买 / 卖 / 留" />
+						</dd>
+						<dt>分析提示</dt>
+						<dd>
+							<mm_input v-model="form.tip" :minlength="0" :maxlength="0" placeholder="技术分析，公式的名称集合" />
+						</dd>
+						<dt>预言</dt>
+						<dd>
+							<mm_input v-model="form.predict" :minlength="0" :maxlength="0" placeholder="告知今日 / 近日和后市发展情况" />
+						</dd>
+						<dt>阶段</dt>
+						<dd>
+							<mm_select v-model="form.ok" :options="$to_kv(list_, 'ok', 'name')" />
+						</dd>
 					</dl>
 					<footer>
 						<div class="mm_group">
@@ -82,12 +134,47 @@
 						"CHG": 0,
 						"TOTAL": 0,
 						"VOL": 0,
+						"score": 0,
+						"weight_1": 0,
+						"weight_4": 0,
+						"weight_7": 0,
+						"extent_1": 0,
+						"extent_4": 0,
+						"extent_7": 0,
+						"action_day": '',
+						"action_week": '',
+						"action": '',
+						"tip": '',
+						"predict": '',
+						"ok": 0,
 				},
+				// 阶段
+				'list_': [],
 			}
 		},
 		methods: {
+				/**
+				 * 获取阶段
+				 * @param {query} 查询条件
+				 */
+				get_(query){
+					var _this = this;
+					if(!query){
+						query = {
+							field: "ok,name"
+						};
+					}
+					this.$get('~/apis/1已抓取，2已分析，3已计算?size=0', query, function(json) {
+						if (json.result) {
+							_this.list_.clear();
+							_this.list_.addList(json.result.list)
+						}
+					});
+				},
 		},
 		created() {
+			// 获取阶段
+			this.get_();
 		}
 	}
 </script>
