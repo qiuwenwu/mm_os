@@ -262,9 +262,10 @@ function toUrl(obj, url) {
 	if (url) {
 		if (url.endWith('?') || url.endWith('&')) {
 			return url + queryStr.replace('&', '');
-		} else if (url.indexOf('?') === -1) {
+		} else if(url.indexOf('?') === -1) {
 			return url + queryStr.replace('&', '?');
-		} else {
+		}
+		else {
 			return url + queryStr;
 		}
 	} else {
@@ -994,20 +995,20 @@ if (typeof($) === "undefined") {
 		}
 		return arr;
 	}
-	
-	function toList(list, sub = 'sub', arr = []){
-		for(var i = 0; i < list.length; i++){
+
+	function toList(list, sub = 'sub', arr = []) {
+		for (var i = 0; i < list.length; i++) {
 			var o = list[i];
 			var lt = o[sub];
 			delete o[sub];
 			arr.push(o);
-			if(lt && lt.length > 0){
+			if (lt && lt.length > 0) {
 				toList(lt, sub, arr);
 			}
 		}
 		return arr;
 	}
-	
+
 	/**
 	 * 列表转树形列表
 	 * @param {String} id ID字段
@@ -1019,17 +1020,17 @@ if (typeof($) === "undefined") {
 	Array.prototype.toTree = function(id, value = 0, father_id = 'father_id', sub = 'sub') {
 		return toTree(this, id, value, father_id, sub);
 	};
-	
+
 	/**
 	 * 列表转树形列表
 	 * @param {String} sub 子类字段
 	 * @param {Array} arr 结果数组
 	 * @return {Array} 返回数组
 	 */
-	Array.prototype.toList = function (sub = 'sub', arr = []){
+	Array.prototype.toList = function(sub = 'sub', arr = []) {
 		return toList(this, sub, arr);
 	};
-	
+
 	/**
 	 * @description 拷贝对象
 	 * @param {Boolean} has 是否非空拷贝，如果含有数据才拷贝，不含数据不拷贝

@@ -102,6 +102,7 @@ ViewModel.prototype.js = async function(model) {
 				var name = "list_" + basename;
 				var id = format.id || format.key;
 				o.label = name;
+				var path = path_start + format.table.replace('_', '/') + "?size=0" // &field=" + format.key + "," + format.name;
 				js.data.push({
 					basename,
 					title: format.title,
@@ -109,7 +110,7 @@ ViewModel.prototype.js = async function(model) {
 					name,
 					field: format.name,
 					value: [],
-					path: path_start + format.table.replace('_', '/') + "?size=0"
+					path
 				});
 			} else {
 				var basename = format.key;
