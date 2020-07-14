@@ -6,7 +6,79 @@
  * -伪类名 表示对伪类控制, 例如: table-hover
  * -数字 表示样式1,样式2
 */
-
+:root {
+	/* === 颜色变量 === */
+	/* 基本色 */
+	--color_red: #FF0036;
+	--color_orange: #fca216;
+	--color_yellow: #fcca16;
+	--color_green: #09BB07;
+	--color_cyan: #26d2ff;
+	--color_blue: #38f;
+	--color_purple: #7f39e8;
+	
+	--color_black: #333;
+	--color_white: #fff;
+	--color_grey: #999;
+	--color_light: #F9F9F9;
+	--color_dark: #666;
+	
+	
+	/* 主题色 */
+	--color_error: #FF0036;
+	--color_error_b:#d10000;
+	--color_error_h:#ff3237;
+	--color_warning: #fca216;
+	--color_warning_b:#ff8200;
+	--color_warning_h:#fca248;
+	--color_success: #09BB07;
+	--color_success_b:#2F9833;
+	--color_success_h:#3bbb39;
+	--color_info: #26d2ff;
+	--color_info_b:#15baf8;
+	--color_info_h: #58e6ff;
+	--color_primary: #38f;
+	--color_primary_b:#317EF3;
+	--color_primary_h: #51a6ff;
+	--color_default: #666;
+	--color_default_b:#444;
+	
+	
+	/* 场景色 */
+	--color_base: #333;
+	--color_title: #000;
+	--color_subtitle: #333;
+	--color_describe: #666;
+	--color_paragraph: #666;
+	--color_tip: #999;
+	--color_border:#e5e5e5;
+	--color_mask:rgba(0, 0, 0, 0.4);
+	--color_bg:#f6f6f9;
+	--color_shadow:rgba(7,17,27,0.1);
+	
+	/* === 其他 === */
+	/* 透明度 */
+	--opacity_disabled: 0.3;
+	
+	
+	/* 渐变 */
+	--line_red: linear-gradient(135deg, #FF5A6A 0%, #f12f04 100%);
+	--line_yellow: linear-gradient(135deg, rgb(252, 207, 49) 10%, rgb(245, 85, 85) 100%);
+	--line_green: linear-gradient(135deg, rgb(255, 247, 32) 10%, rgb(60, 213, 0) 100%);
+	--line_blue: linear-gradient(135deg, rgb(94, 252, 232) 10%, rgb(115, 110, 254) 100%); 
+	--line_purple: linear-gradient(135deg, #EE9AE5 10%, #5961F9 100%); 
+	
+	--line_red-1: linear-gradient(135deg, #fffddc 0%, #ff4c4c 20%, #fa2aa4 100%);
+	--line_red-2: linear-gradient(135deg, #ffe7dc 0%, #ff7a4c 20%, #fa2a7d 100%);
+	--line_yellow-1: linear-gradient(135deg, #ffe4dc 0%, #faa02a 20%, #ff4c5d 100%);
+	--line_yellow-2: linear-gradient(135deg, #fffadc 0%, #faf32a 20%, #ff7f4c 100%);
+	--line_green-1: linear-gradient(135deg, #dcf9ff 0%, #e8ff4c 20%, #2afac2 100%);
+	--line_green-2: linear-gradient(135deg, #fff7dc 0%, #4cff6e 20%, #46c4fe 100%);
+	--line_blue-1: linear-gradient(135deg, #dcfff9 0%, #2afadf 20%, #4c83ff 100%);
+	--line_blue-2: linear-gradient(135deg, #dcffe0 0%, #2accfa 20%, #b14cff 100%);
+	--line_purple-1: linear-gradient(135deg, #ffe8dc 0%, #ff4cb5 20%, #cc2afa 100%);
+	--line_purple-2: linear-gradient(135deg, #ffe8dc 0%, #ec4cff 20%, #652afa 100%);
+}
 
 /* 重置样式 */
 body  { color: #333; background: #efeff4; }
@@ -20,9 +92,6 @@ input::-webkit-input-placeholder {
 input:-moz-placeholder {
 	color: #999;
 } 
-input::-moz-placeholder {
-	color: #999;
-}
 input:-ms-input-placeholder {
 	color: #999;
 }
@@ -81,7 +150,7 @@ input:-ms-input-placeholder {
 .br_info { border-color:#26d2ff !important; }
 
 /* 按钮 */
-.btn_default-x { color:#666; border-color:#666; }
+.btn_default-x { color:#666; border-color: rgba(125,125,125,0.25); }
 .btn_warning-x { color:#f12f04; border-color:#f12f04; }
 .btn_success-x { color:#44b549; border-color:#44b549; }
 .btn_primary-x { color:#38f; border-color:#38f; }

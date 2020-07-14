@@ -76,6 +76,8 @@ define(function() {
 				page_now: 1,
 				// 选择项状态
 				select_state: false,
+				// 排序键，用于拖拽修改排序
+				sort_key: "display",
 				// 修改条件
 				query_set: {}
 			};
@@ -198,12 +200,17 @@ define(function() {
 			/**
 			 * 修改前事件
 			 * @param {Object} param
-			 * @param {Boolean} includeZero 是否包括0
+			 * @param {Boolean} includeZero 是否删除0值项
 			 * @param {Object} 返回新的参数
 			 */
 			set_before: function set_before(param, includeZero) {
-				// console.log('修改前', $.toJson(param));
-				return $.delete(param, includeZero);
+				var pm = $.delete(param, includeZero);
+				for(var k in pm){
+					if(k.toLocaleLowerCase().indexOf('time') !== -1 && pm[k].indexOf('T') !== -1){
+						pm[k] = new Date(pm[k]).toStr('yyyy-MM-dd 00:00:00');
+					}
+				}
+				return pm;
 			},
 			/**
 			 * 批量修改
@@ -957,6 +964,29 @@ define(function() {
 			 */
 			cancel: function cancel() {
 				this.$back();
+			},
+			/**
+			 * 排序改变事件
+			 * @param {Object} e 事件对象
+			 */
+			sort_change: function sort_change(e){
+				console.log(e);
+				// var key = this.sort_key;
+				// var obj = e.moved.element;
+				// var id_1 = e.moved.oldIndex;
+				// var id_2 = e.moved.newIndex
+				// if(obj.hasOwnProperty(key)){
+				// 	var o1 = this.list[id_1];
+				// 	var o2 = this.list[id_2];
+				// 	if(id_1 > id_2){
+				// 		o2[key] = o1[key] - 1;
+				// 	}
+				// 	else {
+				// 		o2[key] = o1[key] + 1;
+				// 	}
+				// 	this.set(o1);
+				// 	this.set(o2);
+				// }
 			}
 		},
 		computed: {

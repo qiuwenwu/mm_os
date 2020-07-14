@@ -12,25 +12,27 @@
 							<mm_list col="3">
 								<!--{if(param.list)}-->
 								<!--{loop param.list v idx}-->
-									<!--{if(v.name == 'keyword')}-->
+								<!--{if(v.name == 'keyword')}-->
 								<mm_col>
-									<mm_input v-model="query.keyword" title="${v.title}" desc="${v.description.replace(/\([0-9A-Za-z_]+\)/g, '').replace('用于搜索', '').replace(/、/g, ' / ')}" @blur="search()" />
+									<mm_input v-model="query.keyword" title="${v.title}" desc="${v.description.replace(/\([0-9A-Za-z_]+\)/g, '').replace('用于搜索', '').replace(/、/g, ' / ')}"
+									 @blur="search()" />
 								</mm_col>
-									<!--{/if}-->
+								<!--{/if}-->
 								<!--{/loop}-->
 								<!--{/if}-->
 								<!--{loop field v idx}-->
-									<!--{if(v.format)}-->
-										<!--{if(v.format.table)}-->
+								<!--{if(v.format)}-->
+								<!--{if(v.format.table)}-->
 								<mm_col>
-									<mm_select v-model="query.${v.format.key}" title="${v.title}" :options="$to_kv(${v.label}, '${v.format.id || v.format.key}', '${v.format.name}')" @change="search()" />
+									<mm_select v-model="query.${v.format.key}" title="${v.title}" :options="$to_kv(${v.label}, '${v.format.id || v.format.key}', '${v.format.name}')"
+									 @change="search()" />
 								</mm_col>
-										<!--{else}-->
+								<!--{else}-->
 								<mm_col>
 									<mm_select v-model="query.${v.format.key}" title="${v.title}" :options="$to_kv(${v.label})" @change="search()" />
 								</mm_col>
-										<!--{/if}-->
-									<!--{/if}-->
+								<!--{/if}-->
+								<!--{/if}-->
 								<!--{/loop}-->
 								<mm_col>
 									<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
@@ -50,16 +52,16 @@
 									<th scope="col" class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 									<th scope="col" class="th_id"><span>#</span></th>
 									<!--{loop field v idx}-->
-										<!--{if(idx > 0)}-->
+									<!--{if(idx > 0)}-->
 									<th scope="col">
 										<mm_reverse title="${v.title}" v-model="query.orderby" field="${v.name}" :func="search"></mm_reverse>
 									</th>
-										<!--{/if}-->
+									<!--{/if}-->
 									<!--{/loop}-->
 									<th scope="col" class="th_handle"><span>操作</span></th>
 								</tr>
 							</thead>
-							<tbody>
+							<draggable v-model="list" tag="tbody" @change="sort_change">
 								<tr v-for="(o, idx) in list" :key="idx" :class="{'active': select == idx}" @click="selected(idx)">
 									<th scope="row"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 									<!--{loop field v idx}-->
@@ -67,13 +69,13 @@
 										<!--{if(v.dataType === 'tinyint')}-->
 										<mm_switch v-model="o.${v.name}" @click.native="set(o)" />
 										<!--{else if(v.format)}-->
-											<!--{if(v.format.table)}-->
+										<!--{if(v.format.table)}-->
 										<span>{{ get_name(${v.label}, o.${v.format.key}, '${v.format.id || v.format.key}', '${v.format.name}') }}</span>
-											<!--{else if(v.name == 'state' || v.name == 'status')}-->
+										<!--{else if(v.name == 'state' || v.name == 'status')}-->
 										<span v-bind:class="arr_color[o.${v.name}]">{{ ${v.label}[o.${v.name}] }}</span>
-											<!--{else}-->
+										<!--{else}-->
 										<span>{{ ${v.label}[o.${v.name}] }}</span>
-											<!--{/if}-->
+										<!--{/if}-->
 										<!--{else if(v.name.indexOf('img') !== -1 || v.name.indexOf('icon') !== -1 || v.name === 'avatar')}-->
 										<img class="${v.name}" :src="o.${v.name}" alt="${v.title}" />
 										<!--{else if(v.dataType === 'date')}-->
@@ -94,7 +96,7 @@
 										<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
 									</td>
 								</tr>
-							</tbody>
+							</draggable>
 						</mm_table>
 					</mm_body>
 					<footer>
@@ -126,18 +128,18 @@
 				<mm_body>
 					<dl>
 						<!--{loop field v idx}-->
-							<!--{if(v.format)}-->
+						<!--{if(v.format)}-->
 						<dt>${v.title}</dt>
-								<!--{if(v.format.table)}-->
+						<!--{if(v.format.table)}-->
 						<dd>
 							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label}, '${v.format.id || v.format.key}', '${v.format.name}')" />
 						</dd>
-								<!--{else}-->
+						<!--{else}-->
 						<dd>
 							<mm_select v-model="form.${v.format.key}" :options="$to_kv(${v.label})" />
 						</dd>
-								<!--{/if}-->
-							<!--{/if}-->
+						<!--{/if}-->
+						<!--{/if}-->
 						<!--{/loop}-->
 					</dl>
 				</mm_body>
@@ -175,11 +177,11 @@
 					size: 10,
 					/*[loop js.query v idx]*/
 					// ${' ' + v.title}
-						/*[if v.type === 'number' && !v.select]*/
+					/*[if v.type === 'number' && !v.select]*/
 					'${v.name}': 0,
-						/*[else]*/
+					/*[else]*/
 					'${v.name}': '',
-						/*[/if]*/
+					/*[/if]*/
 					/*[/loop]*/
 					//排序
 					orderby: ""
@@ -189,42 +191,42 @@
 				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
 				/*[loop js.data v idx]*/
 				// ${' ' + v.title}
-				'${v.name}': [/*[loop v.value a idx]*//*[if idx == 0]*/'${a}'/*[else]*/,'${a}'/*[/if]*//*[/loop]*/],
+				'${v.name}': [ /*[loop v.value a idx]*/ /*[if idx == 0]*/ '${a}' /*[else]*/ , '${a}' /*[/if]*/ /*[/loop]*/ ],
 				/*[/loop]*/
 				// 视图模型
 				vm: {}
 			}
 		},
 		methods: {
-		/*[loop js.data v idx]*/
+			/*[loop js.data v idx]*/
 			/*[if(v.path)]*/
 			/**
 			 * 获取 ${v.title}
 			 * @param {query} 查询条件
 			 */
-			get_/*[v.basename]*/(query){
+			get_ /*[v.basename]*/(query) {
 				var _this = this;
-				if(!query){
+				if (!query) {
 					query = {
 						field: "${v.id},${v.field}"
 					};
 				}
 				this.$get('~${v.path}', query, function(json) {
 					if (json.result) {
-						_this/*['.' + v.name]*/.clear();
-						_this/*['.' + v.name]*/.addList(json.result.list)
+						_this /*['.' + v.name]*/ .clear();
+						_this /*['.' + v.name]*/ .addList(json.result.list)
 					}
 				});
 			},
 			/*[/if]*/
-		/*[/loop]*/
+			/*[/loop]*/
 		},
 		created() {
 			/*[loop js.data v idx]*/
-				/*[if(v.path)]*/
+			/*[if(v.path)]*/
 			// 获取 ${v.title}
-			this.get_/*[v.basename]*/();
-				/*[/if]*/
+			this.get_ /*[v.basename]*/();
+			/*[/if]*/
 			/*[/loop]*/
 		}
 	}
