@@ -5,7 +5,9 @@
 	"func_file": "",
 	"post": {
 		"query": ["uid", "name", "username", "phone", "email"],
-		"body": ["age", "headImg", "birthday", "password", "confirm_password", "pay_password"]
+		"query_required": [],
+		"body": ["age", "headImg", "birthday", "password", "confirm_password", "pay_password"],
+		"body_required": []
 	},
 	"list": [{
 			"name": "uid",
