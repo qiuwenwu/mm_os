@@ -29,6 +29,9 @@ import mm_slide_img from '/src/components/slide/mm_slide_img.vue';
 import mm_slide_page from '/src/components/slide/mm_slide_page.vue';
 import mm_slide_text from '/src/components/slide/mm_slide_text.vue';
 
+// 拓展
+import 'mm_drag' from '/src/components/expand/mm_drag.vue';
+
 /* === 创建全局组件 === */
 export default {
 	install(Vue, options) {
@@ -64,5 +67,8 @@ export default {
 		Vue.component('mm_slide_img', mm_slide_img);
 		Vue.component('mm_slide_page', mm_slide_page);
 		Vue.component('mm_slide_text', mm_slide_text);
+		
+		// 轮播
+		Vue.component('mm_drag', mm_drag);
 	}
 }

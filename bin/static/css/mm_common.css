@@ -135,6 +135,19 @@
 .pl-5 {padding-left:2rem !important;}
 .pb-5 {padding-bottom:2rem !important;}
 
+.ptb-1 {padding-top:0.25rem !important;padding-bottom:0.25rem !important;}
+.ptb-2 {padding-top:0.5rem !important;padding-bottom:0.5rem !important;}
+.ptb-3 {padding-top:1rem !important;padding-bottom:1rem !important;}
+.ptb-4 {padding-top:1.5rem !important;padding-bottom:1.5rem !important;}
+.ptb-5 {padding-top:2rem !important;padding-bottom:2rem !important;}
+
+.plr-1 {padding-left:0.25rem !important;padding-right:0.25rem !important;}
+.plr-2 {padding-left:0.5rem !important;padding-right:0.5rem !important;}
+.plr-3 {padding-left:1rem !important;padding-right:1rem !important;}
+.plr-4 {padding-left:1.5rem !important;padding-right:1.5rem !important;}
+.plr-5 {padding-left:2rem !important;padding-right:2rem !important;}
+
+
 /* ===  间距  === */
 .ma {margin:1rem !important;}
 .mb {margin-bottom:1rem !important;}
@@ -189,6 +202,19 @@
 .mr-5 {margin-right:2rem !important;}
 .ml-5 {margin-left:2rem !important;}
 .mb-5 {margin-bottom:2rem !important;}
+
+.mtb-1 {margin-top:0.25rem !important;margin-bottom:0.25rem !important;}
+.mtb-2 {margin-top:0.5rem !important;margin-bottom:0.5rem !important;}
+.mtb-3 {margin-top:1rem !important;margin-bottom:1rem !important;}
+.mtb-4 {margin-top:1.5rem !important;margin-bottom:1.5rem !important;}
+.mtb-5 {margin-top:2rem !important;margin-bottom:2rem !important;}
+
+.mlr-1 {margin-left:0.25rem !important;margin-right:0.25rem !important;}
+.mlr-2 {margin-left:0.5rem !important;margin-right:0.5rem !important;}
+.mlr-3 {margin-left:1rem !important;margin-right:1rem !important;}
+.mlr-4 {margin-left:1.5rem !important;margin-right:1.5rem !important;}
+.mlr-5 {margin-left:2rem !important;margin-right:2rem !important;}
+
 
 /* ===  边框  === */
 .ba {border:1px solid #e5e5e5 !important;}

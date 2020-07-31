@@ -40,7 +40,7 @@ module.exports = function(config) {
 
 	// 引用公共库
 	if (sys.com == true) {
-		"./app".addDir();
+		"/app".addDir();
 		var Com = require("./bin/com.js");
 		$.com = new Com(null, $);
 		$.com.run();
