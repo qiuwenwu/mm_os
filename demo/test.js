@@ -1,7 +1,7 @@
 const MM = require('../index.js');
 
 // 修改程序运行目录
-$.runPath = __dirname.fullname();
+$.runPath = __dirname + $.slash;
 // console.log($.runPath);
 var NODE_ENV = process.env.NODE_ENV || 'local';
 var config_path = `./config/${NODE_ENV}.json`;
