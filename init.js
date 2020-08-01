@@ -1,3 +1,4 @@
+require("mm_expand");
 require("mm_logs");
 require('mm_tpl');
 require("mm_https");
