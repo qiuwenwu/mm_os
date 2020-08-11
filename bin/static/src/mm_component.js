@@ -1,4 +1,4 @@
-// 栏目
+栏目
 import mm_action from '/src/components/bar/mm_action.vue';
 import mm_buy from '/src/components/bar/mm_buy.vue';
 import mm_chat from '/src/components/bar/mm_chat.vue';
@@ -6,8 +6,8 @@ import mm_count from '/src/components/bar/mm_count.vue';
 import mm_filter from '/src/components/bar/mm_filter.vue';
 import mm_search from '/src/components/bar/mm_search.vue';
 import mm_sort from '/src/components/bar/mm_sort.vue';
-import mm_title from '/src/components/bar/mm_title.vue';
 import mm_tag from '/src/components/bar/mm_tag.vue';
+import mm_title from '/src/components/bar/mm_title.vue';
 
 // 列表项
 import mm_article from '/src/components/item/mm_article.vue';
@@ -30,13 +30,13 @@ import mm_slide_page from '/src/components/slide/mm_slide_page.vue';
 import mm_slide_text from '/src/components/slide/mm_slide_text.vue';
 
 // 拓展
-import 'mm_drag' from '/src/components/expand/mm_drag.vue';
+import mm_drag from '/src/components/expand/mm_drag.vue';
 
 /* === 创建全局组件 === */
 export default {
 	install(Vue, options) {
-		
-		// 栏目组件
+
+		栏目组件
 		Vue.component('mm_action', mm_action);
 		Vue.component('mm_buy', mm_buy);
 		Vue.component('mm_chat', mm_chat);
@@ -67,7 +67,7 @@ export default {
 		Vue.component('mm_slide_img', mm_slide_img);
 		Vue.component('mm_slide_page', mm_slide_page);
 		Vue.component('mm_slide_text', mm_slide_text);
-		
+
 		// 轮播
 		Vue.component('mm_drag', mm_drag);
 	}

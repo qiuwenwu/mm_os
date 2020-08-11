@@ -493,7 +493,7 @@ define(function() {
 							for (var k in o) {
 								if (k.indexOf('time') !== -1) {
 									var val = o[k];
-									if(val.indexOf('T') !== -1){
+									if(val && val.indexOf('T') !== -1){
 										var v = new Date(o[k]);
 										o[k] = v.toStr('yyyy-MM-dd hh:mm:ss');
 									}

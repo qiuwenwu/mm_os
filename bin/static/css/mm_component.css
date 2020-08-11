@@ -258,7 +258,7 @@ table .mm_reverse .title {min-width:initial;padding-left:0;float: left; white-sp
 /* 表格中的按钮 */
 table .mm_btn {border-radius:.25rem;display:inline-block;height:1.5rem;line-height:1.5rem;padding-left:0.75rem;padding-right:0.75rem;margin-right:.5rem;font-size:.75rem;}
 table .icon,table .avatar { width: 2.5rem; }
-table .img { min-width: 5rem; }
+table .img { max-width: 10rem; }
 
 /* 图片上传 */
 .mm_upload_img {position: relative;}
