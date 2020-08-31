@@ -4,10 +4,8 @@
 		".git",
 		".svn",
 		"node_modules/**/node_modules",
-		"*/static/img/*",
-		"*/static/js/*",
-		"*/static/src/*",
-		"*/static/css/*"
+		"*/static/*/*.json",
+		"*/static/*.js"
 	],
 	"verbose": true,
 	"execMap": {
