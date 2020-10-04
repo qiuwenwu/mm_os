@@ -7,7 +7,7 @@ require('mm_matchs');
 require("mm_timer");
 $.Html = require('mm_html');
 
-$.binPath = __dirname.fullname();
+$.binPath = __dirname.fullname() + "/";
 $.redis_admin = require("mm_redis").redis_admin;
 $.mongodb_admin = require("mm_mongodb").mongodb_admin;
 $.mysql_admin = require('mm_mysql').mysql_admin;
