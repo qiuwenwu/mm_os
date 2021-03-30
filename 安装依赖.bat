@@ -1,0 +1,1 @@
+npm i cross-env nodemon -g
