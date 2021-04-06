@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地数据库
+ Source Server         : 本地
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 21/03/2021 02:45:09
+ Date: 06/04/2021 08:49:59
 */
 
 SET NAMES utf8mb4;
@@ -390,6 +390,7 @@ INSERT INTO `cms_lang` VALUES (56, 'desc_about_us', 'About Our Institution', '�
 DROP TABLE IF EXISTS `cms_nav`;
 CREATE TABLE `cms_nav`  (
   `nav_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '导航ID：[0,32767]',
+  `available` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否启用：[0,1]启用后才可以看到。(0否|1是)',
   `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '英文名称：[0,32]用于多国语识别',
   `title` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中文标题：[0,32]用于中文提示',
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '跳转链接：[0,255]跳转的链接地址',
@@ -405,11 +406,11 @@ CREATE TABLE `cms_nav`  (
 -- ----------------------------
 -- Records of cms_nav
 -- ----------------------------
-INSERT INTO `cms_nav` VALUES (1, 'home', '首页', '/', '', '', '', 'top', '', 0);
-INSERT INTO `cms_nav` VALUES (2, 'about', '关于我们', '/about', '', '', '', 'top', '', 0);
-INSERT INTO `cms_nav` VALUES (3, 'product', '产品展示', '/product', '', '', '', 'top', '', 0);
-INSERT INTO `cms_nav` VALUES (4, 'service', '技术服务', '/service', '', '', '', 'top', '', 0);
-INSERT INTO `cms_nav` VALUES (5, 'contact', '联系方式', '/contact', '', '', '', 'top', '', 0);
+INSERT INTO `cms_nav` VALUES (1, 1, 'home', '首页', '/', '', '', '', 'top', '', 0);
+INSERT INTO `cms_nav` VALUES (2, 1, 'about', '关于我们', '/about', '', '', '', 'top', '', 0);
+INSERT INTO `cms_nav` VALUES (3, 1, 'product', '产品展示', '/product', '', '', '', 'top', '', 0);
+INSERT INTO `cms_nav` VALUES (4, 1, 'service', '技术服务', '/service', '', '', '', 'top', '', 0);
+INSERT INTO `cms_nav` VALUES (5, 1, 'contact', '联系方式', '/contact', '', '', '', 'top', '', 0);
 
 -- ----------------------------
 -- Table structure for dev_app
@@ -1215,7 +1216,7 @@ CREATE TABLE `service_member`  (
 -- ----------------------------
 -- Records of service_member
 -- ----------------------------
-INSERT INTO `service_member` VALUES (1, 0, 0, 2, 130200, 0, 0, 0, 8.56, '1997-01-01 00:00:00', '2020-06-23 21:03:02', NULL, NULL, '');
+INSERT INTO `service_member` VALUES (1, 3, 0, 2, 130200, 0, 0, 0, 8.56, '1997-01-01 00:00:00', '2021-03-21 12:11:01', NULL, '李晓兰', '汤坑镇');
 
 -- ----------------------------
 -- Table structure for service_order
@@ -1258,14 +1259,44 @@ CREATE TABLE `service_type`  (
   `father_id` smallint(5) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级分类ID：[0,32767](service_type.name.type_id)',
   `name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分类名称：[0,16]',
   `icon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '分类图标：',
-  `time_create` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间：',
-  `time_update` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间：',
   PRIMARY KEY (`type_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '服务分类：' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '服务分类：' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of service_type
 -- ----------------------------
+INSERT INTO `service_type` VALUES (1, 100, 0, '家庭保洁', '');
+INSERT INTO `service_type` VALUES (2, 100, 0, '形象护理', '');
+INSERT INTO `service_type` VALUES (3, 100, 0, '家庭教师', '');
+INSERT INTO `service_type` VALUES (4, 100, 0, '专职保姆', '');
+INSERT INTO `service_type` VALUES (5, 100, 0, '技术服务', '');
+INSERT INTO `service_type` VALUES (6, 100, 0, '临时特工', '');
+INSERT INTO `service_type` VALUES (7, 100, 3, '才艺表演', '');
+INSERT INTO `service_type` VALUES (8, 100, 3, '物理化', '');
+INSERT INTO `service_type` VALUES (9, 100, 3, '语数英', '');
+INSERT INTO `service_type` VALUES (10, 100, 1, '开荒保洁', '');
+INSERT INTO `service_type` VALUES (11, 100, 1, '日常保洁', '');
+INSERT INTO `service_type` VALUES (12, 100, 1, '专项清洁', '');
+INSERT INTO `service_type` VALUES (13, 100, 2, '化妆', '');
+INSERT INTO `service_type` VALUES (14, 100, 2, '美甲', '');
+INSERT INTO `service_type` VALUES (15, 100, 2, '理发', '');
+INSERT INTO `service_type` VALUES (16, 100, 4, '幼儿保姆', '');
+INSERT INTO `service_type` VALUES (17, 100, 4, '老人保姆', '');
+INSERT INTO `service_type` VALUES (18, 100, 4, '生活保姆', '');
+INSERT INTO `service_type` VALUES (19, 100, 0, '兼职服务', '');
+INSERT INTO `service_type` VALUES (20, 100, 19, '洗碗', '');
+INSERT INTO `service_type` VALUES (21, 100, 19, '做饭', '');
+INSERT INTO `service_type` VALUES (22, 100, 19, '派单', '');
+INSERT INTO `service_type` VALUES (23, 100, 19, '配送', '');
+INSERT INTO `service_type` VALUES (24, 100, 6, '模特', '');
+INSERT INTO `service_type` VALUES (25, 100, 6, '演员', '');
+INSERT INTO `service_type` VALUES (26, 100, 6, '主播', '');
+INSERT INTO `service_type` VALUES (27, 100, 6, '客服', '');
+INSERT INTO `service_type` VALUES (28, 100, 19, '搬运', '');
+INSERT INTO `service_type` VALUES (29, 100, 6, '导购', '');
+INSERT INTO `service_type` VALUES (30, 100, 5, '电脑维修', '');
+INSERT INTO `service_type` VALUES (31, 100, 5, '空调维修', '');
+INSERT INTO `service_type` VALUES (32, 100, 5, '管道疏通', '');
 
 -- ----------------------------
 -- Table structure for stock_analyse
@@ -4576,9 +4607,7 @@ CREATE TABLE `sys_address_city`  (
 -- Records of sys_address_city
 -- ----------------------------
 INSERT INTO `sys_address_city` VALUES (110100, 0, 100, 110000, '市辖区');
-INSERT INTO `sys_address_city` VALUES (110200, 0, 100, 110000, '县');
 INSERT INTO `sys_address_city` VALUES (120100, 0, 100, 120000, '市辖区');
-INSERT INTO `sys_address_city` VALUES (120200, 0, 100, 120000, '县');
 INSERT INTO `sys_address_city` VALUES (130100, 0, 100, 130000, '石家庄市');
 INSERT INTO `sys_address_city` VALUES (130200, 0, 100, 130000, '唐山市');
 INSERT INTO `sys_address_city` VALUES (130300, 0, 100, 130000, '秦皇岛市');
@@ -4650,7 +4679,6 @@ INSERT INTO `sys_address_city` VALUES (231100, 0, 100, 230000, '黑河市');
 INSERT INTO `sys_address_city` VALUES (231200, 0, 100, 230000, '绥化市');
 INSERT INTO `sys_address_city` VALUES (232700, 0, 100, 230000, '大兴安岭地区');
 INSERT INTO `sys_address_city` VALUES (310100, 0, 100, 310000, '市辖区');
-INSERT INTO `sys_address_city` VALUES (310200, 0, 100, 310000, '县');
 INSERT INTO `sys_address_city` VALUES (320100, 0, 100, 320000, '南京市');
 INSERT INTO `sys_address_city` VALUES (320200, 0, 100, 320000, '无锡市');
 INSERT INTO `sys_address_city` VALUES (320300, 0, 100, 320000, '徐州市');
@@ -4813,8 +4841,6 @@ INSERT INTO `sys_address_city` VALUES (460100, 0, 100, 460000, '海口市');
 INSERT INTO `sys_address_city` VALUES (460200, 0, 100, 460000, '三亚市');
 INSERT INTO `sys_address_city` VALUES (469000, 0, 100, 460000, '省直辖县级行政单位');
 INSERT INTO `sys_address_city` VALUES (500100, 0, 100, 500000, '市辖区');
-INSERT INTO `sys_address_city` VALUES (500200, 0, 100, 500000, '县');
-INSERT INTO `sys_address_city` VALUES (500300, 0, 100, 500000, '市');
 INSERT INTO `sys_address_city` VALUES (510100, 0, 100, 510000, '成都市');
 INSERT INTO `sys_address_city` VALUES (510300, 0, 100, 510000, '自贡市');
 INSERT INTO `sys_address_city` VALUES (510400, 0, 100, 510000, '攀枝花市');
@@ -5165,6 +5191,7 @@ INSERT INTO `sys_message` VALUES (27, '', '132123');
 DROP TABLE IF EXISTS `sys_nav`;
 CREATE TABLE `sys_nav`  (
   `nav_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '导航ID：[0,32767]',
+  `available` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否启用：[0,1]启用后才可以看到。(0否|1是)',
   `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '英文名称：[0,32]用于多国语识别',
   `title` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中文标题：[0,32]用于中文提示',
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '跳转链接：[0,255]跳转的链接地址',
@@ -5180,11 +5207,11 @@ CREATE TABLE `sys_nav`  (
 -- ----------------------------
 -- Records of sys_nav
 -- ----------------------------
-INSERT INTO `sys_nav` VALUES (1, 'home', '首页', '/', '', '', '', 'top', '', 0);
-INSERT INTO `sys_nav` VALUES (2, 'about', '关于我们', '/about', '', '', '', 'top', '', 0);
-INSERT INTO `sys_nav` VALUES (3, 'product', '产品展示', '/product', '', '', '', 'top', '', 0);
-INSERT INTO `sys_nav` VALUES (4, 'service', '技术服务', '/service', '', '', '', 'top', '', 0);
-INSERT INTO `sys_nav` VALUES (5, 'contact', '联系方式', '/contact', '', '', '', 'top', '', 0);
+INSERT INTO `sys_nav` VALUES (1, 1, 'home', '首页', '/', '', '', '', 'top', '', 0);
+INSERT INTO `sys_nav` VALUES (2, 1, 'about', '关于我们', '/about', '', '', '', 'top', '', 0);
+INSERT INTO `sys_nav` VALUES (3, 1, 'product', '产品展示', '/product', '', '', '', 'top', '', 0);
+INSERT INTO `sys_nav` VALUES (4, 1, 'service', '技术服务', '/service', '', '', '', 'top', '', 0);
+INSERT INTO `sys_nav` VALUES (5, 1, 'contact', '联系方式', '/contact', '', '', '', 'top', '', 0);
 
 -- ----------------------------
 -- Table structure for url_info
@@ -5197,7 +5224,7 @@ CREATE TABLE `url_info`  (
   `time_create` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间：',
   `time_update` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间：',
   PRIMARY KEY (`url_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of url_info
@@ -5215,7 +5242,7 @@ CREATE TABLE `url_log`  (
   `query` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '查询参数：用来校验推广者身份，平台等',
   `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '访问源IP：用来判断是否刷的流量',
   PRIMARY KEY (`log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of url_log
@@ -5252,7 +5279,7 @@ CREATE TABLE `url_share_log`  (
   `query` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '查询参数：用来校验推广者身份，平台等',
   `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '访问源IP：用来判断是否刷的流量',
   PRIMARY KEY (`log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of url_share_log
@@ -5292,7 +5319,7 @@ CREATE TABLE `user_account`  (
 -- ----------------------------
 -- Records of user_account
 -- ----------------------------
-INSERT INTO `user_account` VALUES (1, 1, 14, 5, 5, 1, 1, 0, '2021-02-06 15:11:45', 'mm2020', '000000', NULL, 0, 'admin', '管理员', '0cf6066acc83160a6c65282835399c40', '', 0, '127.0.0.1', NULL, NULL, NULL, '2020-11-11 11:10:28');
+INSERT INTO `user_account` VALUES (1, 1, 5, 5, 5, 1, 1, 0, '2021-03-25 01:15:02', 'mm2020', '000000', NULL, 0, 'admin', '管理员', '0cf6066acc83160a6c65282835399c40', '', 0, '127.0.0.1', NULL, NULL, NULL, '2020-11-11 11:10:28');
 INSERT INTO `user_account` VALUES (2, 1, 3, 5, 4, 0, 0, 0, '2021-02-06 13:06:21', 'mm2020', '775825', '', 0, 'wenwu', '文武', '0cf6066acc83160a6c65282835399c40', '', 0, '', '', '', '', '2020-11-11 11:10:45');
 INSERT INTO `user_account` VALUES (3, 1, 1, 2, 3, 0, 0, 0, '2021-03-21 02:36:20', '', '', NULL, 0, 'test', '小李子', '', '', 0, NULL, NULL, NULL, NULL, '2021-01-29 15:15:16');
 

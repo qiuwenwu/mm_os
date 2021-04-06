@@ -1,6 +1,6 @@
-﻿require('mm_expand');
+require('mm_expand');
 // 修改程序运行目录
-$.runPath = __dirname  + $.slash;
+$.runPath = __dirname + $.slash;
 const Soa = require('./mm_soa/index.js');
 
 var NODE_ENV = process.env.NODE_ENV || 'local';
