@@ -13,36 +13,36 @@
 									<dl>
 										<dt>适用的应用</dt>
 										<dd>
-											<mm_select v-model="form.app_id" :options="$to_kv(list_app, 'app_id', 'name', 0)" />
+											<control_select v-model="form.app_id" :options="$to_kv(list_app, 'app_id', 'name', 0)" />
 										</dd>
 										<dt>数据表分组</dt>
 										<dd>
-											<mm_select v-model="form.group_id" :options="$to_kv(list_table_group, 'group_id', 'name', 0)" />
+											<control_select v-model="form.group_id" :options="$to_kv(list_table_group, 'group_id', 'name', 0)" />
 										</dd>
 										<dt>使用次数</dt>
 										<dd>
-											<mm_number v-model="form.num" :min="0" :max="2147483647" />
+											<control_number v-model="form.num" :min="0" :max="2147483647" />
 										</dd>
 										<dt>适用率</dt>
 										<dd>
-											<mm_number v-model="form.rate" :min="0" :max="0" />
+											<control_number v-model="form.rate" :min="0" :max="0" />
 										</dd>
 										<dt class="required">表名</dt>
 										<dd>
-											<mm_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
+											<control_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
 											 :required="true" />
 										</dd>
 										<dt>标题</dt>
 										<dd>
-											<mm_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
+											<control_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
 										</dd>
 										<dt>描述</dt>
 										<dd>
-											<mm_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
+											<control_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
 										</dd>
 										<dt>关键词</dt>
 										<dd>
-											<mm_input v-model="form.keywords" :minlength="0" :maxlength="255" placeholder="" />
+											<control_input v-model="form.keywords" :minlength="0" :maxlength="255" placeholder="" />
 										</dd>
 									</dl>
 								</mm_form>

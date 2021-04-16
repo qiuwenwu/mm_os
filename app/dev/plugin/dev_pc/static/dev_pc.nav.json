@@ -4,7 +4,7 @@
     "routes": [
         {
             "name": "dev",
-            "path": "/dev",
+            "path": "/dev/",
             "redirect": "/dev/app"
         },
         {

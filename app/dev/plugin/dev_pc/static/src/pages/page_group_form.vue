@@ -13,32 +13,32 @@
 									<dl>
 										<dt>上级分组</dt>
 										<dd>
-											<mm_select v-model="form.father_id" :options="$to_kv(list_page_group, 'group_id', 'name', 0)" />
+											<control_select v-model="form.father_id" :options="$to_kv(list_page_group, 'group_id', 'name', 0)" />
 										</dd>
 										<dt>适用的应用</dt>
 										<dd>
-											<mm_select v-model="form.app_id" :options="$to_kv(list_app, 'app_id', 'name', 0)" />
+											<control_select v-model="form.app_id" :options="$to_kv(list_app, 'app_id', 'name', 0)" />
 										</dd>
 										<dt>使用次数</dt>
 										<dd>
-											<mm_number v-model="form.num" :min="0" :max="2147483647" />
+											<control_number v-model="form.num" :min="0" :max="2147483647" />
 										</dd>
 										<dt>适用率</dt>
 										<dd>
-											<mm_number v-model="form.rate" :min="0" :max="0" />
+											<control_number v-model="form.rate" :min="0" :max="0" />
 										</dd>
 										<dt class="required">分组名称</dt>
 										<dd>
-											<mm_input v-model="form.name" :minlength="0" :maxlength="16" placeholder=""
+											<control_input v-model="form.name" :minlength="0" :maxlength="16" placeholder=""
 											 :required="true" />
 										</dd>
 										<dt>分组标题</dt>
 										<dd>
-											<mm_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
+											<control_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
 										</dd>
 										<dt>分组描述</dt>
 										<dd>
-											<mm_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
+											<control_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
 										</dd>
 									</dl>
 								</mm_form>

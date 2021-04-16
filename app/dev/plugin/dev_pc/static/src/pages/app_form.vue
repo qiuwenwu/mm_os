@@ -13,24 +13,24 @@
 									<dl>
 										<dt>应用分类</dt>
 										<dd>
-											<mm_select v-model="form.type_id" :options="$to_kv(list_app_type, 'type_id', 'name', 0)" />
+											<control_select v-model="form.type_id" :options="$to_kv(list_app_type, 'type_id', 'name', 0)" />
 										</dd>
 										<dt class="required">应用名</dt>
 										<dd>
-											<mm_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
+											<control_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
 											 :required="true" />
 										</dd>
 										<dt>标题</dt>
 										<dd>
-											<mm_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
+											<control_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
 										</dd>
 										<dt>描述</dt>
 										<dd>
-											<mm_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
+											<control_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
 										</dd>
 										<dt>关键词</dt>
 										<dd>
-											<mm_input v-model="form.keywords" :minlength="0" :maxlength="255" placeholder="" />
+											<control_input v-model="form.keywords" :minlength="0" :maxlength="255" placeholder="" />
 										</dd>
 									</dl>
 								</mm_form>

@@ -9,17 +9,17 @@
 								<h5>开发表字段</h5>
 							</div>
 							<div class="card_body">
-								<mm_form class="mm_filter">
+								<mm_form class="bar_filter">
 									<div class="title">
 										<h5><span>筛选条件</span></h5>
 									</div>
 									<mm_list col="3">
 										<mm_item>
-											<mm_input v-model="query.keyword" title="关键词" desc="字段名 / 标题 / 描述 / 关键词"
+											<control_input v-model="query.keyword" title="关键词" desc="字段名 / 标题 / 描述 / 关键词"
 											 @blur="search()" />
 										</mm_item>
 										<mm_item>
-											<mm_select v-model="query.table_id" title="适用的表" :options="$to_kv(list_table, 'table_id', 'name')"
+											<control_select v-model="query.table_id" title="适用的表" :options="$to_kv(list_table, 'table_id', 'name')"
 											 @change="search()" />
 										</mm_item>
 										<mm_item>
@@ -27,14 +27,14 @@
 										</mm_item>
 									</mm_list>
 								</mm_form>
-								<div class="mm_action">
+								<div class="bar_action">
 									<h5><span>操作</span></h5>
 									<div class="btns">
 										<mm_btn class="btn_primary-x" url="./table_field_form?">添加</mm_btn>
 										<mm_btn @click.native="show = true" class="btn_primary-x" v-bind:class="{ 'disabled': !selects }">批量修改</mm_btn>
 									</div>
 									<div class="btn_small">
-										<mm_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></mm_file>
+										<control_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></control_file>
 										<mm_btn class="btn_default-x" @click.native="export_db()" v-if="url_export">导出</mm_btn>
 									</div>
 								</div>
@@ -44,64 +44,64 @@
 											<th class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 											<th class="th_id"><span>#</span></th>
 											<th>
-												<mm_reverse title="是否主键" v-model="query.orderby" field="key" :func="search"></mm_reverse>
+												<control_reverse title="是否主键" v-model="query.orderby" field="key" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="是否补零" v-model="query.orderby" field="fill_zero" :func="search"></mm_reverse>
+												<control_reverse title="是否补零" v-model="query.orderby" field="fill_zero" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="是否非空" v-model="query.orderby" field="not_null" :func="search"></mm_reverse>
+												<control_reverse title="是否非空" v-model="query.orderby" field="not_null" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="是否含符号" v-model="query.orderby" field="symbol" :func="search"></mm_reverse>
+												<control_reverse title="是否含符号" v-model="query.orderby" field="symbol" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="小数点位" v-model="query.orderby" field="decimal" :func="search"></mm_reverse>
+												<control_reverse title="小数点位" v-model="query.orderby" field="decimal" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="适用的表" v-model="query.orderby" field="table_id" :func="search"></mm_reverse>
+												<control_reverse title="适用的表" v-model="query.orderby" field="table_id" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="使用次数" v-model="query.orderby" field="num" :func="search"></mm_reverse>
+												<control_reverse title="使用次数" v-model="query.orderby" field="num" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="最小长度" v-model="query.orderby" field="min_length" :func="search"></mm_reverse>
+												<control_reverse title="最小长度" v-model="query.orderby" field="min_length" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="最大长度" v-model="query.orderby" field="max_length" :func="search"></mm_reverse>
+												<control_reverse title="最大长度" v-model="query.orderby" field="max_length" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="最小值" v-model="query.orderby" field="min" :func="search"></mm_reverse>
+												<control_reverse title="最小值" v-model="query.orderby" field="min" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="最大值" v-model="query.orderby" field="max" :func="search"></mm_reverse>
+												<control_reverse title="最大值" v-model="query.orderby" field="max" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="适用率" v-model="query.orderby" field="rate" :func="search"></mm_reverse>
+												<control_reverse title="适用率" v-model="query.orderby" field="rate" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="字段名" v-model="query.orderby" field="name" :func="search"></mm_reverse>
+												<control_reverse title="字段名" v-model="query.orderby" field="name" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="数据类型" v-model="query.orderby" field="type" :func="search"></mm_reverse>
+												<control_reverse title="数据类型" v-model="query.orderby" field="type" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="自动" v-model="query.orderby" field="auto" :func="search"></mm_reverse>
+												<control_reverse title="自动" v-model="query.orderby" field="auto" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="标题" v-model="query.orderby" field="title" :func="search"></mm_reverse>
+												<control_reverse title="标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="描述" v-model="query.orderby" field="description" :func="search"></mm_reverse>
+												<control_reverse title="描述" v-model="query.orderby" field="description" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="关键词" v-model="query.orderby" field="keywords" :func="search"></mm_reverse>
+												<control_reverse title="关键词" v-model="query.orderby" field="keywords" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="默认值" v-model="query.orderby" field="default" :func="search"></mm_reverse>
+												<control_reverse title="默认值" v-model="query.orderby" field="default" :func="search"></control_reverse>
 											</th>
 											<th>
-												<mm_reverse title="关联图" v-model="query.orderby" field="map" :func="search"></mm_reverse>
+												<control_reverse title="关联图" v-model="query.orderby" field="map" :func="search"></control_reverse>
 											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
@@ -112,16 +112,16 @@
 											<th class="th_selected"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 											<td>{{ o[field] }}</td>
 											<td>
-												<mm_switch v-model="o.key" @click.native="set(o)" />
+												<control_switch v-model="o.key" @click.native="set(o)" />
 											</td>
 											<td>
-												<mm_switch v-model="o.fill_zero" @click.native="set(o)" />
+												<control_switch v-model="o.fill_zero" @click.native="set(o)" />
 											</td>
 											<td>
-												<mm_switch v-model="o.not_null" @click.native="set(o)" />
+												<control_switch v-model="o.not_null" @click.native="set(o)" />
 											</td>
 											<td>
-												<mm_switch v-model="o.symbol" @click.native="set(o)" />
+												<control_switch v-model="o.symbol" @click.native="set(o)" />
 											</td>
 											<td>
 												<span>{{ o.decimal }}</span>
@@ -182,7 +182,7 @@
 							</div>
 							<div class="card_foot">
 								<div class="fl">
-									<mm_select v-model="query.size" :options="$to_size()" @change="search()" />
+									<control_select v-model="query.size" :options="$to_size()" @change="search()" />
 								</div>
 								<div class="fr">
 									<span class="mr">共 {{ count }} 条</span>
@@ -190,7 +190,7 @@
 									<input type="number" class="pager_now" v-model.number="page_now" @blur="goTo(page_now)" @change="page_change" />
 									<span>/{{ page_count }}页</span>
 								</div>
-								<mm_pager display="2" v-model="query.page" :count="count / query.size" :func="goTo" :icons="['首页', '上一页', '下一页', '尾页']"></mm_pager>
+								<control_pager display="2" v-model="query.page" :count="count / query.size" :func="goTo" :icons="['首页', '上一页', '下一页', '尾页']"></control_pager>
 							</div>
 						</mm_card>
 					</mm_col>
@@ -206,7 +206,7 @@
 					<dl>
 						<dt>适用的表</dt>
 						<dd>
-							<mm_select v-model="form.table_id" :options="$to_kv(list_table, 'table_id', 'name')" />
+							<control_select v-model="form.table_id" :options="$to_kv(list_table, 'table_id', 'name')" />
 						</dd>
 					</dl>
 				</div>

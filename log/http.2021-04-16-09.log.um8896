@@ -1,0 +1,572 @@
+[2021-04-16T09:36:09.461] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:09 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:09.569] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/css/common.css
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:09 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:09.570] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/theme/blue/index.css
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:09 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:09.701] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/css/index.css
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:09 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:09.829] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/js/common.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:09 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:10.786] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/img/lang/zh_cn.jpg
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:10 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:10.787] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/img/lang/en.jpg
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:10 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:10.787] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/img/ad_1.jpg
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:10 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:10.790] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/img/banner/banner_3.jpg
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:10 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:10.790] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/img/banner/banner_1.jpg
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:10 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:10.791] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /cms/home_pc/template/default/img/banner/banner_2.jpg
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:10 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:29.371] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /ui
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:29 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:29.388] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /js/require.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:29 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.425] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /ui/src/main.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.477] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /ui/src/store.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.478] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /ui/src/router.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.482] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /js/mm_vue_ui.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.484] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /js/requirejs-vue.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.485] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/mm_component.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.511] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /js/mm_vue.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.514] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /js/vuex.min.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.516] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /js/vue-router.min.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.520] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /ui/src/App.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.528] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_action.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.529] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_buy.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.538] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_chat.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.542] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_count.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.543] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_filter.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.552] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_search.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.557] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_sort.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.558] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_tag.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.566] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/bar/mm_title.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.569] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_article.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.570] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_base.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.583] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_contact.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.588] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_goods.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.588] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_image.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.601] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_media.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.607] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_message.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.608] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_music.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.621] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_news.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.627] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_question.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.628] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_user.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.639] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/item/item_video.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.648] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/swiper/swiper_card.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.648] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/swiper/swiper_img.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.666] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/swiper/swiper_page.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.670] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/swiper/swiper_text.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.671] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/expand/mm_drag.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.684] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/components/expand/mm_sptite.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.729] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /src/mixins/item.js
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
+[2021-04-16T09:36:30.747] [INFO] http - 
+======= request =======
+
+method: GET
+originalUrl:  /ui/src/pages/index.vue
+client ip:  127.0.0.1
+query:  {}
+req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
+
+======= request end =======
+
