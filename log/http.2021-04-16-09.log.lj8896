@@ -332,7 +332,7 @@ req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
 ======= request =======
 
 method: GET
-originalUrl:  /src/components/bar/bar_tag.vue
+originalUrl:  /src/components/bar/bar_tab.vue
 client ip:  127.0.0.1
 query:  {}
 req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
@@ -530,7 +530,7 @@ req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
 ======= request =======
 
 method: GET
-originalUrl:  /src/components/expand/mm_drag.vue
+originalUrl:  /src/components/expand/expand_drag.vue
 client ip:  127.0.0.1
 query:  {}
 req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
@@ -541,7 +541,7 @@ req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)
 ======= request =======
 
 method: GET
-originalUrl:  /src/components/expand/mm_sptite.vue
+originalUrl:  /src/components/expand/expand_sptite.vue
 client ip:  127.0.0.1
 query:  {}
 req time: Fri Apr 16 2021 09:36:30 GMT+0800 (中国标准时间)

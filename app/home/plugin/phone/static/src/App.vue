@@ -10,9 +10,9 @@
 	import nav_main from './components/nav_main.vue'
 	import nav_quick from './components/nav_quick.vue'
 	import nav_float from './components/nav_float.vue'
-	import mm_drag from '/src/components/expand/mm_drag.vue'
+	import expand_drag from '/src/components/expand/expand_drag.vue'
 	
-	Vue.component('mm_drag', mm_drag);
+	Vue.component('expand_drag', expand_drag);
 	
 	export default {
 		components: {
