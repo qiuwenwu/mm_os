@@ -137,11 +137,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/api/dev/component_type",
-				url_del: "/api/dev/component_type?method=del&",
-				url_set: "/api/dev/component_type?method=set&",
-				url_import: "/api/dev/component_type?method=import&",
-				url_export: "/api/dev/component_type?method=export&",
+				url_get_list: "/apis/dev/component_type",
+				url_del: "/apis/dev/component_type?method=del&",
+				url_set: "/apis/dev/component_type?method=set&",
+				url_import: "/apis/dev/component_type?method=import&",
+				url_export: "/apis/dev/component_type?method=export&",
 				field: "type_id",
 				query_set: {
 					"type_id": ""
@@ -192,7 +192,7 @@
 						field: "type_id,name,father_id"
 					};
 				}
-				this.$get('~/api/dev/component_type?size=0', query, function(json) {
+				this.$get('~/apis/dev/component_type?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_component_type .clear();
 						_this.list_component_type .addList(json.result.list)

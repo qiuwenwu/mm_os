@@ -55,10 +55,6 @@
 										<dd>
 											<control_number v-model="form.max" :min="0" :max="2147483647" />
 										</dd>
-										<dt>适用率</dt>
-										<dd>
-											<control_number v-model="form.rate" :min="0" :max="0" />
-										</dd>
 										<dt class="required">字段名</dt>
 										<dd>
 											<control_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
@@ -119,8 +115,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/api/dev/table_field?",
-				url_get_obj: "/api/dev/table_field?method=get_obj",
+				url: "/apis/dev/table_field?",
+				url_get_obj: "/apis/dev/table_field?method=get_obj",
 				field: "field_id",
 				query: {
 					"field_id": 0
@@ -138,7 +134,6 @@
 					"max_length": 0,
 					"min": 0,
 					"max": 0,
-					"rate": 0,
 					"name": '',
 					"type": '',
 					"auto": '',
@@ -164,7 +159,7 @@
 						field: "table_id,name"
 					};
 				}
-				this.$get('~/api/dev/table?size=0', query, function(json) {
+				this.$get('~/apis/dev/table?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_table.clear();
 						_this.list_table.addList(json.result.list)

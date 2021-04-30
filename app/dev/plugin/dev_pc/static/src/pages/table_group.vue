@@ -153,11 +153,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/api/dev/table_group",
-				url_del: "/api/dev/table_group?method=del&",
-				url_set: "/api/dev/table_group?method=set&",
-				url_import: "/api/dev/table_group?method=import&",
-				url_export: "/api/dev/table_group?method=export&",
+				url_get_list: "/apis/dev/table_group",
+				url_del: "/apis/dev/table_group?method=del&",
+				url_set: "/apis/dev/table_group?method=set&",
+				url_import: "/apis/dev/table_group?method=import&",
+				url_export: "/apis/dev/table_group?method=export&",
 				field: "group_id",
 				query_set: {
 					"group_id": ""
@@ -208,7 +208,7 @@
 						field: "group_id,name,father_id"
 					};
 				}
-				this.$get('~/api/dev/table_group?size=0', query, function(json) {
+				this.$get('~/apis/dev/table_group?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_table_group.clear();
 						_this.list_table_group.addList(json.result.list)
@@ -226,7 +226,7 @@
 						field: "app_id,name"
 					};
 				}
-				this.$get('~/api/dev/app?size=0', query, function(json) {
+				this.$get('~/apis/dev/app?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app.clear();
 						_this.list_app.addList(json.result.list)

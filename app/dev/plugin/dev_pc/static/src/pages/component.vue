@@ -19,7 +19,11 @@
 											 @blur="search()" />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.page_id" title="适用页面" :options="$to_kv(list_page, 'page_id', 'name')"
+											<control_select v-model="query.type_id" title="组件分类" :options="$to_kv(list_component_type, 'type_id', 'name')"
+											 @change="search()" />
+										</mm_item>
+										<mm_item>
+											<control_select v-model="query.page_id" title="适用的页面" :options="$to_kv(list_page, 'page_id', 'name')"
 											 @change="search()" />
 										</mm_item>
 										<mm_item>
@@ -47,10 +51,10 @@
 												<control_reverse title="组件ID" v-model="query.orderby" field="component_id" :func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="使用次数" v-model="query.orderby" field="num" :func="search"></control_reverse>
+												<control_reverse title="组件分类" v-model="query.orderby" field="type_id" :func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="适用率" v-model="query.orderby" field="rate" :func="search"></control_reverse>
+												<control_reverse title="使用次数" v-model="query.orderby" field="num" :func="search"></control_reverse>
 											</th>
 											<th>
 												<control_reverse title="组件名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
@@ -73,10 +77,10 @@
 												<span>{{ o.component_id }}</span>
 											</td>
 											<td>
-												<span>{{ o.num }}</span>
+												<span>{{ get_name(list_component_type, o.type_id, 'type_id', 'name') }}</span>
 											</td>
 											<td>
-												<span>{{ o.rate }}</span>
+												<span>{{ o.num }}</span>
 											</td>
 											<td>
 												<span>{{ o.name }}</span>
@@ -120,7 +124,11 @@
 				</div>
 				<div class="card_body">
 					<dl>
-						<dt>适用页面</dt>
+						<dt>组件分类</dt>
+						<dd>
+							<control_select v-model="form.type_id" :options="$to_kv(list_component_type, 'type_id', 'name')" />
+						</dd>
+						<dt>适用的页面</dt>
 						<dd>
 							<control_select v-model="form.page_id" :options="$to_kv(list_page, 'page_id', 'name')" />
 						</dd>
@@ -145,11 +153,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/api/dev/component",
-				url_del: "/api/dev/component?method=del&",
-				url_set: "/api/dev/component?method=set&",
-				url_import: "/api/dev/component?method=import&",
-				url_export: "/api/dev/component?method=export&",
+				url_get_list: "/apis/dev/component",
+				url_del: "/apis/dev/component?method=del&",
+				url_set: "/apis/dev/component?method=set&",
+				url_import: "/apis/dev/component?method=import&",
+				url_export: "/apis/dev/component?method=export&",
 				field: "page_id",
 				query_set: {
 					"page_id": ""
@@ -160,16 +168,12 @@
 					page: 1,
 					//页面大小
 					size: 10,
-					// 适用页面ID
+					// 适用的页面
 					'page_id': '',
 					// 使用次数——最小值
 					'num_min': 0,
 					// 使用次数——最大值
 					'num_max': 0,
-					// 适用率——最小值
-					'rate_min': 0,
-					// 适用率——最大值
-					'rate_max': 0,
 					// 组件名称
 					'name': '',
 					// 标题
@@ -184,7 +188,9 @@
 				form: {},
 				//颜色
 				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
-				// 适用页面
+				// 组件分类
+				'list_component_type':[],
+				// 适用的页面
 				'list_page':[],
 				// 视图模型
 				vm: {}
@@ -192,7 +198,25 @@
 		},
 		methods: {
 			/**
-			 * 获取适用页面
+			 * 获取组件分类
+			 * @param {query} 查询条件
+			 */
+			get_component_type(query) {
+				var _this = this;
+				if (!query) {
+					query = {
+						field: "type_id,name"
+					};
+				}
+				this.$get('~/apis/dev/component_type?size=0', query, function(json) {
+					if (json.result) {
+						_this.list_component_type.clear();
+						_this.list_component_type.addList(json.result.list)
+					}
+				});
+			},
+			/**
+			 * 获取适用的页面
 			 * @param {query} 查询条件
 			 */
 			get_page(query) {
@@ -202,7 +226,7 @@
 						field: "page_id,name"
 					};
 				}
-				this.$get('~/api/dev/page?size=0', query, function(json) {
+				this.$get('~/apis/dev/page?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_page.clear();
 						_this.list_page.addList(json.result.list)
@@ -211,7 +235,9 @@
 			},
 		},
 		created() {
-			// 获取适用页面
+			// 获取组件分类
+			this.get_component_type();
+			// 获取适用的页面
 			this.get_page();
 		}
 	}

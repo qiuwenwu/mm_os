@@ -19,10 +19,6 @@
 										<dd>
 											<control_number v-model="form.num" :min="0" :max="2147483647" />
 										</dd>
-										<dt>适用率</dt>
-										<dd>
-											<control_number v-model="form.rate" :min="0" :max="0" />
-										</dd>
 										<dt class="required">页面名称</dt>
 										<dd>
 											<control_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
@@ -62,8 +58,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/api/dev/page?",
-				url_get_obj: "/api/dev/page?method=get_obj",
+				url: "/apis/dev/page?",
+				url_get_obj: "/apis/dev/page?method=get_obj",
 				field: "page_id",
 				query: {
 					"page_id": 0
@@ -72,7 +68,6 @@
 					"page_id": 0,
 					"group_id": 0,
 					"num": 0,
-					"rate": 0,
 					"name": '',
 					"title": '',
 					"description": '',
@@ -93,7 +88,7 @@
 						field: "group_id,name"
 					};
 				}
-				this.$get('~/api/dev/page_group?size=0', query, function(json) {
+				this.$get('~/apis/dev/page_group?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_page_group.clear();
 						_this.list_page_group.addList(json.result.list)

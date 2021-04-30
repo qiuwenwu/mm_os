@@ -57,9 +57,6 @@
 												<control_reverse title="使用次数" v-model="query.orderby" field="num" :func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="适用率" v-model="query.orderby" field="rate" :func="search"></control_reverse>
-											</th>
-											<th>
 												<control_reverse title="表名" v-model="query.orderby" field="name" :func="search"></control_reverse>
 											</th>
 											<th>
@@ -87,9 +84,6 @@
 											</td>
 											<td>
 												<span>{{ o.num }}</span>
-											</td>
-											<td>
-												<span>{{ o.rate }}</span>
 											</td>
 											<td>
 												<span>{{ o.name }}</span>
@@ -165,11 +159,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/api/dev/table",
-				url_del: "/api/dev/table?method=del&",
-				url_set: "/api/dev/table?method=set&",
-				url_import: "/api/dev/table?method=import&",
-				url_export: "/api/dev/table?method=export&",
+				url_get_list: "/apis/dev/table",
+				url_del: "/apis/dev/table?method=del&",
+				url_set: "/apis/dev/table?method=set&",
+				url_import: "/apis/dev/table?method=import&",
+				url_export: "/apis/dev/table?method=export&",
 				field: "table_id",
 				query_set: {
 					"table_id": ""
@@ -186,10 +180,6 @@
 					'num_min': 0,
 					// 使用次数——最大值
 					'num_max': 0,
-					// 适用率——最小值
-					'rate_min': 0,
-					// 适用率——最大值
-					'rate_max': 0,
 					// 表名
 					'name': '',
 					// 标题
@@ -226,7 +216,7 @@
 						field: "app_id,name"
 					};
 				}
-				this.$get('~/api/dev/app?size=0', query, function(json) {
+				this.$get('~/apis/dev/app?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app.clear();
 						_this.list_app.addList(json.result.list)
@@ -244,7 +234,7 @@
 						field: "group_id,name"
 					};
 				}
-				this.$get('~/api/dev/table_group?size=0', query, function(json) {
+				this.$get('~/apis/dev/table_group?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_table_group.clear();
 						_this.list_table_group.addList(json.result.list)

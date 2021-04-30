@@ -23,10 +23,6 @@
 										<dd>
 											<control_number v-model="form.num" :min="0" :max="2147483647" />
 										</dd>
-										<dt>适用率</dt>
-										<dd>
-											<control_number v-model="form.rate" :min="0" :max="0" />
-										</dd>
 										<dt class="required">表名</dt>
 										<dd>
 											<control_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
@@ -70,8 +66,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/api/dev/table?",
-				url_get_obj: "/api/dev/table?method=get_obj",
+				url: "/apis/dev/table?",
+				url_get_obj: "/apis/dev/table?method=get_obj",
 				field: "table_id",
 				query: {
 					"table_id": 0
@@ -81,7 +77,6 @@
 					"app_id": 0,
 					"group_id": 0,
 					"num": 0,
-					"rate": 0,
 					"name": '',
 					"title": '',
 					"description": '',
@@ -105,7 +100,7 @@
 						field: "app_id,name"
 					};
 				}
-				this.$get('~/api/dev/app?size=0', query, function(json) {
+				this.$get('~/apis/dev/app?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app.clear();
 						_this.list_app.addList(json.result.list)
@@ -123,7 +118,7 @@
 						field: "group_id,name"
 					};
 				}
-				this.$get('~/api/dev/table_group?size=0', query, function(json) {
+				this.$get('~/apis/dev/table_group?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_table_group.clear();
 						_this.list_table_group.addList(json.result.list)

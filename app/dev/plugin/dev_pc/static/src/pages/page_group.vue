@@ -60,9 +60,6 @@
 												<control_reverse title="使用次数" v-model="query.orderby" field="num" :func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="适用率" v-model="query.orderby" field="rate" :func="search"></control_reverse>
-											</th>
-											<th>
 												<control_reverse title="分组名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
 											</th>
 											<th>
@@ -90,9 +87,6 @@
 											</td>
 											<td>
 												<span>{{ o.num }}</span>
-											</td>
-											<td>
-												<span>{{ o.rate }}</span>
 											</td>
 											<td>
 												<span>{{ o.name }}</span>
@@ -165,11 +159,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/api/dev/page_group",
-				url_del: "/api/dev/page_group?method=del&",
-				url_set: "/api/dev/page_group?method=set&",
-				url_import: "/api/dev/page_group?method=import&",
-				url_export: "/api/dev/page_group?method=export&",
+				url_get_list: "/apis/dev/page_group",
+				url_del: "/apis/dev/page_group?method=del&",
+				url_set: "/apis/dev/page_group?method=set&",
+				url_import: "/apis/dev/page_group?method=import&",
+				url_export: "/apis/dev/page_group?method=export&",
 				field: "group_id",
 				query_set: {
 					"group_id": ""
@@ -190,10 +184,6 @@
 					'num_min': 0,
 					// 使用次数——最大值
 					'num_max': 0,
-					// 适用率——最小值
-					'rate_min': 0,
-					// 适用率——最大值
-					'rate_max': 0,
 					// 分组名称
 					'name': '',
 					// 分组标题
@@ -228,7 +218,7 @@
 						field: "group_id,name,father_id"
 					};
 				}
-				this.$get('~/api/dev/page_group?size=0', query, function(json) {
+				this.$get('~/apis/dev/page_group?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_page_group.clear();
 						_this.list_page_group.addList(json.result.list)
@@ -246,7 +236,7 @@
 						field: "app_id,name"
 					};
 				}
-				this.$get('~/api/dev/app?size=0', query, function(json) {
+				this.$get('~/apis/dev/app?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app.clear();
 						_this.list_app.addList(json.result.list)

@@ -139,11 +139,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/api/dev/app",
-				url_del: "/api/dev/app?method=del&",
-				url_set: "/api/dev/app?method=set&",
-				url_import: "/api/dev/app?method=import&",
-				url_export: "/api/dev/app?method=export&",
+				url_get_list: "/apis/dev/app",
+				url_del: "/apis/dev/app?method=del&",
+				url_set: "/apis/dev/app?method=set&",
+				url_import: "/apis/dev/app?method=import&",
+				url_export: "/apis/dev/app?method=export&",
 				field: "app_id",
 				query_set: {
 					"app_id": ""
@@ -190,7 +190,7 @@
 						field: "type_id,name"
 					};
 				}
-				this.$get('~/api/dev/app_type?size=0', query, function(json) {
+				this.$get('~/apis/dev/app_type?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app_type.clear();
 						_this.list_app_type.addList(json.result.list)

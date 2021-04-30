@@ -58,8 +58,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/api/dev/app?",
-				url_get_obj: "/api/dev/app?method=get_obj",
+				url: "/apis/dev/app?",
+				url_get_obj: "/apis/dev/app?method=get_obj",
 				field: "app_id",
 				query: {
 					"app_id": 0
@@ -88,7 +88,7 @@
 						field: "type_id,name"
 					};
 				}
-				this.$get('~/api/dev/app_type?size=0', query, function(json) {
+				this.$get('~/apis/dev/app_type?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app_type.clear();
 						_this.list_app_type.addList(json.result.list)

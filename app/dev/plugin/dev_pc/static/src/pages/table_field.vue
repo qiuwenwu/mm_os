@@ -77,9 +77,6 @@
 												<control_reverse title="最大值" v-model="query.orderby" field="max" :func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="适用率" v-model="query.orderby" field="rate" :func="search"></control_reverse>
-											</th>
-											<th>
 												<control_reverse title="字段名" v-model="query.orderby" field="name" :func="search"></control_reverse>
 											</th>
 											<th>
@@ -143,9 +140,6 @@
 											</td>
 											<td>
 												<span>{{ o.max }}</span>
-											</td>
-											<td>
-												<span>{{ o.rate }}</span>
 											</td>
 											<td>
 												<span>{{ o.name }}</span>
@@ -229,11 +223,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/api/dev/table_field",
-				url_del: "/api/dev/table_field?method=del&",
-				url_set: "/api/dev/table_field?method=set&",
-				url_import: "/api/dev/table_field?method=import&",
-				url_export: "/api/dev/table_field?method=export&",
+				url_get_list: "/apis/dev/table_field",
+				url_del: "/apis/dev/table_field?method=del&",
+				url_set: "/apis/dev/table_field?method=set&",
+				url_import: "/apis/dev/table_field?method=import&",
+				url_export: "/apis/dev/table_field?method=export&",
 				field: "field_id",
 				query_set: {
 					"field_id": ""
@@ -278,10 +272,6 @@
 					'max_min': 0,
 					// 最大值——最大值
 					'max_max': 0,
-					// 适用率——最小值
-					'rate_min': 0,
-					// 适用率——最大值
-					'rate_max': 0,
 					// 字段名
 					'name': '',
 					// 标题
@@ -316,7 +306,7 @@
 						field: "table_id,name"
 					};
 				}
-				this.$get('~/api/dev/table?size=0', query, function(json) {
+				this.$get('~/apis/dev/table?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_table.clear();
 						_this.list_table.addList(json.result.list)

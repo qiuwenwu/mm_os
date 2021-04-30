@@ -58,8 +58,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/api/dev/table_group?",
-				url_get_obj: "/api/dev/table_group?method=get_obj",
+				url: "/apis/dev/table_group?",
+				url_get_obj: "/apis/dev/table_group?method=get_obj",
 				field: "group_id",
 				query: {
 					"group_id": 0
@@ -90,7 +90,7 @@
 						field: "group_id,name,father_id"
 					};
 				}
-				this.$get('~/api/dev/table_group?size=0', query, function(json) {
+				this.$get('~/apis/dev/table_group?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_table_group.clear();
 						_this.list_table_group.addList(json.result.list)
@@ -108,7 +108,7 @@
 						field: "app_id,name"
 					};
 				}
-				this.$get('~/api/dev/app?size=0', query, function(json) {
+				this.$get('~/apis/dev/app?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app.clear();
 						_this.list_app.addList(json.result.list)
