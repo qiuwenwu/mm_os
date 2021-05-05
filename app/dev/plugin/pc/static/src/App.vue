@@ -201,11 +201,6 @@
 		margin-top: 4.5rem;
 	}
 
-	.card_body {
-		position: relative;
-		padding: var(--padding_mini) var(--padding_base);
-	}
-
 	.bar_filter {
 		display: flex;
 		padding-bottom: .5rem;

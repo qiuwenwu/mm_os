@@ -255,11 +255,6 @@
 		font-size: 14px;
 	}
 
-	.card_body {
-		position: relative;
-		padding: 0.5rem 1rem 1rem 1rem;
-	}
-
 	.mm_col>.mm_view,
 	[class*=mm_col_]>.mm_view {
 		background: #fff;
