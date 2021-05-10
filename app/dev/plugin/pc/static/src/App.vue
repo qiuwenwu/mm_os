@@ -16,10 +16,8 @@
 						<mm_row>
 							<mm_col class="col-12">
 								<nav_quick>
-									<button class="btn_link btn_primary hide_phone" @click="fold = !fold"><i
-											class="fa-bars"></i></button>
-									<button class="btn_link btn_primary show_phone" @click="hide = !hide"><i
-											class="fa-bars"></i></button>
+									<button class="btn_link btn_primary hide_phone" @click="fold = !fold"><i class="fa-bars"></i></button>
+									<button class="btn_link btn_primary show_phone" @click="hide = !hide"><i class="fa-bars"></i></button>
 								</nav_quick>
 								<nav_top></nav_top>
 							</mm_col>
@@ -33,12 +31,11 @@
 								<!-- 页签组件 -->
 								<mm_view id="tabs">
 									<div class="mm_tab_head">
-										<div v-for="(o, idx) in nav_cache" :key="idx"
-											:class="{ 'active': o.url === url_now }">
+										<div v-for="(o, idx) in nav_cache" :key="idx" :class="{ 'active': o.url === url_now }">
 											<router-link :to="o.url">
 												{{ o.title }}
 											</router-link>
-											<i class="icon-close" v-if="o.name !== 'index'" @click="del_tab(o)"></i>
+											<i class="icon-close" v-if="o.name !== 'index'" @click="del_tab(o)">×</i>
 										</div>
 									</div>
 								</mm_view>
@@ -56,8 +53,7 @@
 							<div class="mm_col col-12">
 								<div class="info">
 									<div class="fl"><a target="_blank" href="http://bbs.elins.cn">开发者: 超级美眉工作室</a></div>
-									<div class="fr"><a
-											href="tencent://message/?uin=573242395">升级维护联系：573242395@qq.com</a></div>
+									<div class="fr"><a href="tencent://message/?uin=573242395">升级维护联系：573242395@qq.com</a></div>
 								</div>
 							</div>
 						</div>
@@ -170,20 +166,13 @@
 		border-radius: 50%;
 		background-color: var(--color_border);
 		color: #fff;
+		font-weight: 600;
 		text-align: center;
 		width: 1.125rem;
 		height: 1.125rem;
-		font-weight: 600;
-		line-height: 1;
+		line-height: 1.125rem;
 		display: inline-block;
 		position: relative;
-		font-style: normal
-	}
-
-	.icon-close::after {
-		content: "×";
-		position: relative;
-		top: 2px;
 	}
 
 	.icon-close:hover {
@@ -201,24 +190,29 @@
 		margin-top: 4.5rem;
 	}
 
-	.bar_filter {
+	.card_body {
+		position: relative;
+		padding: var(--padding_mini) var(--padding_base);
+	}
+
+	.mm_filter {
 		display: flex;
 		padding-bottom: .5rem;
 		margin-bottom: 1rem;
 		border-bottom: 1px solid rgba(51, 136, 255, .25);
 	}
 
-	.bar_filter .mm_list {
+	.mm_filter .mm_list {
 		align-items: center;
 	}
 
-	.bar_filter .mm_item {
+	.mm_filter .mm_item {
 		min-width: 20rem;
 		padding-top: 0.5rem;
 		padding-bottom: 0.5rem;
 	}
 
-	.bar_filter>.title {
+	.mm_filter>.title {
 		flex: 1;
 		position: relative;
 		border-right: 2px solid #DBDBDB;
@@ -229,7 +223,7 @@
 		min-height: 2rem;
 	}
 
-	.bar_filter>.title h5 {
+	.mm_filter>.title h5 {
 		position: absolute;
 		width: 100%;
 		left: 0;
@@ -244,42 +238,42 @@
 		min-width: auto !important;
 	}
 
-	.bar_filter button:first-child {
+	.mm_filter button:first-child {
 		margin-left: 1rem;
 	}
 
 	@media (max-width: 576px) {
-		.bar_filter {
+		.mm_filter {
 			display: block;
 		}
 
-		.control_pager,
-		[class*=control_pager_] {
+		.mm_pager,
+		[class*=mm_pager_] {
 			float: none;
 			clear: both;
 			padding: 0.5rem 0;
 		}
 	}
 
-	.bar_action {
+	.mm_action {
 		margin: 1rem 0 .5rem 0;
 	}
 
-	.bar_action>h5 {
+	.mm_action>h5 {
 		float: left;
 		line-height: 2rem;
 	}
 
-	.bar_action .btns {
+	.mm_action .btns {
 		float: right;
 	}
 
-	.bar_action .btn_small {
+	.mm_action .btn_small {
 		padding: 0 2.5rem;
 		margin-right: auto;
 	}
 
-	.bar_action .btn_small .mm_btn {
+	.mm_action .btn_small .mm_btn {
 		font-size: 0.625rem;
 		height: 1.5rem;
 		line-height: 1.5rem;
@@ -289,8 +283,8 @@
 		top: 0.25rem
 	}
 
-	.bar_action::before,
-	.bar_action::after {
+	.mm_action::before,
+	.mm_action::after {
 		content: "";
 		display: block;
 		clear: both;

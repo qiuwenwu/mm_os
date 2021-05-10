@@ -13,24 +13,24 @@
 									<dl>
 										<dt>应用分类</dt>
 										<dd>
-											<control_select v-model="form.type_id" :options="$to_kv(list_app_type, 'type_id', 'name', 0)" />
+											<mm_select v-model="form.type_id" :options="$to_kv(list_app_type, 'type_id', 'name', 0)" />
 										</dd>
 										<dt class="required">应用名</dt>
 										<dd>
-											<control_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
+											<mm_input v-model="form.name" :minlength="0" :maxlength="32" placeholder=""
 											 :required="true" />
 										</dd>
 										<dt>标题</dt>
 										<dd>
-											<control_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
+											<mm_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
 										</dd>
 										<dt>描述</dt>
 										<dd>
-											<control_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
+											<mm_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
 										</dd>
 										<dt>关键词</dt>
 										<dd>
-											<control_input v-model="form.keywords" :minlength="0" :maxlength="255" placeholder="" />
+											<mm_input v-model="form.keywords" :minlength="0" :maxlength="255" placeholder="" />
 										</dd>
 									</dl>
 								</mm_form>
@@ -58,8 +58,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/dev/app?",
-				url_get_obj: "/apis/dev/app?method=get_obj",
+				url: "/api/dev/app?",
+				url_get_obj: "/api/dev/app?method=get_obj",
 				field: "app_id",
 				query: {
 					"app_id": 0
@@ -88,7 +88,7 @@
 						field: "type_id,name"
 					};
 				}
-				this.$get('~/apis/dev/app_type?size=0', query, function(json) {
+				this.$get('~/api/dev/app_type?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app_type.clear();
 						_this.list_app_type.addList(json.result.list)

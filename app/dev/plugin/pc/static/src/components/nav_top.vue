@@ -1,9 +1,9 @@
 <template>
 	<mm_nav_top id="nav_top" v-model="show">
 		<div class="item">
-			<control_select class="user" v-model="option" :options="options" type="click" :func="select">
+			<mm_select class="user" v-model="option" :options="options" type="click" :func="select">
 				<img class="avatar" :src="user.avatar || '/img/avatar.png'" />
-			</control_select>
+			</mm_select>
 		</div>
 	</mm_nav_top>
 </template>

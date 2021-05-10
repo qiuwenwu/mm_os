@@ -13,28 +13,32 @@
 									<dl>
 										<dt>上级分组</dt>
 										<dd>
-											<control_select v-model="form.father_id" :options="$to_kv(list_page_group, 'group_id', 'name', 0)" />
+											<mm_select v-model="form.father_id" :options="$to_kv(list_page_group, 'group_id', 'name', 0)" />
 										</dd>
 										<dt>适用的应用</dt>
 										<dd>
-											<control_select v-model="form.app_id" :options="$to_kv(list_app, 'app_id', 'name', 0)" />
+											<mm_select v-model="form.app_id" :options="$to_kv(list_app, 'app_id', 'name', 0)" />
 										</dd>
 										<dt>使用次数</dt>
 										<dd>
-											<control_number v-model="form.num" :min="0" :max="2147483647" />
+											<mm_number v-model="form.num" :min="0" :max="2147483647" />
+										</dd>
+										<dt>适用率</dt>
+										<dd>
+											<mm_number v-model="form.rate" :min="0" :max="0" />
 										</dd>
 										<dt class="required">分组名称</dt>
 										<dd>
-											<control_input v-model="form.name" :minlength="0" :maxlength="16" placeholder=""
+											<mm_input v-model="form.name" :minlength="0" :maxlength="16" placeholder=""
 											 :required="true" />
 										</dd>
 										<dt>分组标题</dt>
 										<dd>
-											<control_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
+											<mm_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
 										</dd>
 										<dt>分组描述</dt>
 										<dd>
-											<control_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
+											<mm_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
 										</dd>
 									</dl>
 								</mm_form>
@@ -62,8 +66,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/dev/page_group?",
-				url_get_obj: "/apis/dev/page_group?method=get_obj",
+				url: "/api/dev/page_group?",
+				url_get_obj: "/api/dev/page_group?method=get_obj",
 				field: "group_id",
 				query: {
 					"group_id": 0
@@ -73,6 +77,7 @@
 					"father_id": 0,
 					"app_id": 0,
 					"num": 0,
+					"rate": 0,
 					"name": '',
 					"title": '',
 					"description": '',
@@ -95,7 +100,7 @@
 						field: "group_id,name,father_id"
 					};
 				}
-				this.$get('~/apis/dev/page_group?size=0', query, function(json) {
+				this.$get('~/api/dev/page_group?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_page_group.clear();
 						_this.list_page_group.addList(json.result.list)
@@ -113,7 +118,7 @@
 						field: "app_id,name"
 					};
 				}
-				this.$get('~/apis/dev/app?size=0', query, function(json) {
+				this.$get('~/api/dev/app?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app.clear();
 						_this.list_app.addList(json.result.list)

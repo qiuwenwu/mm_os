@@ -9,17 +9,17 @@
 								<h5>组件分类</h5>
 							</div>
 							<div class="card_body">
-								<mm_form class="bar_filter">
+								<mm_form class="mm_filter">
 									<div class="title">
 										<h5><span>筛选条件</span></h5>
 									</div>
 									<mm_list col="3">
 										<mm_item>
-											<control_input v-model="query.keyword" title="关键词" desc="分类名称 / 分类标题 / 分类描述 / 关键词"
+											<mm_input v-model="query.keyword" title="关键词" desc="分类名称 / 分类标题 / 分类描述 / 关键词"
 											 @blur="search()" />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.father_id" title="上级分类" :options="$to_kv(list_component_type, 'type_id', 'name')"
+											<mm_select v-model="query.father_id" title="上级分类" :options="$to_kv(list_component_type, 'type_id', 'name')"
 											 @change="search()" />
 										</mm_item>
 										<mm_item>
@@ -27,14 +27,14 @@
 										</mm_item>
 									</mm_list>
 								</mm_form>
-								<div class="bar_action">
+								<div class="mm_action">
 									<h5><span>操作</span></h5>
 									<div class="btns">
 										<mm_btn class="btn_primary-x" url="./component_type_form?">添加</mm_btn>
 										<mm_btn @click.native="show = true" class="btn_primary-x" v-bind:class="{ 'disabled': !selects }">批量修改</mm_btn>
 									</div>
 									<div class="btn_small">
-										<control_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></control_file>
+										<mm_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></mm_file>
 										<mm_btn class="btn_default-x" @click.native="export_db()" v-if="url_export">导出</mm_btn>
 									</div>
 								</div>
@@ -45,22 +45,22 @@
 											<th class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 											<th class="th_id"><span>#</span></th>
 											<th>
-												<control_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></control_reverse>
+												<mm_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="上级分类" v-model="query.orderby" field="father_id" :func="search"></control_reverse>
+												<mm_reverse title="上级分类" v-model="query.orderby" field="father_id" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="分类名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
+												<mm_reverse title="分类名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="分类标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
+												<mm_reverse title="分类标题" v-model="query.orderby" field="title" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="分类描述" v-model="query.orderby" field="description" :func="search"></control_reverse>
+												<mm_reverse title="分类描述" v-model="query.orderby" field="description" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="关键词" v-model="query.orderby" field="keywords" :func="search"></control_reverse>
+												<mm_reverse title="关键词" v-model="query.orderby" field="keywords" :func="search"></mm_reverse>
 											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
@@ -80,16 +80,16 @@
 												<span>{{ get_name(list_component_type, o.father_id, 'type_id', 'name') }}</span>
 											</td>
 											<td>
-												<control_input :auto="true" v-model="o.name" @blur="set(o)" />
+												<mm_input :auto="true" v-model="o.name" @blur="set(o)" />
 											</td>
 											<td>
-												<control_input :auto="true" v-model="o.title" @blur="set(o)" />
+												<mm_input :auto="true" v-model="o.title" @blur="set(o)" />
 											</td>
 											<td>
-												<control_input :auto="true" v-model="o.description" @blur="set(o)" />
+												<mm_input :auto="true" v-model="o.description" @blur="set(o)" />
 											</td>
 											<td>
-												<control_input :auto="true" v-model="o.keywords" @blur="set(o)" />
+												<mm_input :auto="true" v-model="o.keywords" @blur="set(o)" />
 											</td>
 											<td>
 												<mm_btn class="btn_primary" :url="'./component_type_form?type_id=' + o[field]">修改</mm_btn>
@@ -114,7 +114,7 @@
 					<dl>
 						<dt>上级分类</dt>
 						<dd>
-							<control_select v-model="form.father_id" :options="$to_kv(list_component_type, 'type_id', 'name')" />
+							<mm_select v-model="form.father_id" :options="$to_kv(list_component_type, 'type_id', 'name')" />
 						</dd>
 					</dl>
 				</div>
@@ -137,11 +137,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/apis/dev/component_type",
-				url_del: "/apis/dev/component_type?method=del&",
-				url_set: "/apis/dev/component_type?method=set&",
-				url_import: "/apis/dev/component_type?method=import&",
-				url_export: "/apis/dev/component_type?method=export&",
+				url_get_list: "/api/dev/component_type",
+				url_del: "/api/dev/component_type?method=del&",
+				url_set: "/api/dev/component_type?method=set&",
+				url_import: "/api/dev/component_type?method=import&",
+				url_export: "/api/dev/component_type?method=export&",
 				field: "type_id",
 				query_set: {
 					"type_id": ""
@@ -192,7 +192,7 @@
 						field: "type_id,name,father_id"
 					};
 				}
-				this.$get('~/apis/dev/component_type?size=0', query, function(json) {
+				this.$get('~/api/dev/component_type?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_component_type .clear();
 						_this.list_component_type .addList(json.result.list)

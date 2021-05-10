@@ -9,21 +9,17 @@
 								<h5>组件</h5>
 							</div>
 							<div class="card_body">
-								<mm_form class="bar_filter">
+								<mm_form class="mm_filter">
 									<div class="title">
 										<h5><span>筛选条件</span></h5>
 									</div>
 									<mm_list col="3">
 										<mm_item>
-											<control_input v-model="query.keyword" title="关键词" desc="组件名称 / 标题 / 描述"
+											<mm_input v-model="query.keyword" title="关键词" desc="组件名称 / 标题 / 描述"
 											 @blur="search()" />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.type_id" title="组件分类" :options="$to_kv(list_component_type, 'type_id', 'name')"
-											 @change="search()" />
-										</mm_item>
-										<mm_item>
-											<control_select v-model="query.page_id" title="适用的页面" :options="$to_kv(list_page, 'page_id', 'name')"
+											<mm_select v-model="query.page_id" title="适用页面" :options="$to_kv(list_page, 'page_id', 'name')"
 											 @change="search()" />
 										</mm_item>
 										<mm_item>
@@ -31,14 +27,14 @@
 										</mm_item>
 									</mm_list>
 								</mm_form>
-								<div class="bar_action">
+								<div class="mm_action">
 									<h5><span>操作</span></h5>
 									<div class="btns">
 										<mm_btn class="btn_primary-x" url="./component_form?">添加</mm_btn>
 										<mm_btn @click.native="show = true" class="btn_primary-x" v-bind:class="{ 'disabled': !selects }">批量修改</mm_btn>
 									</div>
 									<div class="btn_small">
-										<control_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></control_file>
+										<mm_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></mm_file>
 										<mm_btn class="btn_default-x" @click.native="export_db()" v-if="url_export">导出</mm_btn>
 									</div>
 								</div>
@@ -48,22 +44,22 @@
 											<th class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 											<th class="th_id"><span>#</span></th>
 											<th>
-												<control_reverse title="组件ID" v-model="query.orderby" field="component_id" :func="search"></control_reverse>
+												<mm_reverse title="组件ID" v-model="query.orderby" field="component_id" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="组件分类" v-model="query.orderby" field="type_id" :func="search"></control_reverse>
+												<mm_reverse title="使用次数" v-model="query.orderby" field="num" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="使用次数" v-model="query.orderby" field="num" :func="search"></control_reverse>
+												<mm_reverse title="适用率" v-model="query.orderby" field="rate" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="组件名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
+												<mm_reverse title="组件名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
+												<mm_reverse title="标题" v-model="query.orderby" field="title" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="描述" v-model="query.orderby" field="description" :func="search"></control_reverse>
+												<mm_reverse title="描述" v-model="query.orderby" field="description" :func="search"></mm_reverse>
 											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
@@ -77,10 +73,10 @@
 												<span>{{ o.component_id }}</span>
 											</td>
 											<td>
-												<span>{{ get_name(list_component_type, o.type_id, 'type_id', 'name') }}</span>
+												<span>{{ o.num }}</span>
 											</td>
 											<td>
-												<span>{{ o.num }}</span>
+												<span>{{ o.rate }}</span>
 											</td>
 											<td>
 												<span>{{ o.name }}</span>
@@ -102,7 +98,7 @@
 							</div>
 							<div class="card_foot">
 								<div class="fl">
-									<control_select v-model="query.size" :options="$to_size()" @change="search()" />
+									<mm_select v-model="query.size" :options="$to_size()" @change="search()" />
 								</div>
 								<div class="fr">
 									<span class="mr">共 {{ count }} 条</span>
@@ -110,7 +106,7 @@
 									<input type="number" class="pager_now" v-model.number="page_now" @blur="goTo(page_now)" @change="page_change" />
 									<span>/{{ page_count }}页</span>
 								</div>
-								<control_pager display="2" v-model="query.page" :count="count / query.size" :func="goTo" :icons="['首页', '上一页', '下一页', '尾页']"></control_pager>
+								<mm_pager display="2" v-model="query.page" :count="count / query.size" :func="goTo" :icons="['首页', '上一页', '下一页', '尾页']"></mm_pager>
 							</div>
 						</mm_card>
 					</mm_col>
@@ -124,13 +120,9 @@
 				</div>
 				<div class="card_body">
 					<dl>
-						<dt>组件分类</dt>
+						<dt>适用页面</dt>
 						<dd>
-							<control_select v-model="form.type_id" :options="$to_kv(list_component_type, 'type_id', 'name')" />
-						</dd>
-						<dt>适用的页面</dt>
-						<dd>
-							<control_select v-model="form.page_id" :options="$to_kv(list_page, 'page_id', 'name')" />
+							<mm_select v-model="form.page_id" :options="$to_kv(list_page, 'page_id', 'name')" />
 						</dd>
 					</dl>
 				</div>
@@ -153,11 +145,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/apis/dev/component",
-				url_del: "/apis/dev/component?method=del&",
-				url_set: "/apis/dev/component?method=set&",
-				url_import: "/apis/dev/component?method=import&",
-				url_export: "/apis/dev/component?method=export&",
+				url_get_list: "/api/dev/component",
+				url_del: "/api/dev/component?method=del&",
+				url_set: "/api/dev/component?method=set&",
+				url_import: "/api/dev/component?method=import&",
+				url_export: "/api/dev/component?method=export&",
 				field: "page_id",
 				query_set: {
 					"page_id": ""
@@ -168,12 +160,16 @@
 					page: 1,
 					//页面大小
 					size: 10,
-					// 适用的页面
+					// 适用页面ID
 					'page_id': '',
 					// 使用次数——最小值
 					'num_min': 0,
 					// 使用次数——最大值
 					'num_max': 0,
+					// 适用率——最小值
+					'rate_min': 0,
+					// 适用率——最大值
+					'rate_max': 0,
 					// 组件名称
 					'name': '',
 					// 标题
@@ -188,9 +184,7 @@
 				form: {},
 				//颜色
 				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
-				// 组件分类
-				'list_component_type':[],
-				// 适用的页面
+				// 适用页面
 				'list_page':[],
 				// 视图模型
 				vm: {}
@@ -198,25 +192,7 @@
 		},
 		methods: {
 			/**
-			 * 获取组件分类
-			 * @param {query} 查询条件
-			 */
-			get_component_type(query) {
-				var _this = this;
-				if (!query) {
-					query = {
-						field: "type_id,name"
-					};
-				}
-				this.$get('~/apis/dev/component_type?size=0', query, function(json) {
-					if (json.result) {
-						_this.list_component_type.clear();
-						_this.list_component_type.addList(json.result.list)
-					}
-				});
-			},
-			/**
-			 * 获取适用的页面
+			 * 获取适用页面
 			 * @param {query} 查询条件
 			 */
 			get_page(query) {
@@ -226,7 +202,7 @@
 						field: "page_id,name"
 					};
 				}
-				this.$get('~/apis/dev/page?size=0', query, function(json) {
+				this.$get('~/api/dev/page?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_page.clear();
 						_this.list_page.addList(json.result.list)
@@ -235,9 +211,7 @@
 			},
 		},
 		created() {
-			// 获取组件分类
-			this.get_component_type();
-			// 获取适用的页面
+			// 获取适用页面
 			this.get_page();
 		}
 	}

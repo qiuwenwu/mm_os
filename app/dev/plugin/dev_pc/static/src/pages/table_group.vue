@@ -9,21 +9,21 @@
 								<h5>数据表分组</h5>
 							</div>
 							<div class="card_body">
-								<mm_form class="bar_filter">
+								<mm_form class="mm_filter">
 									<div class="title">
 										<h5><span>筛选条件</span></h5>
 									</div>
 									<mm_list col="3">
 										<mm_item>
-											<control_input v-model="query.keyword" title="关键词" desc="分组名称 / 分组标题 / 分组描述"
+											<mm_input v-model="query.keyword" title="关键词" desc="分组名称 / 分组标题 / 分组描述"
 											 @blur="search()" />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.father_id" title="上级分组" :options="$to_kv(list_table_group, 'group_id', 'name')"
+											<mm_select v-model="query.father_id" title="上级分组" :options="$to_kv(list_table_group, 'group_id', 'name')"
 											 @change="search()" />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.app_id" title="适用的应用" :options="$to_kv(list_app, 'app_id', 'name')"
+											<mm_select v-model="query.app_id" title="适用的应用" :options="$to_kv(list_app, 'app_id', 'name')"
 											 @change="search()" />
 										</mm_item>
 										<mm_item>
@@ -31,14 +31,14 @@
 										</mm_item>
 									</mm_list>
 								</mm_form>
-								<div class="bar_action">
+								<div class="mm_action">
 									<h5><span>操作</span></h5>
 									<div class="btns">
 										<mm_btn class="btn_primary-x" url="./table_group_form?">添加</mm_btn>
 										<mm_btn @click.native="show = true" class="btn_primary-x" v-bind:class="{ 'disabled': !selects }">批量修改</mm_btn>
 									</div>
 									<div class="btn_small">
-										<control_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></control_file>
+										<mm_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></mm_file>
 										<mm_btn class="btn_default-x" @click.native="export_db()" v-if="url_export">导出</mm_btn>
 									</div>
 								</div>
@@ -48,22 +48,22 @@
 											<th class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 											<th class="th_id"><span>#</span></th>
 											<th>
-												<control_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></control_reverse>
+												<mm_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="上级分组" v-model="query.orderby" field="father_id" :func="search"></control_reverse>
+												<mm_reverse title="上级分组" v-model="query.orderby" field="father_id" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="适用的应用" v-model="query.orderby" field="app_id" :func="search"></control_reverse>
+												<mm_reverse title="适用的应用" v-model="query.orderby" field="app_id" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="分组名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
+												<mm_reverse title="分组名称" v-model="query.orderby" field="name" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="分组标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
+												<mm_reverse title="分组标题" v-model="query.orderby" field="title" :func="search"></mm_reverse>
 											</th>
 											<th>
-												<control_reverse title="分组描述" v-model="query.orderby" field="description" :func="search"></control_reverse>
+												<mm_reverse title="分组描述" v-model="query.orderby" field="description" :func="search"></mm_reverse>
 											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
@@ -102,7 +102,7 @@
 							</div>
 							<div class="card_foot">
 								<div class="fl">
-									<control_select v-model="query.size" :options="$to_size()" @change="search()" />
+									<mm_select v-model="query.size" :options="$to_size()" @change="search()" />
 								</div>
 								<div class="fr">
 									<span class="mr">共 {{ count }} 条</span>
@@ -110,7 +110,7 @@
 									<input type="number" class="pager_now" v-model.number="page_now" @blur="goTo(page_now)" @change="page_change" />
 									<span>/{{ page_count }}页</span>
 								</div>
-								<control_pager display="2" v-model="query.page" :count="count / query.size" :func="goTo" :icons="['首页', '上一页', '下一页', '尾页']"></control_pager>
+								<mm_pager display="2" v-model="query.page" :count="count / query.size" :func="goTo" :icons="['首页', '上一页', '下一页', '尾页']"></mm_pager>
 							</div>
 						</mm_card>
 					</mm_col>
@@ -126,11 +126,11 @@
 					<dl>
 						<dt>上级分组</dt>
 						<dd>
-							<control_select v-model="form.father_id" :options="$to_kv(list_table_group, 'group_id', 'name')" />
+							<mm_select v-model="form.father_id" :options="$to_kv(list_table_group, 'group_id', 'name')" />
 						</dd>
 						<dt>适用的应用</dt>
 						<dd>
-							<control_select v-model="form.app_id" :options="$to_kv(list_app, 'app_id', 'name')" />
+							<mm_select v-model="form.app_id" :options="$to_kv(list_app, 'app_id', 'name')" />
 						</dd>
 					</dl>
 				</div>
@@ -153,11 +153,11 @@
 		data() {
 			return {
 				// 列表请求地址
-				url_get_list: "/apis/dev/table_group",
-				url_del: "/apis/dev/table_group?method=del&",
-				url_set: "/apis/dev/table_group?method=set&",
-				url_import: "/apis/dev/table_group?method=import&",
-				url_export: "/apis/dev/table_group?method=export&",
+				url_get_list: "/api/dev/table_group",
+				url_del: "/api/dev/table_group?method=del&",
+				url_set: "/api/dev/table_group?method=set&",
+				url_import: "/api/dev/table_group?method=import&",
+				url_export: "/api/dev/table_group?method=export&",
 				field: "group_id",
 				query_set: {
 					"group_id": ""
@@ -208,7 +208,7 @@
 						field: "group_id,name,father_id"
 					};
 				}
-				this.$get('~/apis/dev/table_group?size=0', query, function(json) {
+				this.$get('~/api/dev/table_group?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_table_group.clear();
 						_this.list_table_group.addList(json.result.list)
@@ -226,7 +226,7 @@
 						field: "app_id,name"
 					};
 				}
-				this.$get('~/apis/dev/app?size=0', query, function(json) {
+				this.$get('~/api/dev/app?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_app.clear();
 						_this.list_app.addList(json.result.list)
