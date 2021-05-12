@@ -162,6 +162,24 @@
 </script>
 
 <style>
+	.card_body .mm_form {
+		margin: 1rem;
+	}
+	.card_body .mm_table {
+		margin: 1rem;
+	}
+	.card_body .bar_action {
+		margin: 0 1rem;
+	}
+	.card_foot .fr{
+		margin-right: 1rem;
+	}
+	.card_foot .fl{
+		margin-left: 1rem;
+	}
+	.control_pager {
+		margin: 1rem 0;
+	}
 	.icon-close {
 		border-radius: 50%;
 		background-color: var(--color_border);
@@ -179,6 +197,7 @@
 		content: "×";
 		position: relative;
 		top: 2px;
+		left: -1px;
 	}
 
 	.icon-close:hover {
