@@ -15,7 +15,7 @@
 									</div>
 									<mm_list :col="3">
 										<mm_item>
-											<control_input v-model="query.keyword" title="关键词" desc="分类名称 / 分类标题 / 分类描述"
+											<control_input v-model="query.keyword" title="关键词" desc="分类名称 / 分类描述 / 分类标题"
 											 @blur="search()" />
 										</mm_item>
 										<mm_item>
@@ -54,10 +54,13 @@
 												<control_reverse title="分类名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="分类标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
+												<control_reverse title="分类描述" v-model="query.orderby" field="description" :func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="分类描述" v-model="query.orderby" field="description" :func="search"></control_reverse>
+												<control_reverse title="分类图标" v-model="query.orderby" field="icon" :func="search"></control_reverse>
+											</th>
+											<th>
+												<control_reverse title="分类标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
 											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
@@ -80,10 +83,13 @@
 												<control_input :auto="true" v-model="o.name" @blur="set(o)" />
 											</td>
 											<td>
-												<control_input :auto="true" v-model="o.title" @blur="set(o)" />
+												<control_input :auto="true" v-model="o.description" @blur="set(o)" />
 											</td>
 											<td>
-												<control_input :auto="true" v-model="o.description" @blur="set(o)" />
+												<img class="icon" :src="o.icon" alt="分类图标" />
+											</td>
+											<td>
+												<control_input :auto="true" v-model="o.title" @blur="set(o)" />
 											</td>
 											<td>
 												<mm_btn class="btn_primary" :url="'./article_type_form?type_id=' + o[field]">修改</mm_btn>
@@ -154,10 +160,10 @@
 					'display_max': 0,
 					// 分类名称
 					'name': '',
-					// 分类标题
-					'title': '',
 					// 分类描述
 					'description': '',
+					// 分类标题
+					'title': '',
 					// 关键词
 					'keyword': '',
 					//排序
@@ -191,6 +197,15 @@
 					}
 				});
 			},
+			/**
+			 * 获取列表之前
+			 * @param {Object} param 参数
+			 */
+			get_list_before(param){
+				delete param.page;
+				param.size = "0";
+				return param;
+			}
 		},
 		created() {
 			// 获取上级分类

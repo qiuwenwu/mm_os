@@ -30,7 +30,7 @@
         {
             "key": "father_id",
             "title": "上级",
-            "table": "cms_nav",
+            "table": "sys_nav",
             "name": "name",
             "id": "nav_id"
         }

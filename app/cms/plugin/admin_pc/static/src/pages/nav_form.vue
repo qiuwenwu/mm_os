@@ -115,7 +115,7 @@
 						field: "nav_id,name,father_id"
 					};
 				}
-				this.$get('~/apis/cms/nav?size=0', query, function(json) {
+				this.$get('~/apis/sys/nav?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_nav.clear();
 						_this.list_nav.addList(json.result.list)

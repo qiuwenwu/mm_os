@@ -71,6 +71,9 @@
 											<th>
 												<control_reverse title="标签" v-model="query.orderby" field="tag" :func="search"></control_reverse>
 											</th>
+											<th>
+												<control_reverse title="评论回复" v-model="query.orderby" field="reply" :func="search"></control_reverse>
+											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
 									</thead>
@@ -99,6 +102,9 @@
 											</td>
 											<td>
 												<span>{{ o.tag }}</span>
+											</td>
+											<td>
+												<span>{{ o.reply }}</span>
 											</td>
 											<td>
 												<mm_btn class="btn_primary" :url="'./article_comment_form?comment_id=' + o[field]">修改</mm_btn>

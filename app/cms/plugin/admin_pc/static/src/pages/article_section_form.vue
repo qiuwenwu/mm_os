@@ -25,7 +25,7 @@
 											<control_input v-model="form.tag" :minlength="0" :maxlength="255" placeholder=""
 											 :required="true" />
 										</dd>
-										<dt>章节内容</dt>
+										<dt class="required">章节内容</dt>
 										<dd>
 											<control_rich v-model="form.content"></control_rich>
 										</dd>

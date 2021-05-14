@@ -19,10 +19,6 @@
 										<dd>
 											<control_input v-model="form.name" :minlength="0" :maxlength="16" placeholder="" />
 										</dd>
-										<dt>分类标题</dt>
-										<dd>
-											<control_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
-										</dd>
 										<dt>分类描述</dt>
 										<dd>
 											<control_input v-model="form.description" :minlength="0" :maxlength="255" placeholder="" />
@@ -30,6 +26,10 @@
 										<dt>分类图标</dt>
 										<dd>
 											<mm_upload_img width="10rem" height="10rem" name="icon" type="text" v-model="form.icon" />
+										</dd>
+										<dt>分类标题</dt>
+										<dd>
+											<control_input v-model="form.title" :minlength="0" :maxlength="125" placeholder="" />
 										</dd>
 									</dl>
 								</mm_form>
@@ -67,9 +67,9 @@
 					"type_id": 0,
 					"father_id": 0,
 					"name": '',
-					"title": '',
 					"description": '',
 					"icon": '',
+					"title": '',
 				},
 				// 上级分类
 				'list_article_type':[],

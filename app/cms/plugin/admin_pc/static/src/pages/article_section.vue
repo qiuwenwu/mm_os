@@ -55,6 +55,9 @@
 											<th>
 												<control_reverse title="章节标签" v-model="query.orderby" field="tag" :func="search"></control_reverse>
 											</th>
+											<th>
+												<control_reverse title="章节图片" v-model="query.orderby" field="img" :func="search"></control_reverse>
+											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
 									</thead>
@@ -74,6 +77,9 @@
 											</td>
 											<td>
 												<span>{{ o.tag }}</span>
+											</td>
+											<td>
+												<img class="img" :src="o.img" alt="章节图片" />
 											</td>
 											<td>
 												<mm_btn class="btn_primary" :url="'./article_section_form?section_id=' + o[field]">修改</mm_btn>
