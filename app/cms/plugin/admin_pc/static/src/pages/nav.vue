@@ -16,17 +16,17 @@
 									<mm_list :col="3">
 										<mm_item>
 											<control_input v-model="query.keyword" title="关键词" desc="英文名称 / 中文标题"
-											 @blur="search()" />
+											  />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.available" title="是否启用" :options="$to_kv(arr_available)" @change="search()" />
+											<control_select v-model="query.available" title="是否启用" :options="$to_kv(arr_available)" />
 										</mm_item>
 										<mm_item>
 											<control_select v-model="query.father_id" title="上级" :options="$to_kv(list_nav, 'nav_id', 'name')"
-											 @change="search()" />
+											 />
 										</mm_item>
 										<mm_item>
-											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
+											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();">重置</mm_btn>
 										</mm_item>
 									</mm_list>
 								</mm_form>
@@ -137,7 +137,7 @@
 				<div class="card_head">
 					<h5>批量修改</h5>
 				</div>
-				<div class="card_body">
+				<div class="card_body pa">
 					<dl>
 						<dt>是否启用</dt>
 						<dd>
@@ -200,13 +200,9 @@
 				//颜色
 				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
 				// 是否启用
-				'arr_available': $ {
-					@JSON.stringify(v.value)
-				},
+				'arr_available':["否","是"],
 				// 上级
-				'list_nav': $ {
-					@JSON.stringify(v.value)
-				},
+				'list_nav':[],
 				// 视图模型
 				vm: {}
 			}
@@ -223,7 +219,7 @@
 						field: "nav_id,name,father_id"
 					};
 				}
-				this.$get('~/apis/sys/nav?size=0', query, function(json) {
+				this.$get('~/apis/cms/nav?size=0', query, function(json) {
 					if (json.result) {
 						_this.list_nav .clear();
 						_this.list_nav .addList(json.result.list)
@@ -234,7 +230,7 @@
 			 * 获取列表之前
 			 * @param {Object} param 参数
 			 */
-			get_list_before(param) {
+			get_list_before(param){
 				delete param.page;
 				param.size = "0";
 				return param;

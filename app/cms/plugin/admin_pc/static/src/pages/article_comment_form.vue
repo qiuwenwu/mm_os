@@ -41,7 +41,7 @@
 										</dd>
 										<dt>评论回复</dt>
 										<dd>
-											<mm_textarea v-model="form.reply" type="text" placeholder="对评论人的评论做出的回复。通过form-url格式保存，多个人的回复用换行分隔"></mm_textarea>
+											<control_textarea v-model="form.reply" type="text" placeholder="对评论人的评论做出的回复。通过form-url格式保存，多个人的回复用换行分隔"></control_textarea>
 										</dd>
 									</dl>
 								</mm_form>

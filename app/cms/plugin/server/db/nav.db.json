@@ -201,7 +201,7 @@
             "max": 10000,
             "decimal": 0,
             "default": "0",
-            "map": "sys_nav.name.nav_id"
+            "map": "cms_nav.name.nav_id"
         }
     ]
 }

@@ -87,7 +87,7 @@
 										</dd>
 										<dt>好友</dt>
 										<dd>
-											<mm_textarea v-model="form.friends" type="text" placeholder="多个好友ID用“,”分隔"></mm_textarea>
+											<control_textarea v-model="form.friends" type="text" placeholder="多个好友ID用“,”分隔"></control_textarea>
 										</dd>
 									</dl>
 								</mm_form>

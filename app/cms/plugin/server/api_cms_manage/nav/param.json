@@ -168,7 +168,7 @@
         {
             "name": "father_id",
             "title": "上级ID",
-            "description": "在频道列表操作时，当上级导航展开时，才显示该导航(sys_nav.name.nav_id)",
+            "description": "在频道列表操作时，当上级导航展开时，才显示该导航(cms_nav.name.nav_id)",
             "type": "number",
             "dataType": "smallint",
             "number": {

@@ -16,14 +16,14 @@
 									<mm_list :col="3">
 										<mm_item>
 											<control_input v-model="query.keyword" title="关键词" desc="分类名称 / 分类描述 / 分类标题"
-											 @blur="search()" />
+											  />
 										</mm_item>
 										<mm_item>
 											<control_select v-model="query.father_id" title="上级分类" :options="$to_kv(list_article_type, 'type_id', 'name')"
-											 @change="search()" />
+											 />
 										</mm_item>
 										<mm_item>
-											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
+											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();">重置</mm_btn>
 										</mm_item>
 									</mm_list>
 								</mm_form>
@@ -110,7 +110,7 @@
 				<div class="card_head">
 					<h5>批量修改</h5>
 				</div>
-				<div class="card_body">
+				<div class="card_body pa">
 					<dl>
 						<dt>上级分类</dt>
 						<dd>

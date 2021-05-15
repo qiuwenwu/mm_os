@@ -32,7 +32,7 @@
         {
             "key": "father_id",
             "title": "上级",
-            "table": "sys_nav",
+            "table": "cms_nav",
             "name": "name",
             "id": "nav_id"
         }
