@@ -30,6 +30,7 @@
 	"dependencies": {
 		"compressing": "^1.5.1",
 		"mm_expand": "^1.5.1",
-		"mm_soa": "^1.4.9"
+		"mm_soa": "^1.4.9",
+		"njwt": "^1.1.0"
 	}
 }
